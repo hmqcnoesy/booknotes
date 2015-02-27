@@ -1,11 +1,13 @@
 # Head First Python
-The python command in the shell (assuming PATH is set) will open a REPL.
+The `python` command in the shell (assuming PATH is set) will open a REPL.
 If a .py file is passed as first arg to python, it will execute that file as a script.
 Script example (test.py):
-    import sys
-    print(sys.platform)
+```python
+import sys
+print(sys.platform)
+```
     
-Then to run that script, cd into the directory containing that test.py file and `python test.py`
+Then to run that script, `cd` into the directory containing that test.py file and `python test.py`
 
 Notice that the filename as an arg requires the .py extension, but .py is omitted from import statements within scripts.
 Importing a module runs the code that is in that script file.  The importing process happens only once per process, so a second `import mymodule.py` in the same process gives access to the code in mymodule.py but does not execute the mymodule.py script again.
