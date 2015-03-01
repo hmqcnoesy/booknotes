@@ -55,7 +55,7 @@ There are lots of ways to format output of cmdlets
 Some cmdlets have their own filtering capabilities using something like `-filter` or something relatively rudimentary like `-name` (e.g. `Get-Service -name "BITS"`)
 
 If you need morebetter filtering capabilities, the `where-object` cmdlet can be piped to. 
-`Where-object` uses powershell comparison flags (not strictly operators) such as `-eq`, `-ne`, `-gt`, `-lt`, `-ge`, `-le`, `-ceq`�(the "c" flags are for case sensitive string comparisons)
+`Where-object` uses powershell comparison flags (not strictly operators) such as `-eq`, `-ne`, `-gt`, `-lt`, `-ge`, `-le`, `-ceq`...(the "c" flags are for case sensitive string comparisons)
 
 Boolean flags are used like `(5 -gt 10) -or (10 -gt 1)`
 
@@ -85,14 +85,14 @@ And to end the remote session: `exit-pssession`
 
 One to many remote commands can be issued like:  
 ```powershell
-invoke-command -computerName server1,server2,server3,server4 -command {�}
+invoke-command -computerName server1,server2,server3,server4 -command {...}
 ```
 
 ##Chapter 11
 WMI not interesting
 
 ##Chapter 12
-Async commands can be submitted using `start-job -scriptblock {�}` where the command is in the `{�}`
+Async commands can be submitted using `start-job -scriptblock {...}` where the command is in the `{...}`
 
 Async commands are fire and forget and keep the shell available for continued interaction.
 
@@ -161,7 +161,7 @@ Scripts have their own scope, within the shell's global scope.  Functions have t
 Store remote sessions in variables for easier remote administration
 
 ##Chapter 19
-A function wraps up scripted content for reusability.  Same format as a script, including the `param()` section, but wrap the content in function `Verb-Noun {�}`
+A function wraps up scripted content for reusability.  Same format as a script, including the `param()` section, but wrap the content in function `Verb-Noun {...}`
 
 ##Chapter 20
 Basic `if` construct looks like
