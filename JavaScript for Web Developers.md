@@ -1,92 +1,93 @@
 #Professional JavaScript for Web Developers
 
 ##typeof operator
-`typeof` is an operator but can also be used like a function i.e. `typeof(x)`
+`typeof`Â isÂ anÂ operatorÂ butÂ canÂ alsoÂ beÂ usedÂ likeÂ aÂ functionÂ i.e.Â `typeof(x)`
 ```javascript
-var x = "abc"; 
-typeof x; // "string" 
+varÂ xÂ =Â "abc";Â 
+typeofÂ x;Â //Â "string"Â 
  
-x = 1.0; 
-typeof x; // "number" 
+xÂ =Â 1.0;Â 
+typeofÂ x;Â //Â "number"Â 
  
-x = true; 
-typeof x; // "boolean" 
+xÂ =Â true;Â 
+typeofÂ x;Â //Â "boolean"Â 
  
-x = undefined; 
-typeof x; // "undefined" 
+xÂ =Â undefined;Â 
+typeofÂ x;Â //Â "undefined"Â 
  
-x = {}; 
-typeof x; // "object" 
+xÂ =Â {};Â 
+typeofÂ x;Â //Â "object"Â 
  
-x = function (a) {
-    alert(a);
+xÂ =Â functionÂ (a)Â {
+Â Â Â Â alert(a);
 }
  
-typeof x; // "function"
+typeofÂ x;Â //Â "function"
 ```
 
 ##types
-undefined type
+undefinedÂ type
 ```javascript
-var msg;
-alert(msg == undefined); // true
+varÂ msg;
+alert(msgÂ ==Â undefined);Â //Â true
 ```
 
-null type
+nullÂ type
 ```javascript
-var car = null;
-alert(typeof car); // null
+varÂ carÂ =Â null;
+alert(typeofÂ car);Â //Â null
 ```
  
-boolean (true/false, case-sensitive) type coerced when necessary or use Boolean() casting function
+booleanÂ (true/false,Â case-sensitive) typeÂ coercedÂ whenÂ necessary orÂ useÂ Boolean()Â castingÂ function
 ```javascript
-Boolean("x"); // true
-Boolean(null); // false
+Boolean("x");Â //Â true
+Boolean(null);Â //Â false
 ```
  
-truthy and falsy values
-true                  |   false
+Truthy and Falsy values
+
+true                  | false
 ----------------------|---------------
-any non-empty string  |  empty string
-any non-zero number   |  0, NaN
-any object            |  null
- -                    |  undefined
+anyÂ non-emptyÂ string  | empty string
+anyÂ non-zeroÂ number   | 0, NaN
+anyÂ object            | null
+ -                    | undefined
  
-number type: ints and floats are handled differently but are both just number types
+numberÂ type: intsÂ andÂ floatsÂ areÂ handledÂ differently butÂ areÂ bothÂ justÂ numberÂ types
 ```javascript
-var a = 0.1, b = 0.2;
-if (a + b == 0.3) // false!!!
-if (a / 0) // true (Infinity)
-if (NaN == NaN)  // false - NaN never equals anything
-if (isNaN(a / 0)) // true
+varÂ aÂ =Â 0.1,Â bÂ =Â 0.2;
+ifÂ (aÂ +Â bÂ ==Â 0.3)Â //Â false!!!
+ifÂ (aÂ /Â 0)Â //Â trueÂ (Infinity)
+ifÂ (NaNÂ ==Â NaN)Â Â //Â falseÂ -Â NaNÂ neverÂ equalsÂ anything
+ifÂ (isNaN(aÂ /Â 0))Â //Â true
 ```
 
-some number function
+someÂ numberÂ function
 ```javascript
 parseInt("123");
 parseFloat("1.23");
-Number(true); // 1
-Number(false); // 0
-Number(null); // 0.
-Number(undefined); // NaN
-Number('x'); //NaN
-Number(''); // 0
-Number('012'); // 12
+Number(true);Â //Â 1
+Number(false);Â //Â 0
+Number(null);Â //Â 0.
+Number(undefined);Â //Â NaN
+Number('x');Â //NaN
+Number('');Â //Â 0
+Number('012');Â //Â 12
 ```
 
-unary + operator can be substituted for `Number()`:
+unaryÂ +Â operatorÂ canÂ beÂ substitutedÂ forÂ `Number()`:
 ```javascript
-+('hello'); // NaN
++('hello');Â //Â NaN
 ```
  
-strings are immutable
+stringsÂ areÂ immutable
 ```javascript
-String(x); //same as .toString() except returns "null" and "undefined" when appropriate.
+String(x);Â //sameÂ asÂ .toString()Â exceptÂ returnsÂ "null" andÂ "undefined"Â whenÂ appropriate.
  
 objects
 ```javascript
-var o = new Object();
-o.hasOwnProperty('name'); // checks if name exists on obj (not prototype)
+varÂ oÂ =Â newÂ Object();
+o.hasOwnProperty('name');Â //Â checksÂ ifÂ nameÂ existsÂ onÂ objÂ (notÂ prototype)
 o.isPrototypeOf(obj);
 o.propertyIsEnumerable('prop');
 o.toLocaleString();
@@ -95,141 +96,141 @@ o.valueOf();
 ```
 
 ##Control Flow
-Logical OR evaluated against objects if preferredObject is null, backupObject:
+LogicalÂ ORÂ evaluatedÂ againstÂ objects ifÂ preferredObjectÂ isÂ null,Â backupObject:
 ```javascript
-var obj = preferredObject || backupObject;
+varÂ objÂ =Â preferredObjectÂ ||Â backupObject;
  
-var x = {};
-var y = 1;
-if (x == y) { // x.valueOf() is checked
+varÂ xÂ =Â {};
+varÂ yÂ =Â 1;
+ifÂ (xÂ ==Â y)Â {Â //Â x.valueOf()Â isÂ checked
 }
  
-var a = null, b;
-if (a == b) {  //true (null == undefined)
+varÂ aÂ =Â null,Â b;
+ifÂ (aÂ ==Â b)Â {Â Â //trueÂ (nullÂ ==Â undefined)
 }
  
-var j = {}, k = {};
-if (j == k) {  //false (only true if j and k point to same object)
+varÂ jÂ =Â {},Â kÂ =Â {};
+ifÂ (jÂ ==Â k)Â {Â Â //falseÂ (onlyÂ trueÂ ifÂ jÂ andÂ kÂ pointÂ toÂ sameÂ object)
 }
 ```
  
  
-`for` loops - variables are placed in function scope
+`for`Â loopsÂ -Â variablesÂ areÂ placedÂ inÂ functionÂ scope
 ```javascript
-for (var i = 0; i < 10; i++) {
+forÂ (varÂ iÂ =Â 0;Â iÂ <Â 10;Â i++)Â {
 }
  
-console.log(i);  // i is valid here
+console.log(i);Â Â //Â iÂ isÂ validÂ here
 ```
  
-`for-in` enumerates properties of an object
+`for-in`Â enumeratesÂ propertiesÂ ofÂ anÂ object
 ```javascript
-for (var propName in window) {
-    document.write(propName);
+forÂ (varÂ propNameÂ inÂ window)Â {
+Â Â Â Â document.write(propName);
 }
 ``` 
  
-`with` statement is poor practice, syntax error in strict mode
+`with`Â statementÂ isÂ poorÂ practice,Â syntaxÂ errorÂ inÂ strictÂ mode
 ```javascript
-with (location) {
-    var url = href;
-    var host = hostname;
+withÂ (location)Â {
+Â Â Â Â varÂ urlÂ =Â href;
+Â Â Â Â varÂ hostÂ =Â hostname;
 }
 ```
 
 ##Functions
-if function doesn't use return or uses return without value, `undefined` is returned.
+ifÂ functionÂ doesn'tÂ useÂ return orÂ usesÂ returnÂ withoutÂ value, `undefined`Â isÂ returned.
  
-arguments - named args are a convenience
+argumentsÂ -Â namedÂ argsÂ areÂ aÂ convenience
 ```javascript
-function howManyArgs() {
-    alert(arguments.length);
+functionÂ howManyArgs()Â {
+Â Â Â Â alert(arguments.length);
 }
  
-howManyArgs('x', 21); // 2
-howManyArgs('');  // 1
-howManyArgs()  // 0
+howManyArgs('x',Â 21);Â //Â 2
+howManyArgs('');Â Â //Â 1
+howManyArgs()Â Â //Â 0
 ```
  
-named args are simply aliases into `arguments[]`
+namedÂ argsÂ areÂ simplyÂ aliasesÂ intoÂ `arguments[]`
 ```javascript
-function doAdd(num1, num2) {
-    if (arguments.length < 2) {
-        return num1 * 2;
-    } else {
-        return arguments[0] + num2;
-    }
+functionÂ doAdd(num1,Â num2)Â {
+Â Â Â Â ifÂ (arguments.lengthÂ <Â 2)Â {
+Â Â Â Â Â Â Â Â returnÂ num1Â *Â 2;
+Â Â Â Â }Â elseÂ {
+Â Â Â Â Â Â Â Â returnÂ arguments[0]Â +Â num2;
+Â Â Â Â }
 }
 ```
  
-oddly, `arguments[x]` and corresponding named arg occupy different spots in memory, but are kept in sync
+oddly,Â `arguments[x]`Â andÂ correspondingÂ namedÂ argÂ occupyÂ differentÂ spotsÂ inÂ memory,Â butÂ areÂ keptÂ inÂ sync
 
 ##Variables
-Five primitive types: `undefined, null, boolean, number, string` are accessed by value. Reference types dont' allow direct access to memory locations, only access by ref
+FiveÂ primitiveÂ types:Â `undefined,Â null,Â boolean,Â number,Â string`Â areÂ accessedÂ byÂ value.Â ReferenceÂ typesÂ dont'Â allowÂ directÂ accessÂ toÂ memoryÂ locations,Â onlyÂ accessÂ byÂ ref
  
-ref types have dynamic properties:
+refÂ typesÂ haveÂ dynamicÂ properties:
 ```javascript
-var obj = new Object();
-obj.name = 'x';
-obj.id = 1;
+varÂ objÂ =Â newÂ Object();
+obj.nameÂ =Â 'x';
+obj.idÂ =Â 1;
 alert(obj.name);
  
-var str = 'abc';
-str.name = 'str'; // no error
-alert(str.name);  // undefined (not an error)
+varÂ strÂ =Â 'abc';
+str.nameÂ =Â 'str';Â //Â noÂ error
+alert(str.name);Â Â //Â undefinedÂ (notÂ anÂ error)
 ```
  
-Copying values - when a value type is assigned value a copy is made:
+CopyingÂ values - whenÂ aÂ valueÂ typeÂ isÂ assignedÂ valueÂ aÂ copyÂ isÂ made:
 ```javascript
-var x = 0, y = 5;
-x = y;  // x and y are separate copies of value 5
+varÂ xÂ =Â 0,Â yÂ =Â 5;
+xÂ =Â y;Â Â //Â xÂ andÂ yÂ areÂ separateÂ copiesÂ ofÂ valueÂ 5
  
-var x = {},
-    y = {};
+varÂ xÂ =Â {},
+Â Â Â Â yÂ =Â {};
  
-x = y; // x and y now point to same object on heap
+xÂ =Â y;Â //Â xÂ andÂ yÂ nowÂ pointÂ toÂ sameÂ objectÂ onÂ heap
 ```
  
-ref type arg passing:
+refÂ typeÂ argÂ passing:
 ```javascript
-function setName(obj) {
-    obj.name = 'x';
-    obj = new Object();
-    obj.name = 'y';
+functionÂ setName(obj)Â {
+Â Â Â Â obj.nameÂ =Â 'x';
+Â Â Â Â objÂ =Â newÂ Object();
+Â Â Â Â obj.nameÂ =Â 'y';
 }
  
-var obj = new Object();
+varÂ objÂ =Â newÂ Object();
 setName(obj);
-alert(obj.name);  // 'x'
+alert(obj.name);Â Â //Â 'x'
 ```
-Above is proof that all args are passed by value
+AboveÂ isÂ proofÂ thatÂ allÂ argsÂ areÂ passedÂ byÂ value
  
-You can determine the type of a ref type using `instanceof` operator and the name of the constructor 
+YouÂ canÂ determineÂ theÂ typeÂ ofÂ aÂ refÂ typeÂ usingÂ `instanceof`Â operatorÂ andÂ theÂ nameÂ ofÂ theÂ constructorÂ 
 ```javascript
-alert(obj instanceof Array); // false
+alert(objÂ instanceofÂ Array);Â //Â false
 ```
 
 ##Scope
-Global variables and functions are created as properties and methods on the window object, which is one execution context.
+GlobalÂ variablesÂ andÂ functionsÂ areÂ createdÂ as propertiesÂ andÂ methodsÂ onÂ theÂ windowÂ object, whichÂ isÂ oneÂ executionÂ context.
 
-Each function call has its own execution context.  When function code is entered, that function's execution context is pushed onto a context stack.  When function is finished the stack is popped and returns to previous execution context.
+EachÂ functionÂ callÂ hasÂ itsÂ ownÂ executionÂ context.  WhenÂ functionÂ codeÂ isÂ entered,Â thatÂ function'sÂ executionÂ contextÂ isÂ pushedÂ ontoÂ aÂ contextÂ stack.  WhenÂ functionÂ isÂ finishedÂ theÂ stackÂ isÂ popped andÂ returnsÂ toÂ previousÂ executionÂ context.
 
-A scope chain is thus created - the first in the chain is always the variable object (inaccessible obj used behind scense for ex context) of the context whose code is executing the last of the chain is always the global context. identifiers are resolved by searching the scope chain. Search begins @ front, continues until identifier found
+A scopeÂ chainÂ isÂ thusÂ createdÂ -Â theÂ firstÂ inÂ theÂ chain isÂ alwaysÂ theÂ variableÂ objectÂ (inaccessibleÂ objÂ usedÂ behindÂ scenseÂ forÂ exÂ context) ofÂ theÂ contextÂ whoseÂ codeÂ isÂ executing theÂ lastÂ ofÂ theÂ chainÂ isÂ alwaysÂ theÂ globalÂ context. identifiersÂ areÂ resolvedÂ byÂ searchingÂ theÂ scopeÂ chain. SearchÂ beginsÂ @Â front,Â continuesÂ untilÂ identifierÂ found
 
-`catch` and `with` statements add their own variable objects to the front of scope chain
+`catch`Â andÂ `with`Â statementsÂ addÂ theirÂ ownÂ variableÂ objectsÂ toÂ theÂ frontÂ ofÂ scopeÂ chain
 
-When `var` is omitted when creating a variable, it is added to the global variable object in strict mode, you must use var.
+WhenÂ `var`Â isÂ omittedÂ whenÂ creatingÂ aÂ variable,Â itÂ isÂ addedÂ toÂ theÂ globalÂ variableÂ object inÂ strictÂ mode,Â youÂ mustÂ useÂ var.
 
-Local variables with same name as global variables effectively hide the global ones because the search stops at the local variable object when its found.
+LocalÂ variablesÂ withÂ sameÂ nameÂ asÂ globalÂ variables effectivelyÂ hideÂ theÂ globalÂ onesÂ becauseÂ theÂ search stopsÂ atÂ theÂ localÂ variableÂ objectÂ whenÂ itsÂ found.
 
 ##Garbage Collection
-Mark and sweep is used by most browsers - could be a list of in-context variables, or a bit flag on each variable.
+MarkÂ andÂ sweepÂ isÂ usedÂ byÂ mostÂ browsers - couldÂ beÂ aÂ listÂ ofÂ in-contextÂ variables, orÂ aÂ bitÂ flagÂ onÂ eachÂ variable.
 
-IE, FF, Opera, Chrome, Safari all use mark/sweep. Netscape used ref counting, but circular refs problematic.
+IE,Â FF,Â Opera,Â Chrome,Â SafariÂ allÂ useÂ mark/sweep. NetscapeÂ usedÂ refÂ counting,Â butÂ circularÂ refsÂ problematic.
 
-IE8 and earlier used COM objects for DOM and BOM instead of native javascript objects. COM uses ref counting, so this was a problem.
-To remedy, make sure you set js object refs = null when they are done.
-That will allow them to get GC'd using ref counting.
+IE8Â andÂ earlierÂ usedÂ COMÂ objectsÂ forÂ DOMÂ andÂ BOM insteadÂ ofÂ nativeÂ javascriptÂ objects. COMÂ usesÂ refÂ counting,Â soÂ thisÂ wasÂ aÂ problem.
+ToÂ remedy,Â makeÂ sureÂ youÂ setÂ jsÂ objectÂ refsÂ =Â null whenÂ theyÂ areÂ done.
+ThatÂ willÂ allowÂ themÂ toÂ getÂ GC'dÂ usingÂ refÂ counting.
 
 ##Objects
 ```javascript
