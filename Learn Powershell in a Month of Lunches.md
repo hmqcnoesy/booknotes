@@ -64,7 +64,7 @@ The `-like` comparison can use `*` as a wildcard, as in `"hello" -like "*ll"`
 The `-match` comparison can use regex as in `"^[Hh]" -match "hello"`.  There is also `-notmatch` and `-cmatch` and `-cnotmatch`
 
 Example of `where-object`:  
-```
+```powershell
 get-service | where { $_.Status -eq 'Running' }
 ```
 
@@ -84,7 +84,7 @@ To start a remote session:  `enter-pssession -computerName Blahblahblah`
 And to end the remote session: `exit-pssession`
 
 One to many remote commands can be issued like:  
-```
+```powershell
 invoke-command -computerName server1,server2,server3,server4 -command {�}
 ```
 
@@ -120,7 +120,7 @@ All variables are untyped
 Variables do no persist between sessions
 
 Variables are evaluated within double-quoted strings, but not single-quoted ones.  So 
-```
+```powershell
 $x = 'world'
 $y = 'hello $x'
 $y
@@ -148,7 +148,7 @@ Other writing cmdlets don't skip the `out-` cmdlets in the pipline, but can modi
 
 ##Chapter 17
 Create a .ps1 script that accepts parameters by including a `param()` block at the beginning and put variable declarations inside, e.g. 
-```
+```powershell
 param (
 	$computername = 'localhost' 
 )
@@ -165,7 +165,7 @@ A function wraps up scripted content for reusability.  Same format as a script, 
 
 ##Chapter 20
 Basic `if` construct looks like
-```
+```powershell
 if ($var -eq 1) {
     ...
 } elseif ($var -eq 0) { 
@@ -178,7 +178,7 @@ if ($var -eq 1) {
 The reserved variables `$True` and `$False` can be used for comparisons and assignments.
 
 The switch construct looks like 
-```
+```powershell
 switch ($var.status) {
 	1001 { 
 		...
@@ -196,21 +196,21 @@ switch ($var.status) {
 ```
 
 The types compared can vary.  When comparing for strings, wildcards can be used if the `-wildcard` flag is set between `Switch` and the evaluation expression:  
-```
+```powershell
 Switch -wildcard ($x)
 ```
 
 With wildcards, there is the possibility of more than one match.  With a `Break` statement in a block, the switch construct is exited.  Without the break, the next expression is evaluated in turn for a match, so multiple blocks in the switch can be executed.
 
 A for loop looks like:  
-```
+```powershell
 For ($i = 0; $i -lt 10; i++) { 
 	...
 }
 ```
 
 A foreach loop looks like:  
-```
+```powershell
 Foreach ($cheese in $collection) { 
 	...
 }
@@ -227,7 +227,7 @@ A built-in variable, `$ErrorActionPreference` determines shell behavior when enc
 The `$ErrorActionPreference` variable is a shotgun approach, but each cmdlet in powershell has an `-ea` or `-erroraction` parameter that determines behavior when running just that cmdlet.  The parameter value is the same strings as are available for the global variable.
 
 The try/catch construct looks like: 
-```
+```powershell
 Try { 
 	...
 } Catch { 
@@ -237,7 +237,7 @@ Try {
 }
 ```
 Within the Catch block, the `$error` variable points to a collection of errors caught, and `$error[0]` will be the most recent.  The catch and finally blocks are optional, so long as at least one of them is included.  Another way to handle is to use the `-ev` or `-ErrorVariable` parameter for a cmdlet and specify the name of a variable to store an error if one is encountered (variable name without the $):  
-```
+```powershell
 Try { 
 	Try-SomethingRisky -ea Stop -ev MyError 
 } Catch { 
@@ -265,24 +265,24 @@ The third location above is usually the best, since it will be loaded just for y
 A profile script is just like any other script, and is subject to the execution policy on the system.
 
 The replace operator is used like:  
-```
+```powershell
 "192.168.34.12" -replace "34", "15"
 ```
 
 The join operator:  
-```
+```powershell
 $arr = 'a','b','c','d','e'
 $arr -join "|";
 ```
 
 The split operator: 
-```
+```powershell
 $arr = (gc tabdelimitedfile.txt) | -split "`t"
 $arr[3]
 ```
 
 All .net string methods are also available, like 
-```
+```powershell
 "  abqdefg  ".trim().replace("q","c")
 ```
 
