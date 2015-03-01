@@ -39,7 +39,7 @@ There are lots of ways to format output of cmdlets
 ##Chapter 9
 Some cmdlets have their own filtering capabilities using something like `-filter` or something relatively rudimentary like `-name` (e.g. `Get-Service -name "BITS"`)
 If you need morebetter filtering capabilities, the `where-object` cmdlet can be piped to. 
-`Where-object` uses powershell comparison flags (not strictly operators) such as `-eq`, `-ne`, `-gt`, `-lt`, `-ge`, `-le`, `-ceq`…(the "c" flags are for case sensitive string comparisons)
+`Where-object` uses powershell comparison flags (not strictly operators) such as `-eq`, `-ne`, `-gt`, `-lt`, `-ge`, `-le`, `-ceq`ï¿½(the "c" flags are for case sensitive string comparisons)
 Boolean flags are used like `(5 -gt 10) -or (10 -gt 1)`
 The `-like` comparison can use `*` as a wildcard, as in `"hello" -like "*ll"`
 The `-match` comparison can use regex as in `"^[Hh]" -match "hello"`.  There is also `-notmatch` and `-cmatch` and `-cnotmatch`
@@ -58,22 +58,22 @@ To start a remote session:  `enter-pssession -computerName Blahblahblah`
 And to end the remote session: `exit-pssession`
 One to many remote commands can be issued like:  
 ```
-invoke-command -computerName server1,server2,server3,server4 -command {…}
+invoke-command -computerName server1,server2,server3,server4 -command {ï¿½}
 ```
 
 ##Chapter 11
 WMI not interesting
 
 ##Chapter 12
-Async commands can be submitted using `start-job -scriptblock {…}` where the command is in the `{…}`
+Async commands can be submitted using `start-job -scriptblock {ï¿½}` where the command is in the `{ï¿½}`
 Async commands are fire and forget and keep the shell available for continued interaction.
 Use `get-job` to see a list of running async jobs
 To see the output of a completed or failed job, use `receive-job -id #` where `#` is the id of the job, as reported by the `get-job` cmdlet.  You can also use `-name` instead of `-id`.
 You can manage jobs using `remove-job`, `stop-job`, and `wait-job`
 
 ##Chapter 13
-Manual object enumeration can be done using `foreach-object -Process {$_ … }` where `$_` is the variable referring to the current object, each time through the iteration.
-More succinctly, use `% { $_ … }` in place of the `foreach-object` construct.
+Manual object enumeration can be done using `foreach-object -Process {$_ ... }` where `$_` is the variable referring to the current object, each time through the iteration.
+More succinctly, use `% { $_ ... }` in place of the `foreach-object` construct.
 
 ##Chapter 14
 By default a windows installation has powershell's execution policy set to restricted so scripts cannot be run, although interactive shell sessions work fine.  This is to prevent an unsuspecting user from being tricked into running a malicious script.  `Set-ExecutionPolicy remotesigned` will allow local scripts to run without signing, but remote scripts would have to be signed.  This is the recommended setting from MS for "normal" scripting security.
@@ -116,17 +116,17 @@ Scripts have their own scope, within the shell's global scope.  Functions have t
 Store remote sessions in variables for easier remote administration
 
 ##Chapter 19
-A function wraps up scripted content for reusability.  Same format as a script, including the `param()` section, but wrap the content in function `Verb-Noun {…}`
+A function wraps up scripted content for reusability.  Same format as a script, including the `param()` section, but wrap the content in function `Verb-Noun {ï¿½}`
 
 ##Chapter 20
 Basic `if` construct looks like
 ```
 if ($var -eq 1) {
- … 
+    ...
 } elseif ($var -eq 0) { 
- … 
+    ...
 } else { 
- … 
+    ...
 }
 ```
 
@@ -135,16 +135,16 @@ The switch construct looks like
 ```
 switch ($var.status) {
 	1001 { 
-		… 
+		...
 	} 
 	1842 { 
-		… 
+		...
 	} 
 	'OK' { 
-		… 
+		... 
 	} 
 	Default { 
-		… 
+		...
 	} 
 }
 ```
@@ -158,14 +158,14 @@ With wildcards, there is the possibility of more than one match.  With a `Break`
 A for loop looks like:  
 ```
 For ($i = 0; $i -lt 10; i++) { 
-	… 
+	...
 }
 ```
 
 A foreach loop looks like:  
 ```
 Foreach ($cheese in $collection) { 
-	… 
+	...
 }
 ```
 
@@ -180,11 +180,11 @@ The `$ErrorActionPreference` variable is a shotgun approach, but each cmdlet in 
 The try/catch construct looks like: 
 ```
 Try { 
-	… 
+	...
 } Catch { 
-	… 
+	...
 } Finally { 
-	… 
+	...
 }
 ```
 Within the Catch block, the `$error` variable points to a collection of errors caught, and `$error[0]` will be the most recent.  The catch and finally blocks are optional, so long as at least one of them is included.  Another way to handle is to use the `-ev` or `-ErrorVariable` parameter for a cmdlet and specify the name of a variable to store an error if one is encountered (variable name without the $):  
