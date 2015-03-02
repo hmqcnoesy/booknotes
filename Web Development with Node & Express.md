@@ -276,3 +276,50 @@ to be modified by JavaScript, **signed**: set to true to
 prevent tampering and make it available in 
 `res.signedCookies` instead of `res.cookies`.
 
+Sessions can be set up using the express-session
+middleware: `npm i --save express-session`. And app.js:
+```javascript
+app.use(require('cookie-parser')('cookie secret goes here'));
+app.use(require('express-session')());
+...
+// then the session object becomes a prop of each req
+app.get('startsession', function(req, res) {
+    req.session.userName = 'Anonymous';
+    var color = req.session.color || 'black';
+});
+```
+
+##Chapter 10 Middleware
+A middleware is a function that takes a req, res, and next
+and optionally an error object.  Middleware can also take
+a string route as a first parameter, and if that is 
+excluded, behaves as if "*" were passed in.  Middleware 
+functions are executed in an ordered pipeline.  Adding 
+middleware functions to the pipeline is done using `app.use()`.
+Middleware is invoked in the order it was added, and it
+is common practice for the last middleware in the 
+pipeline to be a "catch all" for any request that isn't
+handled to completion by another middleware.  A request
+is handled to completion by a middleware if that
+middleware does **not** call `next()`.  It is each
+middleware function's job to properly call `next()`
+correctly (or ***not*** call `next()` as the case may be),
+or the entire rest of the pipeline breaks down.
+
+The Express route handlers (`app.VERB`) are middleware
+that handle only the specified verb, and only for a 
+matching route.  The route handlers take a callback
+function with 2, 3, or 4 parameters:
+```javascript
+app.get('*', function(req, res) { ... });
+app.get('*', function(req, res, next) { 
+    ... 
+    /* call next() if necessary */ 
+    /* if next() is not called, pipeline is terminated */
+});
+app.get('*', function(err, req, res, next) {
+    /* handle error in err object */
+});
+
+```
+
