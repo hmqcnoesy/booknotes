@@ -150,3 +150,63 @@ Note that `require()` takes a relative path for custom
 modules, as opposed to npm-installed modules that are
 required by name only (and are all located in node_modules).
 *Do not put custom modules in node_modules.*
+
+##Chapter 5 Quality Assurance
+Testing techniques for Express apps
+
+##Chapter 6 Request and Response Objects
+The request objects starts out as a node http.IncomingMessage
+object, then Express adds functionality.  Here are 
+a few objects added to request:
+
+`req.params` is an array containing named route params.
+
+`req.query` is an object containing querystring params:
+```javascript
+app.get('/qs', function(req, res) {
+    res.render('qs', { id: req.query.id });
+});
+```
+
+`req.body` is an object containing POST parameters, but 
+using it requires the body-parser middleware.
+
+`req.route` has info about currently matched route.
+This is good for debugging routing issues.
+
+`req.cookies` has objects containing cookie values if
+you use the cookie-parser middleware:
+```javascript
+// Cookie: name=asdf
+req.cookies.name // "asdf"
+```
+`req.url` actually contains just the path and querystring
+but not the protocol, host, or port.
+
+The response object starts out as http.ServerResponse
+but Express adds functionality, such as:
+
+`res.status(code)` sets the status code.  If not set, 
+Express defaults to 200.
+
+`res.set(name, value)` sets a response header:
+```javascript
+app.get('/', function(req, res) {
+    res.set('x-ua-compatible', 'IE=Edge');
+    res.send('index');
+});
+```
+
+`res.cookie(name, value, [options])` sets a cookie to be
+stored on the client.  `res.clearCookie(name, [options])`
+will clear a cookie from the client.
+
+`res.redirect([status], url)` redirects the client.  The 
+default status is 302 (Found).  Set to 301 for a 
+permanent redirect.
+
+`res.send(body)` or `res.send(status, body)` will send a
+response to the client, defaulting to text/html. 
+
+`res.json(json)` or `res.json(status, json)` will return 
+JSON to the client with an optional status code.
