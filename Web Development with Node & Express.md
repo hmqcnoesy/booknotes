@@ -323,3 +323,30 @@ app.get('*', function(err, req, res, next) {
 
 ```
 
+##Chapter 11 Sending Email
+You can use nodemailer to send emails:
+`npm i --save nodemailer` and
+`npm i --save nodemailer-smtp-transport` and then:
+```javascript
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+
+var options = {
+    host: 'smt-servername',
+    port: 25,
+    auth: {
+        user: 'username',
+        pass: 'password'
+};
+
+var transporter = nodemailer.createTransport(smtpTransport(options));
+
+transporter.sendMail({
+    from: 'sender@senderdomain.com',
+    to: 'receiver@receiverdomain.com',
+    subject: 'Hello from nodemailer',
+    text: 'Hello, from nodemailer!'
+});
+```
+
+##Chapter 12 Production Concerns
