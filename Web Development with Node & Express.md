@@ -293,7 +293,7 @@ app.get('startsession', function(req, res) {
 A middleware is a function that takes a req, res, and next
 and optionally an error object.  Middleware can also take
 a string route as a first parameter, and if that is 
-excluded, behaves as if "*" were passed in.  Middleware 
+excluded, behaves as if "\*" were passed in.  Middleware 
 functions are executed in an ordered pipeline.  Adding 
 middleware functions to the pipeline is done using `app.use()`.
 Middleware is invoked in the order it was added, and it
