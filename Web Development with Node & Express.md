@@ -169,7 +169,11 @@ app.get('/qs', function(req, res) {
 ```
 
 `req.body` is an object containing POST parameters, but 
-using it requires the body-parser middleware.
+using it requires the body-parser middleware. 
+Do (`npm i --save body-parser`) and then in app.js:
+```javascript
+app.use(require('body-parser')());
+```
 
 `req.route` has info about currently matched route.
 This is good for debugging routing issues.
@@ -220,3 +224,55 @@ specified view.  The locals object is the model to be
 handed to the view.
 
 ##Chapter 7 Templating
+Handlebars :(
+
+##Chapter 8 
+Form handling requires the use of the body-parser
+middleware: `npm i --save body-parser`, then:
+```javascript
+app.use(require('body-parser')());
+...
+app.post('/processform', function(req, res) {
+    console.log(req.body.name);
+    console.log(req.body.email);
+    // etc.
+});
+```
+File uploads can be handled by other middleware.  For
+instance, `npm i --save formidable`
+
+##Chapter 9 Cookies and Sessions
+Use cookies in Express with the middleware:
+`npm i --save cookie-parser` and then in app.js:
+```javascript
+app.use(require('cookie-parser')('this is your cookie secret'));
+// make sure your cookie secret is externalized, not in source control
+...
+
+app.get('/setcookies', function(req, res) {
+    res.cookie('somekey', 'somevalue');
+    res.cookie('signedSomekey', 'somevalue', { signed: true });
+});
+
+app.get('/readcookies', function(req, res) {
+    var cookieValue = req.cookies.somekey;
+    var signedValue = req.signedCookies.signedSomekey;
+});
+
+app.get('/clearcookies', function(req, res) {
+    res.clearCookie('somekey');
+    res.clearCookie('signedSomekey');
+});
+```
+
+`res.cookie()` can take an options object as 3rd parameter
+with the following properties: **domain**: allows assigning
+a cookie to a specific subdomain, **path**: restricts to 
+a path such as '/foo' (implicit trailing wildcard), 
+**maxAge**: milliseconds for client to keep the cookie,
+**secure**: if true, send only over https, **httpOnly**:
+if set to true, instructs browser not to allow the value 
+to be modified by JavaScript, **signed**: set to true to 
+prevent tampering and make it available in 
+`res.signedCookies` instead of `res.cookies`.
+
