@@ -1,1 +1,152 @@
+#Web Development with Node and Express
 
+##Chapter 3
+Use `npm init` to create package.json
+
+Use `npm i --save express` to install express module into
+node_modules folder and to update the package.json file
+with the dependency.
+
+Create a .gitignore file listing files and dirs to exclude:
+```gitignore
+#ignore packages installed by npm
+node_modules
+#any other files or folders to ignore like *.bak
+```
+
+The index.js or app.js, or whatever entry point you
+specified during npm init might have contents like
+```javascript
+var express = require('express');
+var app = express();
+app.use(function(req, res) {
+    res.type('text/plain');
+    res.status(200);
+    res.send('this is the returned content');
+});
+app.listen(process.env.PORT || 3000, function() {
+    console.log('express started');
+});
+```
+
+`app.use()` is middleware - catching 
+everything that wasn't matched by a route.   
+The `app.get()` specifies a route:
+```javascript
+app.get('/', function(req, res) {
+    res.type('text/plain');
+    res.send('Home');
+});
+app.get('/about', function(req, res) {
+    res.type('text/plain');
+    res.send('About');
+});
+```
+
+The route specified in app.get doesn't care about upper
+or lower case or presence or absence of trailing slash.
+The response status defaults to 200.  The route string
+also supports `*` as a wildcard, e.g. `'/about*'`.
+
+Install your preferred view engine, e.g.
+```
+npm i --save vash
+```
+
+Then in your app.js:
+```javascript
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'vash');
+```
+
+Create a layout.vash view:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    ...
+    @html.block('styles')
+</head>
+<body>
+    <div>
+		@html.block('content')
+    </div>
+</div>
+<script src="/js/site.js"></script>
+@html.block('scripts')
+</body>
+</html>
+```
+
+In vash you can specify as many blocks as needed.
+The styles, content, and scripts are a good starting 
+point.  
+
+An individual view named home.vash
+would hook into the layout like this:
+```html
+@html.extend('layout', function(model){
+	@html.block('content', function(model){
+        <div class="header">
+            <h1><i class="fa fa-home"></i> U&amp;T Home</h1>
+        </div>
+		
+		<div class="content">
+
+	})
+	
+	@html.block('scripts', function() {
+		<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script>
+            $(function () {
+				alert('hey');
+			});
+		</script>
+	})
+})
+```
+
+Note that the view that hooks into the layout view is
+not required to implement all of the blocks.  They are
+all optional.
+
+To send the view from app.js:
+
+```javascript
+app.get('/', function(req, res) {
+    var model = { message: 'anything' };
+    res.render('home', model);
+});
+```
+
+To specify location of static files to be served, use
+middleware before declaring any routes:
+
+```javascript
+app.use(express.static(__dirname  '/public'));
+```
+
+##Chapter 4 Tidying Up
+To create your own module, make a .js file and add
+properties or functions to the `module.exports` object.
+For instance:
+```javascript
+var localVariable = [1,2,3,5,7,9];
+module.exports.getRandomNumber = function() {
+    var idx = Math.floor(Math.random() * localVariable.length);
+    return localVariable[idx];
+};
+```
+
+Then to use that functionality, in app.js you could
+```javascript
+var mymodule = require('./mymodule.js');
+...
+var rnd = mymodule.getRandomNumber();
+```
+
+Note that `require()` takes a relative path for custom
+modules, as opposed to npm-installed modules that are
+required by name only (and are all located in node_modules).
+*Do not put custom modules in node_modules.*
