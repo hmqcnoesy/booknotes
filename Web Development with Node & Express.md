@@ -210,3 +210,11 @@ response to the client, defaulting to text/html.
 
 `res.json(json)` or `res.json(status, json)` will return 
 JSON to the client with an optional status code.
+
+`res.sendFile(path, [options], [callback])` sends a file
+to the client.  But use the static middleware instead when
+possible.
+
+`res.render(view, [locals], callback)` renders the 
+specified view.  The locals object is the model to be 
+handed to the view.
