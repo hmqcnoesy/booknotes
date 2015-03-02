@@ -125,7 +125,7 @@ $x = 'world'
 $y = 'hello $x'
 $y
 ```
-will print `hello $x`, but if the second statement were `$y = "hello $x"` it would print `hello world`.  This replacement occurs when the string is initially set, so setting `$y = "hello $x"` actually sets `y` to `"hello world"`.  The `$x` isn't evaluated later on, just the one time when the string is set.  To escape the `$` in a double quoted string use the `` character.  To get the string `$` evaulation to work in single quoted strings surround the variable with `` ie `$y = 'hello ``$x``'`  The `` also works as an escape for special chars like ``n, ``t, ``a.
+will print `hello $x`, but if the second statement were `$y = "hello $x"` it would print `hello world`.  This replacement occurs when the string is initially set, so setting `$y = "hello $x"` actually sets `y` to `"hello world"`.  The `$x` isn't evaluated later on, just the one time when the string is set.  To escape the `$` in a double quoted string use the backtick character.  To get the string `$` evaulation to work in single quoted strings surround the variable with backticks, ie `$y = 'hello ``$x``'`  The backtick also works as an escape for special chars like ` ``n ``t ``a `.
 
 To create a collection in a variable, use commas:  `$list = 'o','p','q'`
 
