@@ -218,3 +218,5 @@ possible.
 `res.render(view, [locals], callback)` renders the 
 specified view.  The locals object is the model to be 
 handed to the view.
+
+##Chapter 7 Templating
