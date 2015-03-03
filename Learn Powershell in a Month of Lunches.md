@@ -252,6 +252,7 @@ Breakpoints can be set in the ISE.  `Set-psbreakpoint` cmdlet also allows for in
 A profile script contains commands you want executed at startup of your shell session.  A simple profile script might contain just `cd c:\users\myusername`
 
 Profile scripts are loaded from the following locations in this order: 
+
 1. $pshome/profile.ps1 (all consoles)
 2. $pshome/Microsoft.PowerShell_profile.ps1 (ISE only)
 3. $home/documents/WindowsPowerShell/profile.ps1 (all consoles)
