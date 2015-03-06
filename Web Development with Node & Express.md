@@ -350,3 +350,61 @@ transporter.sendMail({
 ```
 
 ##Chapter 12 Production Concerns
+Standard execution environments understood by Express
+are 'production', 'development', and 'test'.
+Use `app.get('env') ` to retrieve the current executing
+environment in code.  Use `app.set('env')` to set,
+but that probably shouldn't ever really be done.
+Outside of code use the `NODE_ENV` environment 
+variable to get or set: 
+```
+export NODE_ENV=production
+node app.js
+```
+On *nix systems use this syntax to set the variable value
+foronly the duration of the command:
+```
+NODE_ENV=production node app.js
+```
+
+To handle environment differences at runtime, you could
+do something like:
+```javascript
+switch(app.get('env')) {
+    case 'development':
+        ...
+        break;
+    case 'production':
+        ...
+        break;
+}
+```
+
+Scaling up an app can be done using the cluster 
+module.  Then your app.js can be rewritten to run as
+the root of your app or can be run as a module, in
+which case the cluster root is used which spins up
+multiple instances of your app as needed to service
+HTTP requests.
+
+To handle errors, create an Error view and middleware:
+```javascript
+app.use(function(err, req, res, next)) {
+    console.error(err.stack);
+    app.status(500).render('Error');
+}
+```
+
+Domains are a feature that allow you to run error-prone
+code in a separate context to avoid the situation
+where an unhandled exception can bring down the entire
+server.  
+
+Third party monitors are usually free to use in small
+doses.  UptimeRobot is one example.  More expensive 
+services include Pingdom and Site24x7.
+
+A module called loadtest may help in stress testing an
+application that will see heavy use.
+
+##Chapter 13 Persistence
