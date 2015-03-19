@@ -408,3 +408,124 @@ A module called loadtest may help in stress testing an
 application that will see heavy use.
 
 ##Chapter 13 Persistence
+
+Mongoose is the official ODM for MongoDB.  To use, 
+install it with `npm i --save mongoose` and create
+a connection:
+
+```javascript
+var mongoose = require('mongoose');
+var opts = {
+    server: {
+        socketOptions: { keepAlive: 1 }
+    }
+};
+
+var connectionString = 
+    app.get('env') === "production" ? "" : "";
+
+mongoose.connect(connectionString, opts);
+```
+
+To create a mongoose schema:
+
+```javascript
+var mongoose = require('mongoose');
+
+var thingSchema = mongoose.Schema({
+    id: Number,
+    name: String,
+    description: String,
+    isActive: Boolean,
+    priceInCents: Number
+});
+
+thingSchema.methods.getDisplayPrice = function() {
+    return '$' + (this.priceInCents / 100).toFixed(2);
+};
+
+var Thing = mongoose.model('Thing', thingSchema);
+module.exports = Thing;
+```
+
+##Chapter 14 Routing
+Subdomains can be created using `npm i --save vhost` and
+
+```javascript
+var admin = express.Router();
+app.use(vhost('admin.*', admin));
+
+admin.get('/', function(req, res) {
+    res.render('admin/home');
+});
+
+admin.get('/users', function(req, res) {
+    res.render('admin/users');
+});
+```
+
+Routes set up using app.VERB such as 
+`app.get('/foo', function(req, res) { ... });`
+are simply specialized middleware functions.
+In fact, the next function can be passed in:
+
+```javascript
+app.get('/foo', function(req, res, next) { 
+    if (Math.random() < 0.5) return next();
+    res.send('Sometimes this');
+});
+
+app.get('/foo', function(req, res) {
+    res.send('Sometimes something else');
+});
+
+app.get('/foo', function(req, res) {
+    res.send('Never this');
+});
+```
+
+Route paths in app.VERB functions are simplified regex.
+Metacharacters available in route paths are
+`+ ? * ( )`.  If the simplified version of regex isn't 
+enough, it is possible to use a regex type instead of 
+a string.  For instance:
+
+```javascript
+app.get('/user(name)?', function(req, res) {
+    res.render('user');
+});
+
+app.get(/one|two|three/i, function(req, res) {
+    res.render('prime');
+});
+```
+
+Route parameters are specified in the route string
+with a `:` character:
+
+```javascript
+app.get('/users/:username', function(req, res) {
+    var userInfo = getUserInfo(req.params.username);
+    res.render('users', userInfo);
+});
+```
+
+For routing any more than a trivial site, declare routes
+in their own module.
+
+##Chapter 15 REST APIs and JSON
+Express can provide a json enabled API very simply:
+
+```javascript
+app.get('/api/users', function(req, res) {
+    res.json({[{id: 1, name: 'Jane'}, {id:2, name:'Kate'}]});
+});
+```
+
+REST middleware can make an API easier.  For instance
+the connect-rest middleware allows creation of route
+handler functions that take a parameter automatically
+passing in an object representing the parsed body
+of the HTTP request.
+
+##Chapter 16 Static Content
