@@ -529,3 +529,7 @@ passing in an object representing the parsed body
 of the HTTP request.
 
 ##Chapter 16 Static Content
+
+##Chapter 17 Implementing MVC in Express
+
+##Chapter 18 Security
