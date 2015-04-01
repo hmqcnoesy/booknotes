@@ -29,9 +29,9 @@ allowed in site pages)
 ##Client(-Side) Object Model (CSOM)
 Three main js files used in JavaScript apps
 
-*`/_layouts/15/SP.js`
-*`/_layouts/15/SP.Runtime.js`
-*SP.Core.js
+* `/_layouts/15/SP.js`
+* `/_layouts/15/SP.Runtime.js`
+* SP.Core.js
 
 In an HTML file you might want something like:
 
