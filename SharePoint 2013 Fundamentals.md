@@ -12,15 +12,25 @@ allowed in site pages)
 	Inherits="System.Web.UI.Page"
 	MasterPageFile="~masterurl/default.master" %>
 	
-<asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
+<asp:Content 
+	ID="Main" 
+	ContentPlaceHolderID="PlaceHolderMain" 
+	runat="server">
 	<div>Hello Main</div>
 </asp:Content>
 	
-<asp:Content ID="PageTitle" ContentPlaceHolderID="PlaceHolderPageTitle" runat="server">
+<asp:Content 
+	ID="PageTitle" 
+	ContentPlaceHolderID="PlaceHolderPageTitle" 
+	runat="server">
 	Hello Title
 </asp:Content>
 	
-<asp:Content ID="PageTitleInTitleArea" ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" runat="server">
+<asp:Content 
+	ID="PageTitleInTitleArea" 
+	ContentPlaceHolderID="PlaceHolderPageTitleInTitleArea" 
+	runat="server">
+	
 	<div>Hello Title Area</div>
 </asp:Content>
 
@@ -31,7 +41,7 @@ Three main js files used in JavaScript apps
 
 * `/_layouts/15/SP.js`
 * `/_layouts/15/SP.Runtime.js`
-* SP.Core.js
+* `/_layouts/15/SP.Core.js`
 
 In an HTML file you might want something like:
 
@@ -107,24 +117,47 @@ And the contents of app.js:
 ```javascript
 $(function() {
 	$('#btn').click(function() {
-		$.ajax({
+		var ajaxCall = $.ajax({
 			url: '../_api/web/lists/getByTitle(\'Announcements\')/items',
 			method: 'GET',
 			dataType: 'json',
-            headers: { Accept: 'application/json;odata=verbose' },
-			success: function(data) {
-				var html = '';
-				for (var i = 0; i < data.d.results.length; i++) {
-					html += '<h6>' + data.d.results[i].Title + '</h6>'
-						+ '<div>' + data.d.results[i].Body + '</div>';
-				}
-				
-				$('#div').html(html);
-			},
-			error: function(data) {
-				alert('f');
+            headers: { Accept: 'application/json;odata=verbose' }
+		});
+		
+		ajaxCall.done(function(data) {
+			var html = '';
+			for (var i = 0; i < data.d.results.length; i++) {
+				html += '<h2>' + data.d.results[i].Title + '</h2>'
+					+ '<div>' + data.d.results[i].Body + '</div>';
 			}
+			
+			$('#div').html(html);
+		});
+		
+		ajaxCall.fail(function(data) {
+			alert('f');
 		});
 	});
 });
 ```
+
+Note that the /_api does not expose metadata, so you
+cannot add a service reference in Visual Studio.
+Two options for managed code then might be to 
+get data in XML and use LINQ to XML, or get the data
+back in JSON and use JSON.NET or the 
+JavaScriptSerializer to deserialize.
+
+Here is a JSON example:
+
+```csharp
+var url = "https://whatever/sites/mysite/_api/web/";
+var wc = new WebClient();
+wc.UseDefaultCredentials = true;
+wc.Headers[HttpRequestHeader.Accept] = "application/json;odata=verbose";
+
+var json = wc.DownloadString(url);
+var ser = new JavaScriptSerializer();
+dynamic obj = ser.Deserialize<object>(json);
+```
+
