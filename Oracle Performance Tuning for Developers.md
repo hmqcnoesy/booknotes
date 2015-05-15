@@ -60,7 +60,7 @@ prefer memory cached operations over disk operations.
 
 ##Performance Metrics
 **Elapsed time** is the most obvious, but not always the most
-useful metric.  It isn't the most useful, because it cannot
+useful metric.  It isn't the most useful because it cannot
 tell you why a statement took as long as it did.
 
 **Logical IO Operations** is a count of the number of read 
@@ -116,7 +116,7 @@ extra unused connections are returned to the pool, excess connections
 can be closed and removed from the pool to conserve resources
 on the server side.
 
-A separate connection pool is established for each connection string.
+A separate connection pool is established for each unique connection string.
 So multiple connection strings mean multiple connection pools. Each 
 connection pool has a minimum and maximum number of allowed connections
 as well as rules determining how many connections to open or close at a
@@ -127,7 +127,7 @@ new connection is required from the pool, the requesting code will be
 blocked until a connection is freed and returned to the pool.  If it 
 waits too long (depending on the connection pool timeout specified in
 the connection string) a timeout exception will be thrown.  As a 
-general rule, do not do any non-database logic during the time that
+general rule, do not perform any non-database logic during the time that
 a connection is checked out from the pool.  Get the connection from 
 the pool, perform database operations, and return it to the pool.  Any
 logic that can be performed without an open connection should be.
@@ -151,8 +151,8 @@ values are set directly in a connection string):
  
 In .NET, `connection.Open()` checks out an open connection from the pool
 and `connection.Close()` returns it to the pool.  In other words, 
-connection pooling is automatic.  However, code like this results in two
-connections being checked out from the pool:
+connection pooling is automatic.  However, code like the following results
+in two connections being checked out from the pool:
 
 ```csharp
 public List<Thing> GetThings() 
@@ -210,3 +210,47 @@ public List<Thing> GetMoreThings()
 
 
 ##Bind Variables
+
+Parsing SQL statements consumes server-side resources.  Using bind
+variables allows reuse of cached execution plans, reducing CPU load.
+Bind variables also provide some protection against SQL injection
+attacks.  
+
+To create an execution plan, Oracle must gather data about database
+statistics and evaluate potential costs of various operations. Parsing
+and evaluating hundreds or even thousands of SQL statements each 
+second can add up to significant expense.  So the gains offered by 
+using bind variables can be tremendously valuable.
+
+When a SQL statement is processed by Oracle, it performs a hash on 
+the SQL text and consults its in-memory cache of execution plans 
+stored in the Shared SQL Area of memory.  If a matching hash is found,
+Oracle can use that execution plan instead of parsing, generating, and
+caching the "new" SQL.  (Actual details are trickier than that because
+situations must be accounted for such as two tables of the same name
+located in different user schemas, but this is the general idea).
+Because a hashing algorithm is used, in order to find a match, a new
+SQL statement must match the cached one exactly - including literals,
+uppercase/lowercase, whitespace, column ordering, etc.  When
+a matching, cached execution plan is found, it is called a **Soft Parse**
+whereas a **Hard Parse** would mean that the execution plan must be 
+generated from scratch.  Most apps submit a relatively small number of 
+SQL statements, so caching the statements in this way provides measurable
+benefit.  
+
+The Shared SQL Area is protected while being updated by one process so 
+that another process doesn't see corrupted data.  In multi-threaded
+scenarios this may be referred to as a lock, in Oracle terminology it
+is called a **latch**.  The latching is necessary, but problematic if
+large or complex SQL statements get hard parsed, locking up the Shared
+SQL Area from access by other processes, which then undergo **latch 
+spinning** until the latch is removed and access to the cached execution
+plans is restored.  The access to the Shared SQL Area can become a 
+noticeable bottleneck, as the system can run only as fast as its slowest
+component.  Also, a single Oracle database instance has only one Shared
+SQL Area, so any application that doesn't use bind variable will adversely
+impact all other applications using the database.  *Poorly written apps
+will bring well-written apps down to their level when sharing the same
+database.*
+
+
