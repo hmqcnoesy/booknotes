@@ -36,6 +36,33 @@ allowed in site pages)
 
 ```
 
+##Server Object Model
+Code that is executed in the context of SharePoint, 
+running in the same asp.net app pool.  API is 
+implemented in Microsoft.SharePoint.dll.  The core
+types are SPSite, SPWeb, SPList, SPListItem, etc.
+
+```csharp
+using(var site = new SPSite("http://localhost/sites/demo")) 
+{
+	var web = site.RootWeb;
+	ListBox1.Items.Add(web.Title);
+	
+	foreach(SPList list in web.Lists) 
+	{
+		if (!list.Hidden) ListBox1.Items.Add("\t" + list.Title);
+		
+		foreach(SPListItem item in list) 
+		{
+			// notice that Title is strongly typed property, other columns not so much
+			var title = item.Title;
+			var unitPrice = (decimal)item["Unit_x0020_Price"];
+			ListBox2.Items.Add(string.Format("{0} ({1})", title, unitPrice);
+		}
+	}
+}
+```
+
 ##Client(-Side) Object Model (CSOM)
 Three main js files used in JavaScript apps
 
