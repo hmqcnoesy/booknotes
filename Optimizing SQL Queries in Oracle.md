@@ -225,3 +225,52 @@ WHERE A.SOMETHING = 'SOMEVALUE'
 Although when properly indexed, the above example would be
 equally fast when listing the big table first.
 
+##Indexes
+
+Indexes are most useful when the returned data constitutes 
+about 15% or less of the total rows of the table.  If
+the returned data comprise more than about 15%, Oracle
+may ignore indexes and perform a full table scan anyway.
+
+Indexes can result in slower data updates because not only
+does a table's data have to be modified, but the index or 
+indexes must be modified as well.
+
+###B-Tree Indexes
+A B-Tree index can be applied to any data type and can
+be applied to one or multiple columns. In a B-Tree index,
+the index entries point to specific row IDs for the table.
+When mutliple columns are indexed together, an index entry
+for one of the column values points to other index entries
+that contain the corresponding values of the other column.
+Those entries in turn point to the corresponding row IDs
+in the table.
+
+###Bitmap Indexes
+Similar in functionality to B-Tree indexes, but stored very
+differently.  A bitmap index is stored as a series of 1s and 0s
+indicated exclusion and inclusion of each particular row.
+A bitmap index is appropriate when the number of distinct values
+being indexed is much smaller than the total number of rows.  
+For example, if a table had millions of rows and a column 
+indicating gender using 'M' or 'F', and we needed an index 
+on the gender column to make filtering on gender a fast 
+operation, a bitmap index would be an appropriate choice
+because 2 << Millions.  In this example, the bitmap index would
+have an 'M' entry and an 'F' entry.  For each of the two entries,
+a stream of millions of 1s and 0s would be stored, indicating 
+whether each row of the table matches the value of the index
+entry or not.  Bitmap indexes perform best in
+situations where the data are not updated very frequently.
+
+###Function-based indexes
+Function-based indexes allow functions to be performed on
+indexed data where indexes would otherwise be ignored
+because queries perform functions on data would eliminate
+the applicability of an index.  For example, querying
+on a "last name" column using `UPPER(LAST_NAME) = :LAST_NAME`
+would not make use of a regular index on the last_name column.
+However, a function-based index could be created that indexes
+`UPPER(LAST_NAME)` so that whenever a query uses *exactly*
+the same function, the index can be used.
+
