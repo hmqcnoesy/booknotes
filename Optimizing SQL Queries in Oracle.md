@@ -274,3 +274,6 @@ However, a function-based index could be created that indexes
 `UPPER(LAST_NAME)` so that whenever a query uses *exactly*
 the same function, the index can be used.
 
+###Bitmap Join Indexes
+A bitmap join index performs an inner join between two tables and 
+stores the join info as an index.
