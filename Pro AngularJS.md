@@ -255,3 +255,132 @@ using AngularJS will end up having
 a mixture of standard and custom
 "angular-extended" HTML.
 
+##JavaScript Primer
+
+`angular.extend()` allows extension of
+an object:
+
+```javascript
+var obj = {
+	id: 12345,
+	name: 'something'
+};
+
+var extObj = {
+	description: 'some description'
+};
+
+angular.extend(extObj, obj);
+
+console.dir(extObj);
+```
+
+The `angular.forEach()` function 
+can loop through elements of an
+array, or it can loop through
+properties of an object:
+
+```javascript
+
+var obj = {
+	id: 12345,
+	name: 'some name',
+	description: 'some desc'
+};
+
+angular.forEach(obj, function(value, key) {
+	console.log(key, value);
+});
+```
+
+To check if an object has
+a property, use the `in`
+operator:
+
+```javascript
+
+var obj = {
+	id: 12345,
+	name: 'some name',
+	description: 'some desc'
+};
+
+console.log('name' in obj);     //true
+console.log('missing' in obj);  //false
+```
+
+The `angular.equals()` method 
+will compare two arguments using
+the `===` operator, or if both
+arguments are objects, it will 
+return true if all properties
+pass the identity comparison:
+
+```javascript
+
+var obj = {
+	id: 12345,
+	name: 'some name',
+	description: 'some desc'
+};
+
+var other = {};
+
+angular.extend(other, obj);
+console.log(angular.equals(obj, other)); // true
+
+other.name = 'another name';
+console.log(angular.equals(obj, other)); // false
+
+other.name = obj.name;
+console.log(angular.equals(obj, other)); // true
+
+other.extraProperty = 'extra';
+console.log(angular.equals(obj, other)); // false
+
+delete other.extraProperty;
+console.log(angular.equals(obj, other)); // true
+```
+
+To convert strings to numbers,
+use built-in functions like
+`Number(str)`, `parseInt(str)`,
+and `parseFloat(str)`.
+
+AngularJS can help detect a 
+JavaScript array with the 
+`isArray()` method:
+
+```javascript
+var obj = {};
+var arr = [];
+
+console.log(angular.isArray(obj)); // false
+console.log(angular.isArray(arr)); // true
+```
+
+The AngularJS `forEach()` 
+method enumerates the elements
+of an array:
+
+```javascript
+var arr = [1,2,3,44,56,72];
+angular.forEach(arr, function(value, key) {
+	console.log(key, value);  // the keys are indexes
+});
+```
+
+The AngularJS function `isDefined()`
+helps determine if a property has 
+been defined:
+
+```javascript
+var obj = {
+	name: 'some name',
+	desc: 'some desc'
+};
+
+console.log(angular.isDefined(obj.desc));  // true
+console.log(angular.isDefined(obj.id)); // false
+```
+
