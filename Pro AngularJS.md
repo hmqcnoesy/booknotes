@@ -384,3 +384,40 @@ console.log(angular.isDefined(obj.desc));  // true
 console.log(angular.isDefined(obj.id)); // false
 ```
 
+A promise is a JavaScript object 
+encapsulating functionality to be
+performed asynchronously at a point
+in the future.  An example of a
+promise in AngularJS is the object
+that is returned (immediately) by
+`$http.get()`:
+
+```javascript
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+    var promise = $http.get('data.json');
+    promise.success(function(data) {
+        $scope.data = data;
+    });
+    // more code that will execute
+    // *before* the function in promise.success
+});
+```
+
+In addition to the `success(cb)` method,
+the promise returned by `$http.get`
+also has an `error(cb)` and 
+`then(success, err)` method.  The
+error is invoked when there is failure
+in finishing the work represented by
+the promise.  The "then" has two
+callbacks, to be invoked upon success
+or failure.  Each of the methods returns
+a promise object, so the methods can
+be chained together, including multiple
+invocations of `then()`.  The data object
+passed into success funtions is always
+a standard JavaScript object, when 
+parsed from an HTTP response using a
+JSON payload.
+
