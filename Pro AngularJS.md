@@ -562,3 +562,39 @@ dependency on the custom filter.  This
 can seem confusing, but angular loads
 all modules before using them to resolve
 dependencies.
+
+Create multiple controllers when necessary.
+For instance, there might be the page's
+main controller:
+
+```javascript
+angular.module('sportsStore').controller('sportsStoreCtrl', function($scope) {
+	$scope.data.products = {...};
+});
+```
+
+Then another controller in a separate file
+(obviously each file would need its own
+script reference):
+
+```javascript
+angular.module('sportsStore').controller('productListCtrl', function($scope) {
+	$scope.selectedCategory = null;
+	$scope.selectCategory = function(category) {
+		$scope.selectedCategory = category;
+	};
+});
+```
+
+Then the html might keep the `sportsStoreCtrl`
+scope at the `body` but then in an ancestor
+element:
+
+```html
+<div ng-controller="productListCtrl">
+	...
+</div>
+```
+
+The elements in the div above would have access
+to the `$scope` data from *both* controllers.
