@@ -421,3 +421,144 @@ a standard JavaScript object, when
 parsed from an HTTP response using a
 JSON payload.
 
+
+##A Real Application
+
+When calling `angular.module()` passing
+two parameters (a string and an array), 
+a new module object will be returned.
+
+```javascript
+var app = angular.module('sportsStore', []);
+```
+
+When calling with a single parameter 
+(just the string), the previously 
+created module of that name wil be 
+returned.  (If no matching module has
+been created already, an error is
+thrown).
+
+```javascript
+var app = angular.module('sportsStore');
+```
+
+This is how controllers in various files
+can get a hold of the application module.
+A controller may do something like the 
+following:
+
+```javascript
+angular.module("sportsStore").controller('sportsStoreCtrl', function($scope) {
+	$scope.data = {...};
+  };
+});
+```
+
+Remember that when defining a filter,
+you give the filter a name, and the 
+second paramter is a function that must
+return a function that returns an array
+of the filtered data.  Below is an example
+of a custom filter that can be reused.
+It filters for a unique set of values:
+
+```javascript
+var customFiltersModule = angular.module('customFilters', []);
+
+customFiltersModule.filter('unique', function() {
+	return function(data, propertyName) {
+		if (angular.isArray(data) && angular.isString(propertyName)) {
+			var results = [];
+			var keys = {};
+			
+			for (var i = 0; i < data.length; i++) {
+				var val = data[i][propertyName];
+				
+				if (keys[val]) continue;
+
+				keys[val] = true;
+				results.push(val);
+			}
+			return results;
+		}
+		return data;
+	}
+});
+```
+
+Note that the `data` parameter represents
+the data passed into the filter, and is 
+required of all filters.  Additional
+paramters follow it, and in this case there
+is one, representing the name of the property
+to be filtered.  To use this custom filter:
+
+```html
+<li ng-repeat="cat in data.products | unique:'category' | orderBy:'toString()'">
+	<a ng-click="selectCategory(cat)" ng-bind="cat"></a>
+</li>
+```
+
+Note above that the parameter passed to the
+"unique" filter is in quotes (single quotes 
+because double-quotes were used to delimit
+the value of the ng-repeat attribute).  By
+default, AngularJS assumes that expression 
+symbols refer to variables in the scope.  
+Specifying a static value - a string literal - 
+requires the quote characters.  Also note
+that the expression can pipe output of one
+filter to another, such as the orderBy filter
+above.  The orderBy filter expects a property
+name to perform ordering of the objects.  
+Since the unique filter results in an
+array of strings, the above example uses a 
+function, `toString()` as the sort expression.
+
+The `ng-click` directive above assigns behavior
+to the `a` element when clicked.  The controller
+might define the behavior like this:
+
+```javascript
+$scope.selectedCategory = null;
+
+$scope.selectCategory = function(category) {
+	$scope.selectedCategory = category;
+};
+```
+
+Items on the page could be shown if the 
+scope's `selectedCategory` is null or if 
+it matches the item's category:
+
+```html
+<li ng-show="selectedCategory == null || item.category == selectedCategory">
+	...
+</li>
+```
+
+To wire this all up correctly, 
+the application module would need to 
+be updated to declare a dependency on the
+custom filter:
+
+```javascript
+var app = app.module('sportsStore', ['customFilters']);
+```
+
+And finally, a reference to the file 
+would need to be made (assuming the 
+custom filter was placed in its own file):
+
+```html
+<script src="/public/js/filters/customFilters.js"></script>
+```
+
+Note that the script reference to the 
+custom filter comes *after* the script 
+that creates the app module which has a 
+dependency on the custom filter.  This 
+can seem confusing, but angular loads
+all modules before using them to resolve
+dependencies.
