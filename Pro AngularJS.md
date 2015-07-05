@@ -598,3 +598,129 @@ element:
 
 The elements in the div above would have access
 to the `$scope` data from *both* controllers.
+
+You can use the `ng-class` attribute to 
+assign an element's class to an angular expression:
+
+```html
+<a ng-class="getSelectionStyleClass(category)">...</a>
+```
+
+Constants can be defined on a per-module basis 
+like so:
+
+```javascript
+angular.module('sportsStore')
+	.constant('productListPageCount', 3)
+	.controller('productListCtrl', function($scope) {
+		// as before...
+	});
+```
+
+Adding pagination to display pages of scope 
+data could be done in a way like this:
+
+```javascript
+angular.module('sportsStore')
+	.constant('productListPageCount', 3)
+	.controller('productListCtrl', function($scope) {
+		$scope.selectedPage = 1;
+		$scope.pageSize = productListPageCount;
+		
+		$scope.selectedCategory = null;
+		$scope.selectCategory = function(category) {
+			$scope.selectedCategory = category;
+			$scope.selectedPage = 1;
+		};
+		$scope.selectPage = function(pageNumber) {
+			$scope.selectedPage = pageNumber;	
+		};
+		$scope.getSelectionStatus = function(category) {
+			if ($scope.selectedCategory == null && category == null) return "selected";
+			if ($scope.selectedCategory === category) return "selected";
+			return '';
+		};
+	});
+	
+// filter code
+angular.module('customFilters', [])
+	.filter('unique', function() {
+		// as before...
+	})
+	.filter('range', function ($filter) {
+		return function (data, page, size) {
+			if (!angular.isArray(data) 
+				|| !angular.isNumber(page)
+				|| !angular.IsNumber(size)) {
+			
+				return data;	
+			}
+			
+			var startIndex = (page - 1) * size;
+			if (data.length < startIndex) return [];
+			else return $filter('limitTo')(data.splice(startIndex), size);
+		};
+	});
+```
+
+Then to use the new pagination filter:
+
+```html
+<div ng-repeat="product in data.products | range:selectedPage:pageSize">
+	...
+</div>
+
+<a ng-repeat="page in data.products | pageCount:pageSize" ng-click="selectPage($index + 1)">
+	{{ $index + 1 }}
+</a>
+```
+
+
+##Chapter 7 Navigation and Checkout
+
+AngularJS provides support for making 
+Ajax requests through the `$http` service:
+
+```javascript
+angular.module('sportsStore')
+	.controller('sportsStoreCtrl', function($scope, $http) {
+		$scope = {};
+		$http.get('/products')
+			.success(function(data) {
+				$scope.data.products = data;	
+			})
+			.error(function(error) {
+				$scope.data.error = error;
+			});
+	});
+```
+
+The `$http.get` method immediately returns
+an object that has `success` and `error`
+methods.  Functions can be passed to those
+two methods, to be executed upon success 
+or error of the Ajax invocation.
+
+The `ng-include` directive can be used
+to bring "partial" html fragments in as
+needed:
+
+```html
+<ng-include src="'views/productList.html'">
+</ng-include>
+```
+
+Note the double and single quotes in the 
+value of the `src` attribute above.  
+Leaving out the single quotes would result
+in an angular expression looking for 
+properties on the `$scope`.
+
+A less ugly method is to use `ng-include`
+as an attribute instead of an element.
+The above could be written:
+
+```html
+<div ng-include="'views/productList.html'">
+</div>
+```
