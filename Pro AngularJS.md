@@ -724,3 +724,109 @@ The above could be written:
 <div ng-include="'views/productList.html'">
 </div>
 ```
+
+An AngularJS service is created using
+the `.factory` method, which takes a 
+name as a first parameter and a function
+to be invoked as a second.  The function
+is invoked once only, when creating the
+service, but then the singleton service
+is available throughout the application:
+
+```javascript
+var cartModule = angular.module('cart', []);
+cartModule.factory('cart', function() {
+	var cartItems = [];
+	
+	return {
+		addProduct: function(id, name, price) {
+			var addedToExisting = false;
+			cartData.forEach(element) {
+				if (element.id == id) {
+					element.count++;
+					addedToExisting = true;
+					break;	
+				}
+			}
+			if (!addedToExisting) {
+				cartItems.push({
+					count: 1,
+					id: id,
+					price: price,
+					name: name
+				});	
+			}
+		},
+		removeProduct: function(id) {
+			for (var i = 0; i < cartItems.length; i++) {
+				if (cartData[i] == id) {
+					cartData.splice(i, 1);	
+				}	
+			}
+		},	
+		getProducts: function() {
+			return cartItems;	
+		}
+	};
+});
+```
+
+Likewise, a custom directive can be added
+to a module using the `.directive()`
+method, which takes a name parameter and
+a factory function that returns a directive
+definition object.  That object defines 
+properties that tell AngularJS what the 
+directive is and how it is used:
+
+```javascript
+var cartModule = angular.module('cart');
+cartModule.factory('cart', function() {
+	// as before...
+});
+
+cartModule.directive('cartSummary', function(cart) {
+	return {
+		restrict: 'E',
+		templateUrl: '/public/js/components/cart/cartSummary.html',
+		controller: function ($scope) {
+			var cartItems = cart.getProducts();
+			
+			$scope.total = function() {
+				var total = 0.0;
+				for (var = i; i < cartItems.length; i++) {
+					total += (cartItems[i].price * cartItems[i].count);	
+				}	
+				return total;
+			}	
+			
+			$scope.itemCount = function() {
+				vart total = 0;
+				for (var i = 0; i < cartItems.length; i++) {
+					total += cartItems[i].count;
+				}
+				return total;
+			}
+		}	
+	};
+});
+```
+
+The above directive definition defines a 
+controller, using a specified view, and 
+restricts the use of the directive to 
+an element (E).  The `cart` parameter is
+declaring a dependency on the cart service,
+defined immediately above it in the same
+module.
+
+Some example HTML that would use the custom
+directive might look like:
+
+```html
+<div>
+	Cart: <span ng-bind="itemCount()"></span>
+	items, <span ng-bind="total() | currency"></span>
+</div>
+```
+
