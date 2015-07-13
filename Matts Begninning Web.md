@@ -74,6 +74,38 @@ is HTML.
 
 
 ##HTML
-An HTML file is text, *marked up*, or 
-formatted to specify a structure for the
-content.  For instance, 
+An HTML file is text, *marked up* with a 
+set of simple rules.  The *markup* describes
+to the browser how to format the content.  
+For instance, the following markup specifies
+a paragraph:
+
+```html
+<p>Once upon a time...</p>
+```
+
+Here, the `<p>` is an **opening tag** 
+followed by some content ("Once upon a 
+time...") and the `</p>` **closing tag**.
+Notice the opening and closing tags differ
+only by the abscense or presence of the `/` 
+character.  These things together form an 
+HTML **element**.  A browser would read the
+example line above and display the "Once 
+upon a time..." text as a paragraph.
+
+An element's opening tag can specify 
+additional information.  For instance,
+a link in an HTML document is specified 
+by an anchor element, which uses the
+letter 'a' for tags.  The content between 
+the tags is shown as the link's text, and
+the target URL of the link is specified
+by an **attribute**:
+
+```html
+<a href="http://www.mozilla.com/firefox">Download Firefox</a>
+```
+
+In the above example, the 'a' element
+uses the href attribute, with a value 
