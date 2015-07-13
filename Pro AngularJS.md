@@ -830,3 +830,51 @@ directive might look like:
 </div>
 ```
 
+The above cart widget would be applied by
+modifying the top level module creation to
+include a dependency on the cart:
+
+```javascript
+var app = angular.module('sportsStore', ['customFilters', 'cart']);
+```
+
+And a script reference must be added:
+
+```html
+<script src='components/cart/cart.js'></script>
+```
+
+And finally, the custom directive in the
+HTML where the cart widget is to be displayed:
+
+```html
+<cart-summary />
+```
+
+URL routing can be done by adding a script 
+reference to `angular-route.js` (a separate
+download) and then modifying the top level
+module creation to configure the routes:
+
+```javascript
+var app = angular.module('sportsStore', ['customFilters', 'cart', 'ngRoute']);
+app.config(function($routeProvider) {
+	$routeProvider.when('/checkout', {
+		templateUrl: '/views/checkoutSummary.html'
+	});
+	
+	$routeProvider.when('/products', {
+		templateUrl: '/views/productList.html'
+	});
+	
+	$routeProvider.otherwise({
+		templateUrl: '/views/productList.html'
+	});
+});
+```
+
+Then in the HTML:
+
+```html
+<ng-view />
+```
