@@ -1,3 +1,4 @@
 body { background-color: #eee; padding: 1em; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-code { background-color: #333; color: #eee; border-radius: 0.5em; padding: 0 0.3em; font-family: Consolas, monospace; }
-pre { background-color: #333; margin: 1em; padding: 1em; border-radius: 1em; font-family: Consolas, monospace; }
+code { background-color: #aaa; color: #000; border-radius: 0.5em; padding: 0 0.3em; font-family: Consolas, monospace; }
+pre { background-color: #333; margin: 1em; padding: 1em; border-radius: 1em; font-family: Consolas, monospace; overflow-x: auto; }
+pre code { background-color: #333; }
