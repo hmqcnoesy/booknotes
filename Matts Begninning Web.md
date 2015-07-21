@@ -527,3 +527,107 @@ as if it were just another word in the text.
 
 
 ##Tables
+HTML tables are meant for tabluar data
+of rows and columns like an Excel 
+spreadsheet.  Unlike previously detailed
+elements, a table requires a hierarchy
+of elements: the enclosing `<table>`
+element, a `<tr>` (table row) element
+for each row of the table, and a `<td>`
+(table data) element for each cell in 
+its enclosing row.  For example:
+
+```html
+<table>
+	<tr>
+		<td>Bach</td>
+		<td>1685</td>
+		<td>1750</td>
+	</tr>
+	<tr>
+		<td>Mozart</td>
+		<td>1756</td>
+		<td>1791</td>
+	</tr>
+	<tr>
+		<td>Beethoven</td>
+		<td>1770</td>
+		<td>1827</td>
+	</tr>
+</table>
+```
+
+In addition to the elements listed above,
+there are also elements that contain one
+or more rows: `<thead>` (a row header 
+container) and `<tfoot>` (a row footer
+container).  When using `<thead>` and 
+`<tfoot>`, the non-header/non-footer rows
+must be enclosed by the `<tbody>` element.
+
+There are also `<th>` (table
+head data) elements which function like
+`<td>` "cells" but are used as header 
+cells.  The `<th>` and `<td>` cell elements
+can have `colspan` and `rowspan` attributes
+whose values indicate the number of columns
+or rows to span.  Here are these additional
+elements and attributes worked into the
+previous example:
+
+```html
+<table>
+	<thead>
+		<tr>
+			<th>Composer</th>
+			<th>Born</th>
+			<th>Died</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Bach</td>
+			<td>1685</td>
+			<td>1750</td>
+		</tAr>
+		<tr>
+			<td>Mozart</td>
+			<td>1756</td>
+			<td>1791</td>
+		</tr>
+		<tr>
+			<td>Beethoven</td>
+			<td>1770</td>
+			<td>1827</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="2">
+				Average age:
+			</td>
+			<td>59</td>
+		</tr>
+	</tfoot>
+</table>
+```
+
+
+##Forms
+HTML includes elements designed for 
+user input, which is useful for filling in
+and saving information, searching, signing
+into web sites, etc.  These user-interactive
+input types include textboxes, radio buttons, 
+checkboxes, dropdowns, buttons, etc.  
+Most of the input types are implemented in
+HTML using the self-enclosing `<input>` 
+element, along with
+the appropriate `type` attribute:
+
+```html
+<input type="text">
+<input type="checkbox">
+<input type="radio">
+<input type="submit">
+```
