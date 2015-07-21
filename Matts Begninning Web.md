@@ -631,3 +631,115 @@ the appropriate `type` attribute:
 <input type="radio">
 <input type="submit">
 ```
+
+Usually these types of `<input>` elements
+are descendents of a the `<form>` block
+element.  The `<form>` element defines 
+an interactive portion of an HTML document
+where `<input>` elements' values can be 
+submitted as part of an HTTP request. Two
+attributes are required on a `<form>` 
+element: the `action` attribute, whose value
+specifies the URL where the form data will
+be sent when submitted, and the `method` 
+attribute, whose value specifies the type
+of HTTP request that will be made when
+the form data are submitted.  The `method`
+value can be `get` or `post`.  Here is
+an example form:
+
+```html
+<form action="search" method="get">
+	Search: <input type="text" name="searchterm">
+	<input type="submit" value="Search">
+</form>
+```
+
+This form has an `<input type="submit">`
+which renders as a button, and when clicked,
+submits the form data.  The form specifies
+that when submitted, an HTTP GET request
+should be made to the relative URL "search".
+In an HTTP GET request, form data are 
+serialized as `name=value` pairs delimited
+by `&` characters in the URL query string.
+For example, in the above case, if the 
+user typed "mozilla" into the text box and
+clicked submit, the browser would make a 
+request to 'search?searchterm=mozilla'.
+In the case of multiple inputs:
+
+```html
+<form action="search" method="get">
+	Search: <input type="text" name="searchterm">
+	Include old results <input type="checkbox" name="old" value="true">
+	<input type="submit" value="Search">
+</form>
+```
+
+A search term value of "mozilla" above, with
+the checkbox clicked, would result in a 
+request to 
+'search?searchterm=mozilla&old=true'.
+
+If a `method` value of "POST" is used instead
+of "GET", the names/values of the form data
+are serialized similarly and submitted with
+the HTTP request, but are sent in the HTTP
+headers rather than as the URL query string.
+
+In addition to the `<input>` elements, the
+`<textarea>` and `<select>` elements also
+can contain user input to be sumbitted as
+part of form data.  The `<textarea>` element
+renders as a multi-line textbox.  The 
+`<select>` element renders as a dropdown,
+with `<option>` elements that specify
+a value for the `<select>` element's name:
+
+```html
+<form action="save" method="post">
+	Favorite composer:
+	<select name="favorite">
+		<option value="jsb">Bach</option>
+		<option value="wam">Mozart</option>
+		<option value="lvb">Beethoven</option>
+	</select>
+	Favorite opus numbers:
+	<textarea name="opusnumbers"></textarea>
+	<input type="submit" value="Save">
+</form>
+```
+
+The `<label>` element is can be used to 
+associate some label text with a particular
+input control.  This is done by setting
+the `for` attribute of the `<label>` to
+the same value as the `id` attribute of the
+`<input>` element:
+
+```html
+<form action="save" method="post">
+	<label for="selFavorite">
+		Favorite composer:
+	</label>
+	<select id="selFavorite" name="favorite">
+		<option value="jsb">Bach</option>
+		<option value="wam">Mozart</option>
+		<option value="lvb">Beethoven</option>
+	</select>
+	<label for="txtOpusNumbers">
+		Favorite opus numbers:
+	</label>
+	<textarea id="txtOpusNumbers" name="opusnumbers"></textarea>
+	<input type="submit" value="Save">
+</form>
+```
+
+The benefits of using labels include improved
+accessibility for visually impaired, and 
+improved mouse or touch input usability (clicking
+or tapping the label focuses on the associated
+input). 
+
+
