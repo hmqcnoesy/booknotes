@@ -420,6 +420,7 @@ a small sample:
  |---------------|----------------------------------
  | `*`           | Selects all elements
  | (tag name)    | Selects by tag name
+ | `,`           | Combines multiple selectors
  | `#`           | Selects by ID
  | `.`           | Selects by class
  | (space)       | Selects descendants
@@ -431,3 +432,152 @@ a small sample:
  | `[x$=y]`      | Selects element where attribute (x) ends with value (y)
  
  
+ ###Pseudo-class selectors
+ 
+ Elements can have different states 
+ that can be selected by psuedo-class
+ selectors.  For instance, a link
+ is usually in its normal state, but
+ when the user hovers the cursor over
+ the link it is in a "hover" state, 
+ and a different set of styling rules
+ may be desired.  To do this, the
+ `:hover` psuedo-class is used:
+ 
+ ```html
+<!doctype html>
+<html>
+	<head>
+		<title>Testing psuedo-classes</title>
+		<style>
+			a { text-decoration: none; }
+			a:hover { color: red;
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<p>This <a>link</a>
+			has special styling
+			when hovering.
+		</p>
+	</body>
+</html>
+ ```
+ 
+ 
+##Inheritance
+
+CSS properties are inherited by their
+ancestor elements by default.  So 
+to use gray text throughout a document,
+rather than apply to each element type in
+the document:
+
+```css
+p, div, li, h1, a, span { color: gray; }
+```
+
+The rule can be applied at a level where
+it will be inherited by all ancestors:
+
+```css
+body { color: gray }
+```
+
+This inheritance is applicable mainly
+to properties dealing with text.
+
+
+##Priority
+
+Obviously an element can be selected
+more than once, each time applying
+different styles:
+
+```html
+<p class="important" id="firstparagraph">
+	How will this be styled?
+</p>
+```
+
+The above paragraph would be selected
+in all of the following CSS rules:
+
+```css
+p { color: blue; }
+#firstparagraph { color: red; }
+.message { color: green; }
+```
+
+All three rules are trying to set the
+color to different values, but the 
+browser can pick only one.  The way 
+the browser makes a decision is based
+on CSS **specificity**.  In this 
+particular example, the paragraph text
+is red because the `#firstparagraph`
+selector is the most *specific* of the
+three selectors.
+
+The measure of selectors' specificities
+can be very complicated, but to simplify
+a rough score can be applied, where `#`
+is worth 100, `.` is worth 10 and a tag
+name selector is worth 1.  In the case 
+of a styling conflict, the selector with
+the higher score takes precedence.  If 
+two rules have the same score, the one
+that comes last will take precedence.
+
+
+##CSS Colors
+
+Thus far, examples that assigned colors
+used named colors such as "red", "blue",
+and "gainsboro".  There are 145 such 
+named colors, which is a lot when it 
+comes to naming colors, but is not enough
+when it comes to getting just the color
+needed.  There are several ways to specify
+precise colors.
+
+
+###rgb
+
+Colors can be defined by their amounts
+of red, green, and blue components.  So
+pure blue is 100% blue, 0% green, and
+0% red.  Purple would be 100% blue and 100%
+red with 0% green.  Black is 0% red,
+green, and blue.  White is 100% of all
+three.  But rather than using whole 
+number percentages, CSS allows a color
+to be defined based on its red, green,
+and blue components on a scale from 0 
+to 255.  So blue, purple, black and white
+are respectively:
+
+```css
+p { color: rgb(0, 0, 255); }
+a { color: rgb(255, 0, 255); }
+th { color: rgb(0, 0, 0); }
+td { color: rgb(255, 255, 255); }
+```
+
+
+###rgba
+
+Transparency values can be added using
+an *alpha* value and using `rgba` in
+place of `rgb`.  The alpha value can
+range between 0 and 1 (completely
+opaque through completely transparent).
+The following would be half-transparent
+blue:
+
+```css
+p { background-color: rgba(0, 0, 255, 0.5); }
+```
+
+###rgb hex values
