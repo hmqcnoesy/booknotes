@@ -854,3 +854,42 @@ element) into block elements:
 nav a { display: block; }
 ``` 
 
+Or to make an element inline:
+
+```css
+li { display: inline }
+```
+
+Another common value for the `display` 
+property is `none` which renders the document
+as if the element were not there.  There is
+also a `visibility` property which can be set
+to `hidden`, but note the important difference
+between `visibility: hidden` and `display: none`.
+Hiding visibility is like making it completely
+transparent, but it still takes up space in
+the document flow.  Setting the the `display`
+to `none` effectively removes it from the 
+document flow entirely:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>Testing display/visibility</title>
+		<style>
+			p.hidden { visibility:hidden; }
+			p.nodisplay { display:none; }
+		</style>
+	</head>
+	<body>
+		<p>Paragraph 1</p>
+		<p>Paragraph 2</p>
+		<p class="nodisplay">Paragraph 3</p>
+		<p>Paragraph 4</p>
+		<p>Paragraph 5</p>
+		<p class="hidden">Paragraph 6</p>
+		<p>Paragraph 7</p>
+	</body>
+</html>
+```
