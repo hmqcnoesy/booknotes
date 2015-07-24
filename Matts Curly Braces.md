@@ -728,7 +728,14 @@ The `font-weight` property can be set
 to `normal` or  `bold`. 
 The `text-decoration` property can
 be set to `underline`, `overline`, or 
-`line-through`.
+`line-through`.  The `text-align` property
+can be `left`, `right`, `center` and 
+`justify`.  The `text-indent` property
+takes a CSS size value, and specifies an
+indentation amount (first line only is
+indented).  The `text-shadow` property takes
+three sizes for x-offset, y-offset, and blur
+and then a CSS color.
 Below is an example combining these font
 and text properties:
 
@@ -740,6 +747,110 @@ span.important {
 	font-weight: bold;
 	font-style: italic;
 	text-decoration: underline;
+	text-align: justify;
+	text-shadow: 1px 2px 5px #eeeeee;
 }
 ```
+
+CSS allows some "shorthand" properties
+to set several related properties at 
+once.  The `font` property is one such
+shorthand property:
+
+```css
+body { font: bold 16px/1.5 Arial, sans-serif; }
+```
+
+This shorthand method allows setting up
+to six font properties at once. Values 
+must be specified in exact order, but
+only the `font-size` and `font-family`
+are required.  The benefit of these shorthand
+properties is questionable, but their use 
+is fairly widespread, so some familiarity
+with them is useful.
+
+
+##CSS Box Model
+Every HTML element, both block and inline,
+is rendered in the browser as a rectangle.
+By default the rectangles are rendered
+in a fluid manner, adjusting their height
+and width to fit the content they contain,
+and their positions to flow with other 
+elements around them.  For instance, a
+`<p>` element (or any other block element)
+will by default take up 100% of the 
+width of the browser window, whether that
+browser window is maximized on a large 
+desktop display, or is on a puny phone. 
+The height of the `<p>` element fluidly
+adjusts accordingly, and a sibling block
+element's rectangle is drawn below the 
+bottom of the `<p>` element's rectangle,
+regardless of the vertical height it 
+consumes. The rectangular nature of HTML
+elements is often referred to as the
+**box model**.
+
+Several CSS properties come into play 
+in rendering an element's rectangle,
+including `background-color`,
+
+
+###background-color
+As illustrated in previous examples,
+to set the color of an element's
+background, use the `background-color`
+property (overriding the default 
+color of `transparent`):
+
+```css
+body { background-color: #777777; }
+```
+
+A `background-image` can also be used,
+by specifying a relative url to the image
+(relative to the CSS file, not necessarily
+relative to the HTML document).  The
+`background-repeat` specifies whether
+the image should be rendered once (`no-repeat`)
+or if it should be repeated vertically
+only (`repeat-y`), repeated horizontally
+only (`repeat-x`), or both (`repeat`, the
+default):
+
+```css
+body { 
+	background-image: url(img/watermark.png); 
+	background-repeat: no-repeat;	
+}
+```
+
+In addition to solid colors and images,
+gradients can be used:
+
+```css
+body { background-image: linear-gradient(white, blue); }
+```
+
+See MDN documentation for more info on
+creating `linear-gradient`s and 
+`radial-gradient`s.
+
+
+###display
+
+Several examples and explanations above
+have discussed the difference between a
+block element and an inline element.
+CSS makes changing the behavior of these
+elements a simple property assignment.
+For instance, to turn some navigation 
+links (`<a>` element is normally an inline
+element) into block elements:
+
+```css
+nav a { display: block; }
+``` 
 
