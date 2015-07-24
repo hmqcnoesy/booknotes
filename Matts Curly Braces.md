@@ -580,4 +580,166 @@ blue:
 p { background-color: rgba(0, 0, 255, 0.5); }
 ```
 
+
 ###rgb hex values
+CSS allows for a more concise format of 
+specifying rgb values.  The format is the
+`#` character followed by six characters,
+two hexadecimal characters for each of the
+colors red, green, and blue (in that order).
+Hexadecimal values go beyond digit 9
+(`0123456789ABCDEF`) which is how there are
+255 possibilities in a 2-digit value.
+
+These hexadecimal values are more commonly
+used than the `rgb()` format, so it is worth
+getting used to.  Here are the same colors
+as the rgb example:
+
+```css
+p { color: #0000ff; }
+a { color: #ff00ff; }
+th { color: #000000; }
+td { color: #ffffff; }
+```
+
+Most of the time, hexadecimal values come
+from a color picker tool, or are copied from
+existing styles or color palettes, etc.  So
+there is rarely need to create cryptic-looking
+values out of thin air.
+
+
+##CSS sizing
+
+There are many CSS properties that require
+a size value:
+
+ - `font-size`
+ - `border-width`
+ - `padding`
+ - `margin`
+ 
+And the common size units used in CSS are:
+
+ - `px` (pixels) 
+ - `%`
+ - `em` ("ems", the size relative to an `m` character)
+
+
+###px
+
+Using pixels is the most straightforward 
+approach, and are widely used.  For example:
+
+```css
+p { border-color: black;
+	border-width: 4px;
+	width: 88px; }
+```
+
+
+###%
+
+Using `%` can be a little tricker than pixels
+because it relies on the selected element's 
+parent value, and sets the specified 
+percentage of that value.  For example:
+
+```css
+strong { font-size: 120%; }
+p { width: 50%; }
+```
+
+
+###em
+
+The unit `em` is also relative and depends on
+the element's `font-size` value.  For example, 
+if a parent element has a `font-size` of `20px`
+`font-size: 0.8em` is applied to a child 
+element, the child element will have a 
+`font-size` of `16px`.
+
+Similar to the `em` unit is the `rem` unit
+which depends not on the element's `font-size`
+but that of the *root element*.
+
+
+##CSS Reset
+
+Each browser has its own set of styling rules
+that are used by default and are simply 
+overridden by styles applied via CSS rules.
+In other words, there is no such thing as a
+truly unstyled element because elements without
+explicit styling rules applied just get the 
+browser's default styling applied.  This 
+can cause problems, because each browser
+might have slightly different default styling
+rules.  For this reason, it is usually a good
+idea to use a **CSS Reset** - a file that sets
+just the right CSS rules to ensure a consistent
+default styling across browsers.  A CSS reset
+file usually will remove margins and padding
+on all elements, set a default `font-size`, etc.
+
+Eric Meyer's reset.css is considered a
+canonical CSS reset file:
+http://meyerweb.com/eric/tools/css/reset/reset.css
+
+
+##CSS Fonts
+
+Picking a font is important for the styling
+of HTML content, but it has to be done 
+carefully because different devices and 
+different operating systems have different sets
+of fonts installed by default.  So the value
+for the `font-family` property can list the 
+preferred fonts in priority order:
+
+```css
+body { 
+	font-family: Segoe UI, Helvetica, 
+				 Arial, sans-serif; 
+}
+```
+
+The above rule sets a preference for the 
+Segoe UI font, but in its absence the browser
+can use Helvetica.  If both are missing the 
+browser should try Arial.  If none of the 
+three are found, the browser can pick a
+sans-serif font to be used.
+
+In addition to the `sans-serif` family there
+is a `serif` and `monospace` family for
+those font types.
+
+As the previous examples have shown, the
+`font-size` property sets the size of fonts
+using one of the CSS units.  The `color`
+property sets the color of text using a 
+named color, or any of the other color 
+specs.  The `font-style` property can be
+set to the value `normal` or `italic`.
+The `font-weight` property can be set
+to `normal` or  `bold`. 
+The `text-decoration` property can
+be set to `underline`, `overline`, or 
+`line-through`.
+Below is an example combining these font
+and text properties:
+
+```css
+span.important {
+	color: #333333;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	font-style: italic;
+	text-decoration: underline;
+}
+```
+
