@@ -1200,5 +1200,146 @@ out of its natural place.
 
 ###absolute
 
-When an element is positioned `absolute` its
-position can be set
+When an element is positioned `absolute`, its
+position can be set based on its nearest
+ancestor whose position is not `static`.
+When this is the case, the element that is
+`absolute` can have its `top`, `left`, `right`,
+and/or `bottom` property set, which specify
+the exact position of the element within its
+non-static ancestor:
+
+```html
+
+<!doctype html>
+<html>
+	<head>
+		<title>Testing relative positioning</title>
+		<style>
+			#container {
+				position: relative;
+				height: 400px;
+				background-color: #334455;
+				color: white;
+			}
+			.abspos { 
+				position: absolute;
+				top: 200px;
+				left: 400px;
+				background-color: gainsboro;
+				color: black;
+				border: 4px solid white;
+				padding: 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id=container>
+			This is relatively positioned
+			<p class="abspos">
+				This is absolutely positioned
+			</p>
+		</div>
+	</body>
+</html>
+```
+
+
+The `<div>` in the example is set to 
+`position: relative` so that it is not static
+and ancestors can be positioned absolutely 
+within it.  Because there are no `left`, 
+`right`, `top`, or `bottom` values specified
+to go along with the `position:relative`, the
+`<div>` is displayed in its natural position,
+the same as if it were `position:static`.  But
+by virtue of the `relative` position, the `<p>`
+descendant can be set to `position: absolute`
+and then can specify `left` and `top` values
+to position itself precisely within the 
+`<div>`.
+
+
+###fixed
+
+Setting an element to `postion:fixed` allows
+`left`, `right`, `top`, and / or `bottom`
+values which will affix the element at those
+locations in the window rather than the
+document.  Here is an example illustrating
+`fixed` positioning, as well as several other
+concepts covered previously:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>Testing relative positioning</title>
+		<style>
+			body {
+				padding: 0 200px;
+				font-family: Segoe UI, sans-serif;
+			}
+			
+			p { 
+				background-color: gainsboro;
+				border: 4px solid #334455;
+				padding: 80px;
+			}
+			
+			nav {
+				position: fixed;
+				left: 18px;
+				top: 18px;
+				background-color: #334455;
+				color: white;
+				width: 150px;
+			}
+			
+			nav a {
+				display: block;
+				padding: 20px 10px;
+			}
+			
+			nav a:hover {
+				background-color: gainsboro;
+				color: black;
+				text-decoration: underline;
+			}
+			
+			aside {
+				position: fixed;
+				width: 100px;
+				height: 400px;
+				top: 18px;
+				right: 18px;
+				border: 8px dashed black;
+				padding: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<a>Nav link 1</a>
+			<a>Nav link 2</a>
+			<a>Nav link 3</a>
+		</nav>
+		<aside>
+			Lorem ipsum dolor sit amet
+		</aside>
+		<p>Lorem ipsum...</p>
+		<p>Lorem ipsum...</p>
+		<p>Lorem ipsum...</p>
+		<p>Lorem ipsum...</p>
+		<p>Lorem ipsum...</p>
+		<p>Lorem ipsum...</p>
+		<p>Lorem ipsum...</p>
+	</body>
+</html>
+```
+
+The `<nav>` above is in a fixed position on
+the window, even as the document is scrolled.
+The `<body>` uses padding on the left to 
+keep content out of the way of the `<nav>`.
+
