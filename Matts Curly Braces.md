@@ -1274,7 +1274,7 @@ concepts covered previously:
 <!doctype html>
 <html>
 	<head>
-		<title>Testing relative positioning</title>
+		<title>Testing fixed positioning</title>
 		<style>
 			body {
 				padding: 0 200px;
@@ -1343,3 +1343,30 @@ the window, even as the document is scrolled.
 The `<body>` uses padding on the left to 
 keep content out of the way of the `<nav>`.
 
+
+##Advanced CSS
+
+CSS seems to have no limits with what it can
+do.  Advanced CSS topics not covered here 
+include:
+
+ - The `float` property
+ - Pseudo-classes in addtion to `:hover`
+ - Color gradients
+ - Transitions
+ - Animations
+ - Transforms
+ - Responsive design
+ 
+
+##CSS Frameworks
+
+There are many useful and powerful CSS
+frameworks that are freely available, 
+attractive, and easy to learn and use.
+Here are some popular ones:
+
+ - Twitter Bootstrap:  http://getbootstrap.com
+ - Zurb Foundation: http://foundation.zurb.com
+ - Pure CSS http://purecss.io
+ 
