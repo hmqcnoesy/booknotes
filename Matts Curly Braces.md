@@ -1,4 +1,4 @@
-#Matt's Curly Braces
+#Curly Braces
 
 ##CSS Purpose
 
@@ -1370,3 +1370,24 @@ Here are some popular ones:
  - Zurb Foundation: http://foundation.zurb.com
  - Pure CSS http://purecss.io
  
+ 
+##Developer Tools
+
+Every modern browser comes with excellent 
+developer tools built in, which can be 
+accessed with the F12 key on a Windows PC.  
+These developer tools are indispensible in 
+debugging CSS styling and layout problems. 
+Consult the documentation for each browser:
+
+ - Internet Explorer: https://msdn.microsoft.com/library/bg182326(v=vs.85)
+ - Firefox: https://developer.mozilla.org/en-US/docs/Tools
+ - Chrome: https://developer.chrome.com/devtools
+ 
+There is also a well-known and highly 
+regarded plugin for Firefox called Firebug
+that can probably be credited with kickstarting
+the browser vendors into including developer
+tools by default.  It has remarkable features
+and is worth learning: http://getfirebug.com
+
