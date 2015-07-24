@@ -893,3 +893,312 @@ document flow entirely:
 	</body>
 </html>
 ```
+
+As mentioned above, a block element by default
+takes up 100% of available width, and whatever
+height is required to show all its content.
+When necessary, it is easy to override this
+default behavior.  The `width` property takes
+a CSS size value and sets the width of a
+block element to exactly that size:
+
+```css
+p { width: 100px; }
+```
+
+In the above situation, paragraphs will extend
+horizontally to a 100 pixel width.  The height
+will still dynamically adjust to display all
+of the `<p>` element content.
+
+The `height` property can also be set:
+
+```css
+p { width: 100px; height: 40px; }
+```
+
+When both height and width are specified, the
+element no longer dynamically expands to display
+all its content.  Instead, the element itself
+may be larger or smaller than what is required
+to display the content.  In the case that it is
+too small, the content is displayed anyway, but
+*overflows* the element:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>Testing fixed height & width</title>
+		<style>
+			p { 
+				height: 80px; 
+				width: 280px;
+				background-color: lightsalmon; 
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			Lorem ipsum dolor sit amet.
+		</p>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur 
+			adipiscing elit, sed do eiusmod tempor 
+			incididunt ut labore et dolore magna aliqua. 
+			Ut enim ad minim veniam, quis nostrud 
+			exercitation ullamco laboris nisi ut 
+			aliquip ex ea commodo consequat. Duis aute 
+			irure dolor in reprehenderit in voluptate 
+			velit esse cillum dolore eu fugiat nulla 
+			pariatur. Excepteur sint occaecat cupidatat 
+			non proident, sunt in culpa qui officia 
+			deserunt mollit anim id est laborum.
+		</p>
+	</body>
+</html>
+``` 
+
+The CSS `overflow` property allows easy
+management of this situation.  The default 
+value (`visible`) is rarely desirable, but other
+possible values are `hidden` (chop off content
+if it overflows its element), `scroll` (allow
+scrollbars to enable content to remain inside
+element), and `auto` (add scrollbars only if
+needed).  Using the HTML in the example above,
+notice how each of the following CSS rules
+changes the `<p>` elements:
+
+```css
+p { height: 80px;width: 280px;background-color: lightsalmon; 
+	overflow: hidden;
+}
+p { height: 80px;width: 280px;background-color: lightsalmon; 
+	overflow: scroll;
+}
+p { height: 80px;width: 280px;background-color: lightsalmon; 
+	overflow: auto;
+}
+```
+
+###Borders
+
+Each element's rectangle has a border.  By 
+default, the border is not visible, but often
+it is desirable to add the styling to make it 
+visible through the three main properties:
+`border-color` (value is a CSS color), 
+`border-style` (value is `solid`, `dashed`, etc.)
+and `border-width` (value is a CSS size).
+
+```css
+p {
+	border-color: black;
+	border-width: 4px;
+	border-style: solid;
+}
+```
+
+The border can also be specified for individual
+sides of the rectangle using the properties
+`border-top`, `border-right`, `border-bottom`
+and `border-left`:
+
+```css
+p {
+	border-top-color: black;
+	border-top-width: 4px;
+	border-top-style: solid;
+	border-bottom-color: blue;
+	border-bottom-width: 12px;
+	border-bottom-style: dashed;
+}
+```
+
+There is a shorthand property for `border`,
+which has just three values, so unlike `font`
+it is easy to remember and therefore useful.
+It sets the `border-width`, `border-style`,
+and `border-color` in that order:
+
+```css
+p { border: 2px solid #556677; }
+```
+
+###Padding
+
+In the border examples above it may have
+been noticeable that the border and the 
+content of an element were uncomfortably
+close to each other.  There is actually 
+another property for styling the CSS box
+model that defines the space between the
+content and border:  `padding`.
+
+```css 
+p {
+	background-color: gainsboro;
+	border: 4px solid #556677;
+	padding: 12px;
+}
+```
+
+Notice that the background color fills
+the padding, right up to the border.
+
+Padding can also be applied to a specific
+side:
+
+```css
+p {
+	background-color: gainsboro;
+	border: 4px solid #556677;
+	padding-top: 12px;
+	padding-right: 200px;
+	padding-bottom: 0;
+	padding-left: 50px;
+}
+```
+
+Or all side sizes can be specified with
+spaces between them, starting with `top`
+and going clockwise.  So this rule is the
+same as the example above:
+
+ 
+```css
+p {
+	background-color: gainsboro;
+	border: 4px solid #556677;
+	padding: 12px 200px 0 50px;
+}
+```
+
+Using two values instead of four will apply
+the first value to the top and bottom and 
+the second value to the right and left:
+
+```css
+p {	
+	background-color: gainsboro;
+	border: 4px solid #556677;
+	padding: 12px 80px;
+}
+```
+
+
+###Margin
+
+The `margin` CSS property adds space to the
+box model *outside* of the border in the 
+same way `padding` adds space *inside* of 
+the border:
+
+```css
+body { background-color: black; }
+p { 
+	background-color: gainsboro;
+	border: 4px solid #556677;
+	padding: 12px;
+	margin: 35px;
+}
+```
+
+Margins have can be per-side just like
+the `padding-*` properties and can use
+the shorthand values (top right bottom left)
+as well.
+
+Margins have the slightly less intuitive 
+behavior of *merging*.  In the CSS example
+above, a `margin: 35px` is set, but two
+sibling `<p>` elements would be spaced 35
+pixels apart rather than 70.  That's because
+a margin is the *minimum space* to keep between
+an element and other elements.  This is 
+an important behavior to remember.
+
+
+##CSS Positioning
+By default, an HTML document allows elements
+to flow - block elements take up all 
+horizontal space, inline elements flow with
+other content within their parent element,
+and elements are rendered in the order in 
+which they appear in the HTML.  But sometimes
+it may be desirable to break the flow and
+take control over the positioning of elements
+using CSS.  This dan be done with the 
+`position` property, which can have 4 values:
+`static` (default, content flows normally),
+`relative` (moves the element relative to 
+what its static position would be), `absolute`
+(moves the element according to its first
+positioned ancestor) or `fixed` (moves an
+element to an always-fixed location so it 
+will not scroll with the page).
+
+
+###relative
+
+Setting `position: relative` will break an 
+element out of normal flow, allowing it to 
+be positioned relative to where it would be 
+if it *were* in normal flow.  The specifics
+of the relative positioning are specified by
+the `left`, `top`, `right`, and/or `bottom`
+properties, whose values are CSS sizes and
+measure the distance of the rectangle from
+its "static" position.  Here is a complete
+example:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>Testing relative positioning</title>
+		<style>
+			p { 
+				background-color: gainsboro;
+				border: 4px solid #334455;
+				padding: 8px;
+				margin: 8px;
+			}
+			
+			p.middle {
+				position: relative;
+				left: 50px;
+				top: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			Lorem ipsum dolor sit amet.
+		</p>
+		<p class="middle">
+			Lorem ipsum dolor sit amet.
+		</p>
+		<p>
+			Lorem ipsum dolor sit amet.
+		</p>
+	</body>
+</html>
+```
+
+In the example above, the "middle" paragraph
+is shifted 50 pixels *from the left* and 25
+pixels *from the top* relative to where it 
+normally would be.  Other elements continue to 
+flow in the document as if the 
+relatively-positioned element
+were in its normal place.  So the third 
+paragraph doesn't know anything has moved
+out of its natural place.
+
+
+###absolute
+
+When an element is positioned `absolute` its
+position can be set
