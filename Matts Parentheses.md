@@ -353,3 +353,143 @@ of `jsIsGood` is `true` and the value of
 `!jsIsEasy` is `true` and therefore the 
 value of `jsIsGood && !jsIsEasy` is also `true`.
 
+
+##Looping
+
+JavaScript offers the typically expected
+looping constructs.  Specifically, the
+`while`, `do-while`, and `for` loops.
+
+###while
+The block within a while loop repeats 
+so long as the expression in parentheses
+evaluates to `true`.  The evaulation
+occurs before execution begins in the 
+block:
+
+```javascript
+var count = 0;
+
+while (count < 3) {
+	alert(count * count * count);
+	count++;
+}
+
+alert('That\'s enough cubes!');
+```
+
+The code example above will display
+an alert 3 times, showing the cubes
+of numbers 0 through 2.  The `++`
+operator increments the variable
+to which it is applied by one.  This
+way, the evaulation of the expression
+`count < 3` eventually results in a
+value of `false` (when `count` is 3),
+at which point code execution 
+continues after the `while` block.
+
+
+###do-while
+
+To execute a loop where the text
+expression is executed after the
+loop's code block executes, use the
+`do-while` loop.  It ensures the
+code within the block will execute
+at least once (where as a `while`
+loop will not execute if the first
+time the text expression evaluates 
+to `false`):
+
+```javascript
+var count = 0;
+do {
+	alert('this alert shows once');
+	count--;
+} while (count > 0);
+```
+
+The `--` operator decrements the 
+variable it is applied to by one.
+The code in the `do` loop block
+executes once because the test
+expression is evaluated *after* the
+block execution.
+
+
+###for
+
+The `for` loop is most common
+and uses three expressions: an
+initialization expression (executed
+*once* at beginning), a test
+expression (evaulated at the beginning
+of each time through the loop to test
+whether to execute the loop's code
+block) and an increment expression
+(executed at the end of each time
+finishing execution of the loop's 
+code block):
+
+```javascript
+var sum = 0;
+var count = 100;
+
+for (var i = 0; i <= count; i++) {
+	sum = sum + count;
+}
+
+alert(sum);
+```
+
+
+##JavaScript Functions
+
+A *function* defines a block of code
+that is reusable (can be invoked
+as needed from other locations in
+code).  A function might require
+input(s) in the form of *parameters*
+that are fed to the function when 
+invoked.  And a function might 
+return some information to the code
+that invokes it in the form of a
+*return value*.
+
+Using functions helps not just with
+readability, it helps with organization
+of code, because it can independently
+implement some (possibly complex)
+functionality, invocable by an easily
+remembered, human-readable name.  Best
+of all functions are easy to declare.
+Here is code that utilizes a function 
+to calculate cubes:
+
+```javascript
+function getCube(input) {
+	var cube = input*input*input;
+	return cube;	 
+}
+
+var result = getCube(3);
+alert(result);
+result = getCube(4);
+alert(result);
+```
+
+Here the `function` declaration shows
+that the function name is `getCube`
+which is how the function can be
+invoked.  The declaration also shows
+that a parameter should be passed when
+the function is invoked.  The name 
+given to the parameter is `input`.
+Then the code in the function's curly
+braces defines exactly what will 
+execute when the function does get 
+invoked.  When invoked, a variable
+named `cube` is created and set to a 
+value that is the `input` value passed
+in, cubed.  The `return` statement
