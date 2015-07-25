@@ -104,7 +104,7 @@ the closing `</body>` tag:
 ```
 
 
-##JavaScript Building Blocks
+##JavaScript Variables
 
 JavaScript, as other languages, makes use of 
 different types of data.  One of the most 
@@ -360,7 +360,7 @@ JavaScript offers the typically expected
 looping constructs.  Specifically, the
 `while`, `do-while`, and `for` loops.
 
-###while
+####while
 The block within a while loop repeats 
 so long as the expression in parentheses
 evaluates to `true`.  The evaulation
@@ -390,7 +390,7 @@ at which point code execution
 continues after the `while` block.
 
 
-###do-while
+####do-while
 
 To execute a loop where the text
 expression is executed after the
@@ -418,7 +418,7 @@ expression is evaluated *after* the
 block execution.
 
 
-###for
+####for
 
 The `for` loop is most common
 and uses three expressions: an
@@ -584,4 +584,53 @@ type in some input, which becomes the
 return value of the function call.
 
 Another behavior of JavaScript functions
-is that they provide **scope**.
+is that they provide **scope**.  A scope
+is the portion of code in which a variable
+lives.  Outside of its scope, a variable
+doesn't exist.  For example:
+
+```javascript
+function getCube(input) {
+	var cubedValue = input*input*input;
+	return cubedValue;	
+}
+
+var answer = getCube(3);
+alert(cubedValue);
+```
+
+The code aboves alerts **undefined** 
+because there has been no `cubedValue`
+variable defined in the scope where
+the `alert` function is invoked.  The
+`cubedValue` variable is defined 
+within the `getCube` function, so it 
+is limited to that scope, i.e. it 
+exists only within the `getCube`
+function code.
+
+Variables that are declared outside
+of functions have **global** scope,
+meaning they are accessible everywhere:
+
+```javascript
+var points = 0;
+
+function scorePoint() {
+	points++;	
+}
+
+alert(points);
+scorePoint();
+alert(points);
+```
+
+The above example illustrates how
+a variable declared in the global
+scope (`points`) can be accessed
+inside and outside of functions.
+It exists as long as the HTML 
+document that loaded it is alive.
+
+
+##JavaScript Arrays

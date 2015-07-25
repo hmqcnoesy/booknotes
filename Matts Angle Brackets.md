@@ -143,7 +143,7 @@ now to see either of these forms:
 ```
 
 
-###Block and inline elements
+####Block and inline elements
 Most HTML elements can be classified as
 **block** or **inline**.  Block elements
 are meant to be displayed on their own 
@@ -243,7 +243,7 @@ it comes to nesting elements: *inline
 elements cannot have child block elements*.
 
 
-###HTML Semantics
+####HTML Semantics
 Decisions to use one particular HTML
 element over another should be driven
 by semantics rather than styling.  In other
@@ -309,7 +309,7 @@ can be more easily maintained.  A valid
 HTML document consists of the following:
 
 
-###Doctype
+####Doctype
 The **doctype** is the first bit of info 
 in a valid HTML document, and indicates to
 the browser the version of HTML the
@@ -330,7 +330,7 @@ HTML document to instruct the browser
 on how to treat the document.
 
 
-###The `<html>` element
+####The `<html>` element
 After the doctype, a valid HTML document
 has a single `<html>` element that encloses
 all other content within the document.
@@ -349,7 +349,7 @@ The `<html>` element has two children only
 in a valid document: `<head>` and `<body>`.
 
 
-###The `<head>` element
+####The `<head>` element
 The `<head>` element contains information
 that pertains to the document itself, and 
 does not contain document content.  For 
@@ -394,7 +394,7 @@ when fulfilling user queries:
 <meta name="description" content="A simple, yet valid, HTML example">
 ```
 
-###The `<body>` element
+####The `<body>` element
 Following the `<head>` element, and 
 still enclosed within the `<html>` 
 element, a valid HTML document contains

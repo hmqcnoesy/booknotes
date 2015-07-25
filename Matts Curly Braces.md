@@ -193,7 +193,7 @@ apply them.
  
 ##CSS Selectors
 
-###Tag names
+####Tag names
 
 Previous examples have specified the "who" 
 with the simplest of selectors - they have
@@ -214,7 +214,7 @@ much more.  In fact, CSS selectors can be
 considered a very terse query language on 
 their own.  
 
-###Classes
+####Classes
 
 The `class` attribute can be applied to any
 HTML element.  Its value can specify an
@@ -281,7 +281,7 @@ applied:
 ```
 
 
-###IDs
+####IDs
 
 Like the `class` attribute, the `id` attribute
 can be applied to any HTML element.  But
@@ -303,7 +303,7 @@ by its `id` value:
 }
 ```
 
-###Descendant selector
+####Descendant selector
 
 A space character can be used to specify
 a descendant in a selector.  So the following
@@ -325,7 +325,7 @@ to links that do not have paragraph ancestors:
 </html>
 ```
 
-###Child selector
+####Child selector
 
 Similar to the descendant selector, a
 `>` character can be used to select a *direct*
@@ -350,7 +350,7 @@ descendant (in other words a child):
 ```
 
 
-###Combining selectors
+####Combining selectors
 The selectors detailed above can be combined 
 into arbitrarily complex selection "queries":
 
@@ -432,7 +432,7 @@ a small sample:
 | `[x$=y]`      | Selects element where attribute (x) ends with value (y)
  
  
- ###Pseudo-class selectors
+ ####Pseudo-class selectors
  
  Elements can have different states 
  that can be selected by psuedo-class
@@ -543,7 +543,7 @@ needed.  There are several ways to specify
 precise colors.
 
 
-###rgb
+####rgb
 
 Colors can be defined by their amounts
 of red, green, and blue components.  So
@@ -566,7 +566,7 @@ td { color: rgb(255, 255, 255); }
 ```
 
 
-###rgba
+####rgba
 
 Transparency values can be added using
 an *alpha* value and using `rgba` in
@@ -581,7 +581,7 @@ p { background-color: rgba(0, 0, 255, 0.5); }
 ```
 
 
-###rgb hex values
+####rgb hex values
 CSS allows for a more concise format of 
 specifying rgb values.  The format is the
 `#` character followed by six characters,
@@ -627,7 +627,7 @@ And the common size units used in CSS are:
  - `em` ("ems", the size relative to an `m` character)
 
 
-###px
+####px
 
 Using pixels is the most straightforward 
 approach, and are widely used.  For example:
@@ -639,7 +639,7 @@ p { border-color: black;
 ```
 
 
-###%
+####%
 
 Using `%` can be a little tricker than pixels
 because it relies on the selected element's 
@@ -652,7 +652,7 @@ p { width: 50%; }
 ```
 
 
-###em
+####em
 
 The unit `em` is also relative and depends on
 the element's `font-size` value.  For example, 
@@ -798,7 +798,7 @@ in rendering an element's rectangle,
 including `background-color`,
 
 
-###background-color
+####background-color
 As illustrated in previous examples,
 to set the color of an element's
 background, use the `background-color`
@@ -839,7 +839,7 @@ creating `linear-gradient`s and
 `radial-gradient`s.
 
 
-###display
+####display
 
 Several examples and explanations above
 have discussed the difference between a
@@ -982,7 +982,7 @@ p { height: 80px;width: 280px;background-color: lightsalmon;
 }
 ```
 
-###Borders
+####Borders
 
 Each element's rectangle has a border.  By 
 default, the border is not visible, but often
@@ -1026,7 +1026,7 @@ and `border-color` in that order:
 p { border: 2px solid #556677; }
 ```
 
-###Padding
+####Padding
 
 In the border examples above it may have
 been noticeable that the border and the 
@@ -1088,7 +1088,7 @@ p {
 ```
 
 
-###Margin
+####Margin
 
 The `margin` CSS property adds space to the
 box model *outside* of the border in the 
@@ -1140,7 +1140,7 @@ element to an always-fixed location so it
 will not scroll with the page).
 
 
-###relative
+####relative
 
 Setting `position: relative` will break an 
 element out of normal flow, allowing it to 
@@ -1198,7 +1198,7 @@ paragraph doesn't know anything has moved
 out of its natural place.
 
 
-###absolute
+####absolute
 
 When an element is positioned `absolute`, its
 position can be set based on its nearest
@@ -1260,7 +1260,7 @@ to position itself precisely within the
 `<div>`.
 
 
-###fixed
+####fixed
 
 Setting an element to `postion:fixed` allows
 `left`, `right`, `top`, and / or `bottom`
