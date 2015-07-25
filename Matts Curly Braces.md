@@ -416,8 +416,8 @@ selectors is terse but rich, due to the
 number of selectors available.  Here is
 a small sample:
 
- | Selector      | Description 
- |---------------|----------------------------------
+ | Selector      | Description
+ | ------------- | ------------------------------------------------------------
  | `*`           | Selects all elements
  | (tag name)    | Selects by tag name
  | `,`           | Combines multiple selectors
