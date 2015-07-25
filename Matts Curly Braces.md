@@ -416,20 +416,20 @@ selectors is terse but rich, due to the
 number of selectors available.  Here is
 a small sample:
 
- | Selector      | Description
- | ------------- | ------------------------------------------------------------
- | `*`           | Selects all elements
- | (tag name)    | Selects by tag name
- | `,`           | Combines multiple selectors
- | `#`           | Selects by ID
- | `.`           | Selects by class
- | (space)       | Selects descendants
- | `>`           | Selects direct descendant (child)
- | `[x]`         | Selects element where an attribute (x) exists
- | `[x=y]`       | Selects element where attribute (x) has exact value (y)
- | `[x*=y]`      | Selects element where attribute (x) contains value (y)
- | `[x^=y]`      | Selects element where attribute (x) starts with value (y)
- | `[x$=y]`      | Selects element where attribute (x) ends with value (y)
+| Selector      | Description
+| ------------- | ------------------------------------------------------------
+| `*`           | Selects all elements
+| (tag name)    | Selects by tag name
+| `,`           | Combines multiple selectors
+| `#`           | Selects by ID
+| `.`           | Selects by class
+| (space)       | Selects descendants
+| `>`           | Selects direct descendant (child)
+| `[x]`         | Selects element where an attribute (x) exists
+| `[x=y]`       | Selects element where attribute (x) has exact value (y)
+| `[x*=y]`      | Selects element where attribute (x) contains value (y)
+| `[x^=y]`      | Selects element where attribute (x) starts with value (y)
+| `[x$=y]`      | Selects element where attribute (x) ends with value (y)
  
  
  ###Pseudo-class selectors
