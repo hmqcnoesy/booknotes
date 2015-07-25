@@ -493,3 +493,95 @@ invoked.  When invoked, a variable
 named `cube` is created and set to a 
 value that is the `input` value passed
 in, cubed.  The `return` statement
+specifies the value that is the
+output of invoking the function, in
+other words, the value that is handed
+back to the expression invoking the 
+code.
+
+A function can make use of multiple
+parameters - their names are separated
+by commas in the function declaration,
+and the values passed in when the function
+is invoked are also separated by commas:
+
+```javascript
+function sayHello(firstName, lastName) {
+	alert('Hello, ' + firstName + ' ' + lastName);	
+}
+
+sayHello('Mark', 'Twain');
+sayHello('Darth', 'Vader');
+```
+
+Notice also in the example above the
+lack of a `return` statement - this function
+does not return a value, and the code
+that invokes the function does not expect
+one.
+
+Notice also that the examples above have
+been repeatedly invoking `alert()`, which
+is itself just another function, albeit a
+built-in one.
+
+It is important to understand how the 
+parameters are handled when invoking a 
+function.  The parameters are passed
+*by value* which means a copy is made
+especially for the function invocation 
+to use.  The code that invokes the function
+passes a value that is untouched by the
+function execution.  Here is an example
+to illustrate this point:
+
+```javascript
+function addOne(input) {
+	input = input + 1;
+	return input;
+} 
+
+var value = 6;
+var returnedValue = addOne(value);
+alert('value is ' + value);
+alert('returned value is ' + returnedValue);
+```
+
+The example above alerts `6` first, then
+`7`.  Note that the 6 value that is 
+passed to the `addOne` function is 
+*copied* so that the addOne function when
+it executes cannot modify the invoker's
+copy of any value passed.  If it were so,
+the first alert would show `7`.
+
+The end result of the pass-by-value 
+behavior is that a function can modify
+only a copy of values that are passed to
+it, and can never modify the original
+variable passed to the function.  A
+misunderstanding of this behavior can
+result in some serious difficulty down
+the road, so it is wise to ensure a 
+proper grasp of the concept early on.
+
+It might go without saying, but functions
+can have no parameters, which just means
+they need no input from code that invokes
+them in order to perform their job:
+
+```javascript
+function getUserName() {
+	var userName = prompt('What\'s your name?');
+	return userName;	
+}
+```
+
+In the above example, the built-in `prompt()`
+function is similar to `alert()` except
+that it has a text box where the user can
+type in some input, which becomes the
+return value of the function call.
+
+Another behavior of JavaScript functions
+is that they provide **scope**.
