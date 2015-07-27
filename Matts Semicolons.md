@@ -1,4 +1,4 @@
-#Parentheses
+#Semicolons
 
 ##JavaScript
 JavaScript is a lightweight scripting language
