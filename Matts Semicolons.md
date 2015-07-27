@@ -36,8 +36,9 @@ alert('Hello from JavaScript!');
 ```
 
 The details on syntax (parentheses, single 
-quotes, semicolons, etc.) will be detailed 
-later.  For now, it is important only to get
+quotes, semicolons, etc.) will become clear 
+with more examples.  For now, it is 
+important only to get
 a simple example working to see how to
 include JavaScript in a document.
 
@@ -70,24 +71,22 @@ And like CSS, it is considered
 best practice is to put 
 JavaScript code in separate files, then 
 reference those files in the HTML document.
-CSS used a `<link>` element in the HTML `<head>`
+CSS uses a `<link>` element in the HTML `<head>`
 but in the case of JavaScript, a `<script>`
-element can be placed in the head or body, and
-the `src` attribute tells the browser the 
+element can be placed in the head or body.
+The `src` attribute tells the browser the 
 absolute or relative URL of the JavaScript 
-file.  Unlike a `<link>` element for CSS,
-a `<script>` element is not self-closing and
-*must* have a closing `</script>` tag.  Also,
-unlike a `<link>` element which must be placed
-in the `<head>` the `<script>` element can
-be anywhere in the HTML document, and the
-JavaScript file will be retrieved and 
-executed immediately when the `<script>` 
-element is encountered by the browser.
+file.
+Wherever the `<script>` element appears,
+the browser will pause while the JavaScript
+file is downloaded and executed.
 For this reason, it is considered best 
 practice to place all `<script>` elements
 at the bottom of the document, just before
-the closing `</body>` tag:
+the closing `</body>` tag.
+Unlike a `<link>` element for CSS,
+a `<script>` element is not self-closing and
+*must* have a closing `</script>` tag.  
 
 ```html
 <!doctype html>
