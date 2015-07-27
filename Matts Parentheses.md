@@ -97,7 +97,7 @@ the closing `</body>` tag:
 	</head>
 	<body>
 		<h1>First JavaScript Example</h1>
-		<h2>This comes after the script</h2>
+		<h2>This comes before the script</h2>
 		<script src="hello.js"></script>
 	</body>
 </html>
@@ -632,5 +632,343 @@ inside and outside of functions.
 It exists as long as the HTML 
 document that loaded it is alive.
 
-
 ##JavaScript Arrays
+
+An array in JavaScript works as a
+list of variables all stored together.
+An array is created using `[]`
+characters.  Accessing an item in
+a particular position in the array
+variable requires the 0-based index
+of the item in the square brackets:
+
+```javascript
+var thingsToForget = ['http', 'html', 'css', 'javascript'];
+alert(thingsToForget[0]); // alerts "http"
+alert(thingsToForget[3]); // alerts "javascript"
+
+thingsToForget[3] = 'java';
+alert(thingsToForget[3]); // alerts "java"
+```
+
+It is easy to loop through the contents 
+of an array using a `for` loop, and by
+using the array's `.length` property in
+the loop's "test":
+
+```javascript
+var numbers = [1,2,3,5,8,13,21,34,55,89];
+
+var sum = 0;
+
+for (var i = 0; i < numbers.length; i++) {
+	sum = sum + numbers[i];
+}
+
+alert('sum of all those numbers is ' + sum);
+```
+
+
+##JavaScript Objects
+
+An object is a container full of 
+**members**.  Members are variables 
+that can 
+be of any of the data types discussed
+previously, including functions
+(in which case they are referred to 
+as **methods**).  These members are
+grouped together in an object because
+they belong
+together.  They often model some
+real-world object.  The simplest
+syntax for creating an object is 
+to use `{}` in a variable assignment
+and as follows:
+
+```javascript
+var fred = {
+	firstName: 'Fred',
+	lastName: 'Doe',
+	age: 38,
+	height: 72,
+	alive: true,
+	sayHi: function() {
+		alert('Hello, my name is Fred.');	
+	},
+	sayBye: function(times) {
+		var msg = '';
+		for(var i = 0; i < times; i++) {
+			msg = msg + 'Goodbye. ';	
+		}
+		alert(msg);
+	}
+};
+```
+
+Accessing the members of an object
+is acccomplished using the `.` operator:
+
+```javascript
+fred.sayHi();
+alert(fred.height);
+fred.sayBye(3);
+```
+
+JavaScript implmentations include some
+handy built-in objects, such as the `Math`
+object that has lots of math-related
+methods:
+
+```javascript
+var ans = Math.sqrt(1000000);
+alert('The square root of a million is ' + ans);
+```
+
+And the `console` object that has the handy
+`log()` method, which writes messages to the 
+console.  That is a lot less annoying than those
+alerts that have to be dismissed every time,
+so let's start using `console.log()` instead
+of `alert()` now that objects and the `.` 
+operator have been covered:
+
+```javascript
+console.log('What is the length of the hypotenuse ');
+console.log('of a right triangle having sides of ');
+console.log('length 3 and 4?');
+var ans = Math.sqrt((3*3) + (4*4));
+console.log('The answer is ' + ans);
+```
+
+There is also the `window` object which
+refers to the browser window and has
+some useful and interesting members:
+
+```javascript
+console.log(window.innerWidth);
+console.log(window.innerHeight);
+console.log(window.outerWidth);
+console.log(window.outerHeight);
+window.open("http://www.google.com");
+```
+
+And perhaps most importantly, the `document`
+object, which refers to the currently
+loaded HTML document in the browser.
+This object is the key to interacting with
+a user's input and the elements within
+an HTML document.  The `getElementById()`
+method is used extensively when interacting
+with document content.  It does exactly
+what it sounds like: gets a handle on
+one specific element in the HTML document,
+whose `id` attribute value matches the 
+value passed into the method.  The return
+value of the method is an element object
+which itself has members, such as the
+`innerHTML` property which can be set,
+dynamically changing the content of the
+element:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>document getElementById example</title>
+	</head>
+	<body>
+		<h1>First JavaScript Example</h1>
+		<p id="onlyparagraph">
+			This is the only paragraph
+		</p>
+		<script>
+			var paragraph = document.getElementById('onlyparagraph');
+			paragraph.innerHTML = 'This content was set using JavaScript';
+		</script>
+	</body>
+</html>
+```
+
+A common need is to be able to react to
+user changes to values of `input` elements,
+or user clicks to `button` elements, etc.
+The element object returned by `getElementById()`
+has an `addEventListener()` method that
+exposes this type of functionality.  The
+method takes a string telling the type of event
+(`click` for instance), then a function parameter
+detailing the code to run when the event occurs.
+For example:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>addEventListener example</title>
+	</head>
+	<body>
+		<input type="text" id="lhs" value="34" />
+		<input type="text" id="rhs" value="59" />
+		<button id="btnAdd">Add</button>
+		<p id="onlyparagraph">
+			This is the only paragraph
+		</p>
+		<script>
+			function AddNumbers() {
+			    var lhsValue = +document.getElementById('lhs').value;
+			    var rhsValue = +document.getElementById('rhs').value;
+			    var paragraph = document.getElementById('onlyparagraph');
+			    paragraph.innerHTML = lhsValue + rhsValue;
+			}
+			
+			var button = document.getElementById('btnAdd');
+			button.addEventListener('click', AddNumbers);
+		</script>
+	</body>
+</html>
+```
+
+Using the members of the `document` object,
+*anything* within the document can be 
+manipulated:  elements can be added, removed,
+edited, rearranged, etc.  Attributes can too.
+Any info in the document can not only be 
+retrieved, it can also be set, and when it is
+set, the browser automatically updates the
+visual representation of the document to 
+reflect that change.  This type of functionality 
+is made easier with the JavaScript library
+jQuery.
+
+
+##jQuery
+
+jQuery is an enormously popular library that 
+focuses on easy interaction with the document
+object model (the **DOM**, or the tree of 
+elements in the document).  It also
+has an expandable plug-in model.  Thousands
+of jQuery plugins are just a google search away. 
+
+The easiest way to use jQuery in an HTML 
+document is to just reference the jQuery 
+JavaScript file hosted by the kind folks at
+jQuery.  Notice in the example below that
+the `script` which references the jQuery
+JavaScript must come before any custom code
+that makes use of jQuery.  
+The first thing jQuery provides is a shorthand
+way of executing code only once the document is
+completely loaded by the browser and the document
+is ready to listen to code that might change it::
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>jQuery example</title>
+	</head>
+	<body>
+		<p id="onlyparagraph">
+			This is the only paragraph
+		</p>
+		<script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+		<script>
+			$(function() {
+				alert('jQuery helped me do this');
+			});
+		</script>
+	</body>
+</html>
+```
+
+The most powerful feature of jQuery is its ability
+to get elements from the DOM based on queries that 
+mimic CSS selectors.  Instead of using the method
+`document.getElementById`, with jQuery one would 
+use the `$()` function, passing in a CSS selector 
+string.  The return value from this function call
+is a jQuery-wrapped set, which is a collection of
+all the elements that matched the selector.  The
+jQuery-wrapped set object then in turn has many
+methods that allow manipulation of the objects in
+the set.  For example:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>jQuery-wrapped set example</title>
+	</head>
+	<body>
+		<p id="firstparagraph">first paragraph</p>
+		<p class="second">Second paragraph</p>
+		<p>There is a <a href="http://bing.com">link</a> in this p element</p>
+		<p>There is a <a href="http://yahoo.com">link</a> in this p element</p>
+		<p data-hide-me>Code will hide this</p>
+		<p data-move-me>Code will make this move</p>
+		<script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+		<script>
+			$(function() {
+				$('#firstparagraph').html("The first paragraph");
+				$('.second').css('background-color', 'gainsboro');
+				$('p>a').attr('href', 'http://www.google.com');
+				$('p[data-hide-me]').hide();
+				$('p[data-move-me]').animate({ fontSize: '12em' }, 15000);
+			});
+		</script>
+	</body>
+</html>
+```
+
+jQuery also eases dealing with events.  The 
+`on` method can be called on a jQuery-wrapped set,
+passing in the type of event to listen for, then an 
+anonymous function wrapping the code to be executed
+when the event occurs:
+
+```html
+<!doctype html>
+<html>
+	<head>
+		<title>jQuery event example</title>
+		<style>
+			body { padding: 1em; }
+			p {
+				display: none;
+				padding: 1.2em;
+				border: 2px solid black;
+			}
+			p#one { background-color: gainsboro; }
+			p#two { background-color: lightblue; }
+			p#three {background-color: yellow; }
+			a {
+				cursor: pointer;
+				padding: 0.5em 1em;
+				margin: 1em;
+				background-color: yellowgreen;
+				border: 3px solid darkgreen;
+			}
+		</style>
+	</head>
+	<body>
+		<a data-content="#one">Show One</a>
+		<a data-content="#two">Show Two</a>
+		<a data-content="#three">Show Three</a>
+		<p id="one">This is the content of para 1</p>
+		<p id="two">And here be the content of para TWO</p>
+		<p id="three">Lorem ipsum dolor sit THREE</p>
+		<script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+		<script>
+			$(function() {
+                $('a').on('click', function() {
+                    var target = $(this).attr('data-content');
+                    $('p').hide();
+                    $(target).show();
+                });
+			});
+		</script>
+	</body>
+</html>
+```
