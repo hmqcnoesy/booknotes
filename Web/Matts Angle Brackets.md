@@ -666,7 +666,7 @@ by `&` characters in the URL query string.
 For example, in the above case, if the 
 user typed "mozilla" into the text box and
 clicked submit, the browser would make a 
-request to 'search?searchterm=mozilla'.
+request to `search?searchterm=mozilla`.
 In the case of multiple inputs:
 
 ```html
@@ -680,7 +680,7 @@ In the case of multiple inputs:
 A search term value of "mozilla" above, with
 the checkbox clicked, would result in a 
 request to 
-'search?searchterm=mozilla&old=true'.
+`search?searchterm=mozilla&old=true`.
 
 If a `method` value of "POST" is used instead
 of "GET", the names/values of the form data
