@@ -1,27 +1,30 @@
 #Angle Brackets
 
 ##HTTP
-HTTP is the method of communication
+HTTP (Hypertext Transfer Protocol)
+is the method of communication
 between a client computer (using
 software such as a browser)
 and a server computer (for example, 
 amazon.com).
 The client initiates communication
-by send a request message to the
-server.  The request is processed
-and a response is sent back to the
+by sending a request message to the
+server.  The server processes the 
+request and sends a response 
+message back to the
 client.  There is always one and only
 one response per request.
 
 An HTTP request must specify the
-Uniform Resource Locator (**URL**)
-resource the client is accessing.
-A URL consists of a scheme (e.g. http://),
-a domain (e.g. amazon.com), a port
-(not required if using default number, 
-e.g. :8080), a path to the resource
-(optional, e.g. /products/12345),
-a query (optional, e.g. ?search=batman). 
+Uniform Resource Locator (**URL**),
+which specifies the exact resource that
+is the destination of the request.
+A URL consists of a scheme (e.g. `http://`),
+a domain (e.g. `amazon.com`), a port
+(optional, 
+e.g. `:8080`), a path to the resource
+(optional, e.g. `/products/12345`),
+and a query (optional, e.g. `?search=batman`). 
 Other details of URLs are less common 
 and not relevant to our discussion.
 
@@ -35,7 +38,7 @@ run software that provides the functionality.
 **Apache** and Microsoft's Internet
 Information Services (**IIS**) are commonly
 used softare that enable a computer to
-function as a web server.
+function as a web server.  
 
 When a web server receives an HTTP
 request, it might do one of any number
@@ -47,15 +50,19 @@ The web server may also run some
 executable code to dynamically generate
 a response to send back.  Or it might
 send a response indicating some kind
-of error situation.
+of error situation.  In our 
+discussion and examples, the web server
+will respond only with static files.
 
 
 ##Web Pages
 A web page is a document written in HTML
+(Hypertext Markup Language)
 and retrieved over HTTP (via an HTTP 
 request initiated by the client, and an
 HTTP response devlivered by the server).
-A web page is loaded the same whether you
+A web page is retrieved and loaded in the
+browser in the same manner whether you
 type the URL in manually, open a shortcut
 or bookmark, or click on a link pointing
 to the page.
@@ -92,10 +99,11 @@ Here, the `<p>` is an **opening tag**
 followed by some content ("Once upon a 
 time...") and the `</p>` **closing tag**.
 Notice the opening and closing tags differ
-only by the abscense or presence of the `/` 
-character.  These things together form an 
-HTML **element**.  A browser would read the
-example line above and display the "Once 
+only by the presence of the `/` 
+character.  The opening tag, content, and
+closing tag together form an 
+HTML **element**.  A browser would interpret the
+example line above by displaying the "Once 
 upon a time..." text as a paragraph.
 
 An element's opening tag can specify 
@@ -115,13 +123,16 @@ In the above example, the 'a' element
 uses the href attribute, with a value of
 "http://www.mozilla.com/firefox".  Most
 HTML elements do not require attributes
-but some do.  For instance, when including
-an image in HTML, the `img` element is used
-and a `src` attribute is required to specify
-the source of the image:
+but some do.  The `img` element is another 
+example of an element
+that makes sense only with a particular 
+attribute.  This element is used for adding
+an image to HTML, and so it makes sense only
+when it specifies a source for that image
+through the `src` attribute:
 
 ```html
-<img src="http://www.mozilla.com/firefox/logo.gif" />
+<img src="https://mdn.mozillademos.org/files/2917/fxlogo.png" />
 ```
 
 The `img` element shown above has another
@@ -138,10 +149,29 @@ that self-enclosing elements use the
 now to see either of these forms:  
 
 ```html
-<img src="http://www.mozilla.com/firefox/logo.gif" />
-<img src="http://www.mozilla.com/firefox/logo.gif">
+<img src="https://mdn.mozillademos.org/files/2917/fxlogo.png" />
+<img src="https://mdn.mozillademos.org/files/2917/fxlogo.png">
 ```
 
+The `<img>` and `<a>` elements are examples
+where a particular attribute might as well be
+considered a requirement.  But most attributes 
+are optional.  For instance, the `id` attribute
+can be added to any element to uniquely identify
+that element (important in CSS and JavaScript).:
+
+```html
+<p id="firstparagraph">
+	This paragraph is uniquely identified.
+</p>
+```
+
+Multiple attributes are added to an element
+by using a space as a separator:
+
+```html
+<img id="logo" src="https://mdn.mozillademos.org/files/2917/fxlogo.png">
+``` 
 
 ####Block and inline elements
 Most HTML elements can be classified as
@@ -163,6 +193,7 @@ around them:
 <p>Find more info in the <a href="http://www.mozilla.com/firefox">about</a> section.</p>
 ```
 
+####Whitespace
 Whitespace characters in HTML documents 
 (including spaces, empty lines, hard returns,
 and indentations) are handled
@@ -201,11 +232,14 @@ help visualize how HTML elements are nested.
 Opening and closing tags of block elements
 can be placed on their own line (as above).
 
+
+####Element Hierarchy
 The HTML fragment above is a good example
 of nesting in HTML.  Each `<p>` element
 is a **parent element** of a `<a>` element, 
-which are in turn **child elements** of
-`<p>`.  An HTML document can have complex,
+which means the `<a>` elements are each
+a **child element** of a `<p>` element.
+An HTML document can have complex,
 arbitrarily deep nesting, but a child element
 must be closed before the parent element.
 So the following is *incorrect* HTML:
@@ -219,7 +253,7 @@ So the following is *incorrect* HTML:
 </a>
 ```
 
-The corrected HTML would close the child
+The correct HTML would close the child
 `<a>` before closing the parent `<p>`:
 
 ```html
@@ -234,8 +268,7 @@ The corrected HTML would close the child
 With deeper nesting, in addition to 
 parent and child elements, there can be
 **ancestor** and **descedant** elements.  
-And elements
-with the same parent can be referred to 
+Elements with the same parent can be referred to 
 as **sibling** elements.
 
 There is one other simple rule when
@@ -294,8 +327,8 @@ elements can be used:
  
 There are many more HTML elements.  For
 an exhaustive list, consult the HTML element
-reference on the
-[Mozilla Developer Network](http://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+reference on the Mozilla Developer Network
+(http://developer.mozilla.org/en-US/docs/Web/HTML/Element)
 
 
 ##HTML documents
@@ -310,7 +343,7 @@ HTML document consists of the following:
 
 
 ####Doctype
-The **doctype** is the first bit of info 
+The **doctype** declaration is the first bit of info 
 in a valid HTML document, and indicates to
 the browser the version of HTML the
 document is using.  The version of HTML
@@ -321,8 +354,8 @@ specified by a very simple doctype:
 <!doctype html>
 ``` 
 
-Note that the doctype "element" isn't
-really an element - it doesn't contain 
+Note that the doctype declaration isn't
+an element - it doesn't contain 
 other elements, it has no closing tag, 
 and is not self-enclosing.  It is just
 a single line of text at the top of the 
@@ -365,8 +398,8 @@ common elements that are found in the
  
 The `<style>` element specifies styles
 to be applied in the document. A `<link>` 
-element specifies the location
-of a stylesheet to be used in a similar
+element might specify the location
+of a stylesheet file to be used in a similar
 manner.  This will be explained in detail 
 when discussing CSS.
 
@@ -393,6 +426,18 @@ when fulfilling user queries:
 ```html
 <meta name="description" content="A simple, yet valid, HTML example">
 ```
+
+A `<meta>` element can also be essential
+in some intranet environments to get
+Internet Explorer to behave in an up-to-date
+manner for particular HTML documents
+when compatibility settings are on by 
+default for intranet sites:
+
+```html
+<meta http-equiv="X-UA-COMPATIBLE" content="IE=Edge">
+``` 
+
 
 ####The `<body>` element
 Following the `<head>` element, and 
@@ -427,11 +472,12 @@ described above:
 ```
 
 
-##Links
+####Links
 Links (using the `<a>` element) have 
 already been described above.  But the
 previous examples all used **absolute**
-`href` values, meaning the complete URL
+values for the `href` attribute, 
+meaning the complete URL
 to the linked resource was included.  
 For example:
 
@@ -491,7 +537,7 @@ Open
 in a new tab.
 ```
 
-##Images
+####Images
 Images are the most common non-textual
 content type on the web.  As detailed
 previously, an image is displayed using
@@ -526,7 +572,7 @@ so it will flow with text content around it
 as if it were just another word in the text.
 
 
-##Tables
+####Tables
 HTML tables are meant for tabluar data
 of rows and columns like an Excel 
 spreadsheet.  Unlike previously detailed
@@ -613,7 +659,7 @@ previous example:
 ```
 
 
-##Forms
+####Forms
 HTML includes elements designed for 
 user input, which is useful for filling in
 and saving information, searching, signing
@@ -650,7 +696,7 @@ an example form:
 
 ```html
 <form action="search" method="get">
-	Search: <input type="text" name="searchterm">
+	Search: <input type="text" name="term">
 	<input type="submit" value="Search">
 </form>
 ```
@@ -666,12 +712,12 @@ by `&` characters in the URL query string.
 For example, in the above case, if the 
 user typed "mozilla" into the text box and
 clicked submit, the browser would make a 
-request to `search?searchterm=mozilla`.
+request to `search?term=mozilla`.
 In the case of multiple inputs:
 
 ```html
 <form action="search" method="get">
-	Search: <input type="text" name="searchterm">
+	Search: <input type="text" name="term">
 	Include old results <input type="checkbox" name="old" value="true">
 	<input type="submit" value="Search">
 </form>
@@ -680,11 +726,11 @@ In the case of multiple inputs:
 A search term value of "mozilla" above, with
 the checkbox clicked, would result in a 
 request to 
-`search?searchterm=mozilla&old=true`.
+`search?term=mozilla&old=true`.
 
 If a `method` value of "POST" is used instead
 of "GET", the names/values of the form data
-are serialized similarly and submitted with
+are serialized similarly and submitted within
 the HTTP request, but are sent in the HTTP
 headers rather than as the URL query string.
 
@@ -711,7 +757,7 @@ a value for the `<select>` element's name:
 </form>
 ```
 
-The `<label>` element is can be used to 
+The `<label>` element can be used to 
 associate some label text with a particular
 input control.  This is done by setting
 the `for` attribute of the `<label>` to
