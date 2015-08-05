@@ -52,15 +52,15 @@ available.
 
 ##CSS Mechanics
 
-CSS works by specifying (selecting) 
+CSS works by *selecting* 
 an element and then specifying a 
 property of the selected element(s)
-and then specifying the value to
-apply to that property.  The general
+followed by a value to apply for that
+property.  The general
 syntax is:
 
 ```css
-selector { property: value }
+selector { property: value; }
 ```
 
 Another way to think about the syntax
@@ -69,19 +69,14 @@ is the selector, or who is targeted
 for applying styles.  The "what" is 
 what property to be set on the "who".
 And the "how" is how to set that
-property.  So the general syntax could
-be illustrated with:
-
-```css
-who { what: how; }
-```
+property.
 
 As a concrete example, to set the background
 color of all paragraph elements to 
 gainsboro, the following CSS would be used:
 
 ```css
-p { background-color: gainsboro }
+p { background-color: gainsboro; }
 ```
 
 Like HTML, whitespace is ignored (except
@@ -95,6 +90,21 @@ dark blue text to all paragraph elements:
 p {
 	background-color: gainsboro;
 	color: darkblue;
+}
+```
+
+Multiple rules are simply listed one
+after the other:
+
+```css
+p {
+	background-color: gainsboro;
+	color: darkblue;
+}
+
+a {
+	background-color: light-salmon;
+	color: maroon;
 }
 ```
 
@@ -114,7 +124,7 @@ are used):
 ```
 
 Or it can be placed within a `<style>`
-element within the `<head>` element:
+element in the `<head>` element:
 
 ```html
 <!doctype html>
@@ -132,10 +142,10 @@ element within the `<head>` element:
 </html>
 ```
 
-And finally (the preferred method),
-CSS can be placed in a separate file,
-with a .css extension, and a link to it
-is specified with a `<link>` element in 
+But the preferred method is to place
+CSS in a separate file,
+with a .css extension, and link to it
+using a `<link>` element in 
 the HTML document's `<head>`.  For 
 example, assume we had this in a file
 named "style.css" and it was in the same
@@ -145,7 +155,7 @@ folder as our HTML document:
 p { background-color: gainsboro; }
 ```
 
-Then the HTML file would just need a 
+Then the HTML file would need a 
 `<link>` element that specifies a value
 of the `href` attribute that points to
 the location of the CSS file (relative or
@@ -168,7 +178,7 @@ of the linked document to the HTML:
 ```
 
 In addition to the advantages mentioned above,
-CSS in a separate file also provides improved 
+keeping CSS in a separate file also provides improved 
 maintainability and speed because the 
 same CSS file can be linked to from multiple
 HTML documents in a site.  Maintainability is
@@ -184,8 +194,8 @@ styling content to be downloaded each time.
 Many of the following examples will use
 a `<style>` element in the `<head>` of an
 HTML document for the sake of making simple
-self-contained examples.  But keep in mind 
-that in "real" HTML documents this goes against
+self-contained examples.  But for
+"real" HTML documents this goes against
 best practices, which keep CSS documents in
 separate files, using `<link>` elements to 
 apply them.
@@ -430,21 +440,21 @@ a small sample:
 | `[x*=y]`      | Selects element where attribute (x) contains value (y)
 | `[x^=y]`      | Selects element where attribute (x) starts with value (y)
 | `[x$=y]`      | Selects element where attribute (x) ends with value (y)
+
+
+####Pseudo-class selectors
+
+Elements can have different states 
+that can be selected by psuedo-class
+selectors.  For instance, a link
+is usually in its normal state, but
+when the user hovers the cursor over
+the link it is in a "hover" state, 
+and a different set of styling rules
+may be applied.  To do this, the
+`:hover` psuedo-class is used:
  
- 
- ####Pseudo-class selectors
- 
- Elements can have different states 
- that can be selected by psuedo-class
- selectors.  For instance, a link
- is usually in its normal state, but
- when the user hovers the cursor over
- the link it is in a "hover" state, 
- and a different set of styling rules
- may be desired.  To do this, the
- `:hover` psuedo-class is used:
- 
- ```html
+```html
 <!doctype html>
 <html>
 	<head>
@@ -496,7 +506,7 @@ more than once, each time applying
 different styles:
 
 ```html
-<p class="important" id="firstparagraph">
+<p class="message" id="firstparagraph">
 	How will this be styled?
 </p>
 ```
@@ -522,7 +532,7 @@ three selectors.
 
 The measure of selectors' specificities
 can be very complicated, but to simplify
-a rough score can be applied, where `#`
+the rules, a rough score can be applied, where `#`
 is worth 100, `.` is worth 10 and a tag
 name selector is worth 1.  In the case 
 of a styling conflict, the selector with
@@ -552,7 +562,8 @@ pure blue is 100% blue, 0% green, and
 red with 0% green.  Black is 0% red,
 green, and blue.  White is 100% of all
 three.  But rather than using whole 
-number percentages, CSS allows a color
+number percentages (0 through 100), 
+CSS allows a color
 to be defined based on its red, green,
 and blue components on a scale from 0 
 to 255.  So blue, purple, black and white
@@ -748,7 +759,7 @@ span.important {
 	font-style: italic;
 	text-decoration: underline;
 	text-align: justify;
-	text-shadow: 1px 2px 5px #eeeeee;
+	text-shadow: 1px 2px 5px #777777;
 }
 ```
 
@@ -842,7 +853,7 @@ creating `linear-gradient`s and
 ####display
 
 Several examples and explanations above
-have discussed the difference between a
+have mentioned the difference between a
 block element and an inline element.
 CSS makes changing the behavior of these
 elements a simple property assignment.
@@ -868,8 +879,8 @@ to `hidden`, but note the important difference
 between `visibility: hidden` and `display: none`.
 Hiding visibility is like making it completely
 transparent, but it still takes up space in
-the document flow.  Setting the the `display`
-to `none` effectively removes it from the 
+the document flow.  Setting an element's `display`
+to `none` effectively removes the element from the 
 document flow entirely:
 
 ```html
@@ -929,7 +940,7 @@ too small, the content is displayed anyway, but
 <!doctype html>
 <html>
 	<head>
-		<title>Testing fixed height & width</title>
+		<title>Testing fixed height and width</title>
 		<style>
 			p { 
 				height: 80px; 
@@ -1129,7 +1140,7 @@ and elements are rendered in the order in
 which they appear in the HTML.  But sometimes
 it may be desirable to break the flow and
 take control over the positioning of elements
-using CSS.  This dan be done with the 
+using CSS.  This can be done with the 
 `position` property, which can have 4 values:
 `static` (default, content flows normally),
 `relative` (moves the element relative to 
@@ -1200,8 +1211,8 @@ out of its natural place.
 
 ####absolute
 
-When an element is positioned `absolute`, its
-position can be set based on its nearest
+When an element's position is  `absolute`, its
+location can be set based on its nearest
 ancestor whose position is not `static`.
 When this is the case, the element that is
 `absolute` can have its `top`, `left`, `right`,
@@ -1346,8 +1357,7 @@ keep content out of the way of the `<nav>`.
 
 ##Advanced CSS
 
-CSS seems to have no limits with what it can
-do.  Advanced CSS topics not covered here 
+Advanced CSS topics not covered here 
 include:
 
  - The `float` property
