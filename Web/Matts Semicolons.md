@@ -21,8 +21,8 @@ have a common syntactical ancestry but are
 otherwise unrelated.  A Java installation is not 
 necessary for a browser to run JavaScript.
 Content built on web technology standards
-(HTML, CSS, JavaScript) has no dependency 
-whatsoever on Java.
+(HTML, CSS, JavaScript) has *no dependency 
+whatsoever on Java*.
 
 
 ##First JavaScript example
@@ -45,7 +45,7 @@ include JavaScript in a document.
 Like CSS, JavaScript can be added to an
 HTML document directly.  JavaScript can 
 be placed anywhere in the document, in
-a `<script>` tag.  Notice in the example 
+a `<script>` element.  Notice in the example 
 below that the JavaScript code is not in
 any way rendered with the content of the 
 page, but is executed when the page is 
@@ -110,7 +110,7 @@ different types of data.  One of the most
 common data types is the **number** 
 (`0`, `42`, `3.14159`, etc.).  Another of the
 most common types is the **string** 
-(`'hello'`, `'goodbye'`, `'ಠ_ಠ'`, etc.).
+(`'hello'`, `'goodbye'`, `'O_o'`, etc.).
 
 Programs need to be able to *create* and 
 *remember* values while they are executing.
@@ -150,7 +150,7 @@ alert(diff);
 ```
 
 In JavaScript, a variable's value can be
-reassigned to any value at any time, not 
+reassigned any other value at any time, not 
 by redeclaring the variable with `var`, but
 by simply using the assignment operator to
 assign it a new value:
@@ -251,7 +251,7 @@ Program code needs to be able to make
 decisions, executing different paths depending
 on the decisions.  A simple way to accomplish
 this type of branching is with the `if`
-statement in JavaScript:
+statement:
 
 ```javascript
 var isTwoMoreThanOne = 2 > 1;
@@ -296,9 +296,9 @@ construct:
 ```javascript
 var age = 38;
 if (age > 40) {
-	alert('You must like Super Mario Bros.');
+	alert('You must like Asteroids.');
 } else if (age > 30) {
-	alert('You must like Doom.');
+	alert('You must like Super Mario Bros.');
 } else if (age > 20) {
 	alert('You must like Halo.');
 } else {
@@ -309,8 +309,8 @@ if (age > 40) {
 Above, the age variable is evaluated against 
 different numbers.  Once an expression is
 evaluated to `true`, code continues within
-that block, then jumps outside the `if`
-statement.  So with the value `38` for `age`
+that block, then jumps outside the closing `}`
+of the construct.  So with the value `38` for `age`
 the above code would display just one alert
 that says "You must like Doom."
 
@@ -419,7 +419,7 @@ block execution.
 
 ####for
 
-The `for` loop is most common
+The `for` loop is very common
 and uses three expressions: an
 initialization expression (executed
 *once* at beginning), a test
@@ -467,19 +467,19 @@ Here is code that utilizes a function
 to calculate cubes:
 
 ```javascript
-function getCube(input) {
+function calculateCube(input) {
 	var cube = input*input*input;
 	return cube;	 
 }
 
-var result = getCube(3);
+var result = calculateCube(3);
 alert(result);
-result = getCube(4);
+result = calculateCube(4);
 alert(result);
 ```
 
 Here the `function` declaration shows
-that the function name is `getCube`
+that the function name is `calculateCube`
 which is how the function can be
 invoked.  The declaration also shows
 that a parameter should be passed when
@@ -589,23 +589,23 @@ lives.  Outside of its scope, a variable
 doesn't exist.  For example:
 
 ```javascript
-function getCube(input) {
-	var cubedValue = input*input*input;
-	return cubedValue;	
+function getUserName() {
+	var userName = prompt('What\'s your name?');
+	return userName;	
 }
 
-var answer = getCube(3);
-alert(cubedValue);
+var myName = getUserName();
+alert(userName);
 ```
 
 The code aboves alerts **undefined** 
-because there has been no `cubedValue`
+because there has been no `userName`
 variable defined in the scope where
 the `alert` function is invoked.  The
-`cubedValue` variable is defined 
-within the `getCube` function, so it 
+`userName` variable is defined 
+within the `getUserName` function, so it 
 is limited to that scope, i.e. it 
-exists only within the `getCube`
+exists only within the `getUserName`
 function code.
 
 Variables that are declared outside
@@ -683,7 +683,7 @@ together.  They often model some
 real-world object.  The simplest
 syntax for creating an object is 
 to use `{}` in a variable assignment
-and as follows:
+ as follows:
 
 ```javascript
 var fred = {
@@ -742,7 +742,8 @@ console.log('The answer is ' + ans);
 
 There is also the `window` object which
 refers to the browser window and has
-some useful and interesting members:
+some useful and interesting members.
+For example:
 
 ```javascript
 console.log(window.innerWidth);
@@ -760,12 +761,12 @@ a user's input and the elements within
 an HTML document.  The `getElementById()`
 method is used extensively when interacting
 with document content.  It does exactly
-what it sounds like: gets a handle on
-one specific element in the HTML document,
+what it sounds like: *returns* an object
+representing the element in the HTML document
 whose `id` attribute value matches the 
-value passed into the method.  The return
-value of the method is an element object
-which itself has members, such as the
+value passed into the method.  The element 
+object returned by `getElementById` has 
+members, such as the
 `innerHTML` property which can be set,
 dynamically changing the content of the
 element:
@@ -837,7 +838,7 @@ retrieved, it can also be set, and when it is
 set, the browser automatically updates the
 visual representation of the document to 
 reflect that change.  This type of functionality 
-is made easier with the JavaScript library
+is made even easier with the JavaScript library
 jQuery.
 
 
@@ -848,7 +849,7 @@ focuses on easy interaction with the document
 object model (the **DOM**, or the tree of 
 elements in the document).  It also
 has an expandable plug-in model.  Thousands
-of jQuery plugins are just a google search away. 
+of jQuery plugins are just a Google search away. 
 
 The easiest way to use jQuery in an HTML 
 document is to just reference the jQuery 
@@ -856,11 +857,11 @@ JavaScript file hosted by the kind folks at
 jQuery.  Notice in the example below that
 the `script` which references the jQuery
 JavaScript must come before any custom code
-that makes use of jQuery.  
-The first thing jQuery provides is a shorthand
+that makes use of jQuery.  The first thing jQuery
+provides is a shorthand
 way of executing code only once the document is
 completely loaded by the browser and the document
-is ready to listen to code that might change it::
+is ready to listen to code that might change it:
 
 ```html
 <!doctype html>
