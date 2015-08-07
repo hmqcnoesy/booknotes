@@ -635,7 +635,7 @@ previous example:
 			<td>Bach</td>
 			<td>1685</td>
 			<td>1750</td>
-		</tAr>
+		</tr>
 		<tr>
 			<td>Mozart</td>
 			<td>1756</td>
