@@ -146,3 +146,78 @@ var peopleWithFavColor = db.people.find({favoriteColor: { $exists: true }});
 (Or not defined, if the value for `$exists` is 
 set to `false`)
 
+Regex searches are supported (although
+not always highly optimized):
+
+```javascript
+db.people.find({name: { $regex: "^A" } });
+```
+
+The `$or` operator can allow multiple
+criteria in an array:
+
+```javascript
+db.people.find({$or:[{name:"Jones"},{age: 25}]});
+```
+
+The `$and` operator works similarly:
+
+```javascript
+db.people.find({$and:[{name:"Jones"},{age: 25}]});
+```
+
+But the `$and` operator is much less
+useful, because:
+
+```javascript
+db.people.find({name:"Jones",age:25});
+```
+
+Note that the following:
+
+```javascript
+db.people.find({age: {$gt: 25}, age: {$lt: 35}}):
+```
+
+will find people under age 35, **not**
+people between 25 and 35.  This is 
+because the query engine will overwrite
+the first age criteria with the second.
+To acheive the "between" query:
+
+```javascript
+db.people.find({age: {$gt: 25, $lt:35}});
+```
+
+To query for documents with arrays:
+
+```javascript
+db.people.insert({name:"Howard", favs:["pretzels","beer"]});
+db.people.insert({name:"George", favs:["almonds","milk"]});
+
+db.people.find({favs: "almonds"});
+```
+
+Surprisingly, the query above returns the
+George document.  The query engine first
+looks for documents having a "favs" property
+with a string value of "almonds", then
+looks for documents having a "favs" property
+having an array value containing a string
+element with value "almonds".
+
+The `$all` operator queries for documents
+where the specified property contains all
+of the specified values:
+
+```javascript
+db.people.insert({name:"Howard", favs:["pretzels","beer"]});
+db.people.insert({name:"George", favs:["almonds","milk"]});
+db.people.insert({name:"Bob", favs:["cheese","beer"]});
+db.people.insert({name:"Joe", favs:["almonds","beer", "cheese"]});
+db.people.insert({name:"Frank", favs:["milk", "bread", "almonds"]});
+
+db.people.find({favs: { $all: ["almonds", "milk"]});
+```
+
+The above query returns Frank and George.
