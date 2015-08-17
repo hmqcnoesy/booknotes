@@ -146,3 +146,11 @@ var peopleWithFavColor = db.people.find({favoriteColor: { $exists: true }});
 (Or not defined, if the value for `$exists` is 
 set to `false`)
 
+Regex queries are supported (although not highly
+optimizable):
+
+```javascript
+db.people.find({name: { $regex: "e$" }});
+db.people.find({name: { $regex: "^A" }});
+```
+
