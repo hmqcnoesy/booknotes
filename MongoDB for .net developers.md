@@ -6,10 +6,12 @@ Never install the 32-bit Windows
 version.  After installing on Windows,
 add the path to mongo.exe (and mongod.exe)
 to the system path.  And also create a 
-directory at `c:\db\data`.
+directory at `c:\data\db`.
 
 
 ##2 Mongod.exe and mongo.exe
+
+###Using document databases
 
 Run mongod to start the database.
 Run mongo to start the interactive
@@ -68,7 +70,28 @@ the example above, there are these properties:
  - `db.hw1`
  - `db.people`
 
-And each of those collection objects has 
+ 
+###Inserting documents
+
+To insert a document into a collection, use
+the `insert()` method on the collection:
+
+```javascript
+db.people.insert({name: "Matt", age: 38});
+```
+
+If the document object doesn't explicitly
+specify an `_id` property, one is generated
+by the database.  All documents in MongoDB have 
+this unique `_id` property.  For automatic
+generation, MongoDB uses a machine ID, process 
+ID, and timestamp so the value should be
+globally unique.
+
+
+###Querying documents
+
+Each of the collection objects above has 
 methods to allow interaction with the 
 collection.  For instance, the `.find()`
 method will return all the documents in 
@@ -91,12 +114,6 @@ Multiple properties can be used:
 ```javascript
 var oldMatts = db.people.find({"name":"matt", "age":38});
 ```
-
-All documents in MongoDB have a unique `_id`
-property.  If none is specified when the document
-is inserted, one is created automatically, using
-a machine ID, process ID, and timestamp in order
-to make a globally unique ID.
 
 A second object parameter can be passed to `find()`
 to specify the properties of the matching documents
@@ -154,3 +171,249 @@ db.people.find({name: { $regex: "e$" }});
 db.people.find({name: { $regex: "^A" }});
 ```
 
+The `$or` operator can allow multiple
+criteria in an array:
+
+```javascript
+db.people.find({$or:[{name:"Jones"},{age: 25}]});
+```
+
+The `$and` operator works similarly:
+
+```javascript
+db.people.find({$and:[{name:"Jones"},{age: 25}]});
+```
+
+But the `$and` operator is much less
+useful, because:
+
+```javascript
+db.people.find({name:"Jones",age:25});
+```
+
+Note that the following:
+
+```javascript
+db.people.find({age: {$gt: 25}, age: {$lt: 35}}):
+```
+
+will find people under age 35, **not**
+people between 25 and 35.  This is 
+because the query engine will overwrite
+the first age criteria with the second.
+To acheive the "between" query:
+
+```javascript
+db.people.find({age: {$gt: 25, $lt:35}});
+```
+
+To query for documents with arrays:
+
+```javascript
+db.people.insert({name:"Howard", favs:["pretzels","beer"]});
+db.people.insert({name:"George", favs:["almonds","milk"]});
+
+db.people.find({favs: "almonds"});
+```
+
+Surprisingly, the query above returns the
+George document.  The query engine first
+looks for documents having a "favs" property
+with a string value of "almonds", then
+looks for documents having a "favs" property
+having an array value containing a string
+element with value "almonds".
+
+The `$all` operator queries for documents
+where the specified property contains all
+of the specified values:
+
+```javascript
+db.people.insert({name:"Howard", favs:["pretzels","beer"]});
+db.people.insert({name:"George", favs:["almonds","milk"]});
+db.people.insert({name:"Bob",    favs:["cheese","beer"]});
+db.people.insert({name:"Joe",    favs:["almonds","beer", "cheese"]});
+db.people.insert({name:"Frank",  favs:["milk", "bread", "almonds"]});
+
+db.people.find({favs: { $all: ["almonds", "milk"]});
+```
+
+The above query returns Frank and George.
+
+The `$in` operator can be used to query 
+arrays, which matches any of the specified
+values (as opposed to `$all` which matches 
+all):
+
+```javascript
+db.people.insert({name:"Howard", favs:["pretzels","beer"]});
+db.people.insert({name:"George", favs:["almonds","milk"]});
+db.people.insert({name:"Bob",    favs:["cheese","beer"]});
+db.people.insert({name:"Joe",    favs:["almonds","beer", "cheese"]});
+db.people.insert({name:"Frank",  favs:["milk", "bread", "almonds"]});
+
+db.people.find({favs: { $in: ["almonds", "milk"]});
+```
+
+The above query returns the George, Joe,
+and Frank documents.
+
+Nested documents can be queried where the 
+*exact* subdocument is specified, including
+the *order* of the properties as they were
+specified when inserted:
+
+```javascript
+db.people.insert({name: "me", email: {personal: "me@me.com", work: "me@work.com" }});
+
+db.people.find({email: {personal: "me@me.com"}});
+// nothing returned
+
+db.people.find({email: {personal: "me@me.com", work:"me@work.com"}});
+// returns the "me" document
+
+db.people.find({email: {work: "me@work.com", personal:"me@me.com"}});
+// nothing returned!!!
+```
+
+Well, that sucks.  To query a nested subdocument
+it is usually more usefull to use the `.`
+notation:
+
+```javascript
+db.people.insert({name: "me", email: {personal: "me@me.com", work: "me@work.com" }});
+
+db.people.find({"email.work": "me@work.com"});
+// returns the "me" document
+```
+
+The `find()` method returns a cursor object,
+which has methods such as `hasNext()` and
+`next()`, which is not terribly usefuly in
+the shell, but more useful in a programmatic
+context:
+
+```javascript
+var cur = db.people.find();
+while(cur.hasNext()) cur.next();
+```
+
+The above is acutally the default behavior 
+of the shell for printing out the results
+of a query.
+
+The cursor object that is returned by `find()`
+is lazy: no querying is done until the 
+results of the query are accessed.  Here
+the extra `null;` statement prevents the 
+shell from printing out the query results,
+so the query is not executed - instead, the
+cursor object is returned only:
+
+```javascript
+var cur = db.people.find(); null;
+cur.limit(5); null;
+```
+
+Once the query results are accessed, the 
+specified limit value is sent as part 
+of the query to the database.
+
+The methods on a cursor object return 
+the cursor itself.  Only the interactive 
+shell's behavior of by default displaying
+the query results causes the query to be
+executed.  So the `sort()` method takes an 
+object to specifying sorting, but returns
+the cursor it is called on so as to prevent
+the query execution:
+
+```javascript
+var c = db.people.find(); null;
+c.sort({ name: -1 }); null;
+while (c.hasNext()) printjson(c.next());
+``` 
+
+So chaining is possible, all of which is
+done by the database, never by the client:
+
+```javascript
+db.people.find().sort({name: -1}).limit(3).skip(2);
+```
+
+Counting results can be done using the
+`count()` method:
+
+```javascript
+db.people.count({name: {$regex: "^m"}});
+```
+
+
+###Updating documents
+
+The collection's `update()` method take
+at least two arguments, the first of which
+is the query, just like the `find()` method, 
+and the second of which is an object specifying
+an object to **replace** the matching document
+(only the `_id` is not replaced):
+
+```javascript
+db.people.update({name:"me"}, {name:"Me", salary: 30});
+```
+
+Using the `$set` command with update can be used with
+the `update()` method to prevent the wholesale
+replacement behavior:
+
+```javascript
+db.people.update({name:"me"}, {$set: {luggageCode: "12345"}});
+```
+
+The above line will update an existing 
+property's value, or add the property
+if it doesn't already exist.
+
+Similarly, the `$inc` operator will increment
+a numeric property value by a step value:
+
+```javascript
+db.people.update({name:"me"}, {$inc: {age: 1}});
+```
+
+Similar to `$set` the `$unset` operator will 
+remove the specified property from a document:
+
+```javascript
+db.people.update({name:"me", {$unset: {salary:1}});
+```
+
+Updating arrays within documents can be 
+done using operators `$push` and `$pop`
+which behave like their JavaScript 
+counterparts:
+
+```javascript
+db.people.insert({_id: "me", numbers: [1,2,3,4,5]});
+db.people.update({_id: "me"}, {$push:{numbers: 6}});
+
+//pop the right-most element:
+db.people.update({_id: "me"}, {$pop:{numbers: 1}});
+
+//pop the left-most element:
+db.people.update({_id: "me"}, {$pop:{numbers: -1}});
+```
+
+The `$pushAll` operator adds multiple values 
+to an array:
+
+```javascript
+db.people.update({_id: "me"}, {$pushAll: {numbers: [7,8,9]}});
+``` 
+
+And the `$pull` operator removes a (single) element
+from an array based on a matching value:
+
+```javascript
+db.people.insert({_id: "x", numbers: [3,4,5,6,7,6,5]});
+```
