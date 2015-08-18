@@ -578,3 +578,123 @@ public class Pet
 }
 ```
 
+The class above uses the convention of
+an `ObjectId` type with field name `Id`.
+The list of strings will be treated as
+an array of strings, the list of pets will
+be treated as an array of nested subdocuments,
+and the `BsonDocument` is a catchall property
+for extra attributes not defined in the
+class explicitly.
+
+Attributes can be added to properties to
+define document behaviors.  For instance,
+a `[BsonElement("name")]` attribute could be
+placed on the `Name` property to force the 
+database serialization to use a lowercase
+`name` property.
+
+
+###Inserting data with .NET driver
+
+Simple insertion using the generic `BsonDocument`
+type:
+
+```csharp
+var client = new MongoClient(_connectionString);
+var db = client.GetDatabase("test");
+var col = db.GetCollection<BsonDocument>("people");
+
+var doc = new BsonDocument 
+{
+	{"Name","Smith"},
+	{"Age",30},
+	{"Profession","Hacker"}	
+};
+
+await col.InsertOneAsync(doc);
+```
+
+If two or more document objects were created, an array
+can be created, e.g. `new [] {doc, doc2}` and
+passed to the `InsertManyAsync()` method.
+
+Using strongly-typed insertions are as easy:
+
+```csharp
+var client = new MongoClient(_connectionString);
+var db = client.GetDatabase("test");
+var col = db.GetCollection<Person>("people");
+
+var person = new Person 
+{
+	Name = "Smith",
+	Age = 30,
+	Profession = "Hacker"
+};
+
+await col.InsertOneAsync(person);
+```
+
+Note that in the above code, before the 
+call to `InsertOneAsync()` the `Id` property
+is unintialized, but after the call, the
+property has the value assigned in the database.
+(However the client driver does the assigning,
+not the database server).
+
+
+###Finding documents using .NET driver
+
+Use the `Find()` method:
+
+```csharp
+var client = new MongoClient(_connectionString);
+var db = client.GetDatabase("test");
+var col = db.GetCollection<BsonDocument>("people");
+
+var list = await col.Find(new BsonDocument()).ToListAsync();
+foreach (var doc in list) 
+{
+	//doc
+}
+```
+
+To find using a filter:
+
+```csharp
+var filter = new BsonDocument("Name", "Smith");
+var list = await col.Find(filter).ToListAsync();
+foreach (var doc in list) 
+{
+	//doc	
+}
+```
+
+More complicated queries might make use of
+the `FilterDefinitionBuilder` type:
+
+```csharp
+var builder = Builders<BsonDocument>.Filter;
+var filter = builder.Lt("Age", 30) & builder.Eq("Name", "Jones");
+var list = await col.Find(filter).ToListAsync();
+foreach (var doc in list) 
+{
+	//doc	
+}
+```
+
+Notice above that the `&` and `|` operators have
+been overloaded to function with expected 
+behavior.
+
+The `Find()` method uses a fluent interface:
+
+```csharp
+var list = await col.Find(filter)
+					.Sort(new BsonDocument("Age", 1))
+					.Limit(5)
+					.Skip(25)
+					.ToListAsync();
+```
+
