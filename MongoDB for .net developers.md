@@ -416,4 +416,165 @@ from an array based on a matching value:
 
 ```javascript
 db.people.insert({_id: "x", numbers: [3,4,5,6,7,6,5]});
+db.people.update({_id: "x"}, { $pull: { numbers: 5}});
+// numbers is now [3,4,6,7,6]
 ```
+
+And the `$pullAll` operator removes elements
+matching any values in a specified array:
+
+```javascript
+db.numbers.insert({_id:"y", numbers: [2,4,7,8,9]});
+db.numbers.update({_id:"y"}, $pullAll: {numbers: [2,7,8]});
+// numbers is now [4,9]
+```
+
+The handy `$addToSet` operator adds to an array
+if the specified value is not found in the array,
+or leaves it untouched if it is:
+
+```javascript
+db.numbers.insert({_id: "z", numbers: [2,4,6]});
+db.numbers.update({_id: "z"}, { $addToSet: { numbers: 5}});
+// numbers is [2,4,6,5]
+db.numbers.update({_id: "z"}, { $addToSet: {numbers: 5}});
+// numbers is still [2,4,6,5]
+```
+
+The `update()` method can also do an upsert by
+specifying a third object parameters, with a
+property named `upsert` and set to `true`.  If 
+there is no document found matching the object
+specified in the first parameter, a matching
+document will be inserted instead of updated:
+
+```javascript
+db.names.update({name: "George"}, { $set: { age: 40 }}, {upsert: true});
+```
+
+The `update()` method by default updates only
+**one** matching document.  In order to update
+multiple documents, a third parameter object with
+a property named `multi` must be set to true.  Here,
+an empty object matches every document in the 
+collection, which will all be updated with a title 
+property:
+
+```javascript
+db.names.update({}, { $set: { title: "Dr" }}, { multi: true });
+```
+
+An operation that updates multiple documents
+may pause to allow other read operations to 
+proceed.  During the yielding, read operations
+might read a half-finished update operation.
+But read operations will never read a half-modified
+individual document.
+
+
+###Removing documents
+
+To remove a document, use the `remove()` method
+on a collection, which takes an argument like `find()`.
+The `drop()` method might be more efficient than
+`remove({})` but will lose any indexes created
+on the collection. 
+
+```javascript
+db.names.remove({name:"Alice"});
+//alice document was removed
+db.names.remove({});
+//all documents in names collection removed
+db.names.drop();
+//names collection is dropped, similar to removing all
+```
+
+Like update operations, remove operations may
+yield to read operations, in which case the read
+operation may read a state where some but not
+all of the matched documents have been removed.
+But any individual document will never be in a
+strange partially deleted state.
+
+
+###Using MongoDB driver for .NET
+
+Use nuget to install the dependency to the
+official package: "MongoDB.Driver".  This
+package depends on "MongoDB.Driver.Core"
+and "MongoDB.Bson" which are handled automatically
+when adding the "MongoDB.Driver" package.
+
+All operations in the MongoDB library are 
+asynchronous by nature.  Create a `MongoClient`
+object by passing the constructor a connection string.
+The MongoClient handles all connections automatically.
+So pooling is handled without need to dispose, and 
+you can create as many client instances as needed.
+
+From a client object, get a database object,
+and from the database object, get a collection.
+So a simple console app might look like:
+
+```csharp
+static void Main(string[] args) 
+{
+	MainAsync(args).Wait();	
+}
+
+static async Task MainAsync(string[] args) 
+{
+	var client = new MongoClient("mongodb://localhost:27017");
+	var db = client.GetDatabase("dbname");
+	var col = db.GetCollection<Person>("people");	
+}
+```
+
+The driver can use strong types as in
+the example above where a person object
+is specified.  But a generic document
+can also be used, which is defined by the
+`BsonDocument` class:
+
+```javascript
+var doc = new BsonDocument 
+{
+	{"name", "matt"},
+	{"age", 38}	
+};
+
+// add prop to the document programatically
+doc.Add("fav", "almonds");
+
+// or using the [] notation:
+doc["profession"] = "hacker";
+
+// nested document
+var nested = new BsonArray();
+nested.Add(new BsonDocument("color", "red"));
+nested.Add(new BsonDocument("shape","circle"));
+doc.Add("arr", nested);
+```
+
+In the case of a strongly typed treatment
+of collection documents, a class can be 
+written using conventions such as:
+
+```csharp
+public class Person 
+{
+	public ObjectId Id {get;set;}
+	public string Name {get; set; }
+	public int Age {get; set; }
+	public List<string> Favs {get; set; }
+	public List<Pet> Pets {get; set; }
+	public BsonDocument ExtraElements {get; set; }	
+}
+
+public class Pet 
+{
+	public string Name {get; set; }
+	public string Type {get; set; }	
+}
+```
+
