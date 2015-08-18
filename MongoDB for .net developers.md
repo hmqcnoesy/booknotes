@@ -13,8 +13,8 @@ directory at `c:\data\db`.
 
 ###Using document databases
 
-Run mongod to start the database.
-Run mongo to start the interactive
+Run `mongod` to start the database.
+Run `mongo` to start the interactive
 shell.  The mongo shell by default
 connects to the local MongoDB 
 instance.
@@ -698,3 +698,47 @@ var list = await col.Find(filter)
 					.ToListAsync();
 ```
 
+Projects are done with `.Project()`, where
+fields to be included are specified with value
+of 1 and the _id must be explicitly excluded
+or it will always be returned:
+
+```csharp
+
+var list = await col.Find(filter)
+					.Project("{Name: 1, _id: 0}")
+					.ToListAsync();
+```
+
+
+###Updating documents with the .NET driver
+
+Replacements are performed using the
+`ReplaceOneAsync()` method, which behaves
+just like the interactive `update()` method:
+
+```csharp
+var result = await col.ReplaceOneAsync(
+	new BsonDocument("x", 5),
+	new BsonDocument("x", 30),
+	new UpdateOptions { IsUpsert = true });
+```
+
+And updates can be done using the
+`UpdateOneAsync()` method:
+
+```csharp
+var result = await col.UpdateOneAsync(
+	new BsonDocument("_id", 5),
+	new BsonDocument("$inc", new BsonDocument("x", 10)));
+
+```
+
+The `UpdateManyAsync()` method allows updating
+of multiple documents in a similar manner.
+
+
+###Removing documents with the .NET driver
+
+The `DeleteOneAsync()` and `DeleteManyAsync()`
+methods behave just as the update counterparts.
