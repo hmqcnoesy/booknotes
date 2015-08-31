@@ -1,7 +1,7 @@
 body { 
-	background-color: #eee; 
+	background-color: #fff; 
 	padding: 1em; 
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+	font-family: Helvetica Neue, Helvetica, Segoe UI, Arial, sans-serif;
 }
 
 h2 {
@@ -10,39 +10,57 @@ h2 {
 }
 
 code { 
-	background-color: #aaa; 
+	background-color: rgba(0,0,0,0.04); 
 	border-radius: 0.4em; 
 	padding: 0 0.3em; 
-	font-family: Consolas, monospace; 
 }
 
 pre { 
 	background-color: black; 
-	padding: 1em 1em 0 1em; 
+	padding: 0 1em 0 1em; 
 	border-radius: 0.4em; 
 	font-family: Consolas, monospace; 
 	overflow-x: auto; 
 }
 
-pre code { 
-	padding: 0;
+pre code .monaco-markdown { 
+	font-family: Consolas, monospace; 
+	font-size: 1.2em;
+}
+
+kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 10px;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fcfcfc;
+    border: solid 1px #ccc;
+    border-bottom-color: #bbb;
+    border-radius: 3px;
+    box-shadow: inset 0px -1px 0px #bbb;
 }
 
 table { 
-	border: 1px solid gainsboro; 
+	border: 1px solid rgba(0,0,0,0.04); 
+	border-collapse: collapse;
+	border-spacing: 0; 
 }
 
 tr:nth-child(even) { 
-	background-color: gainsboro; 
+	background-color: rgba(0,0,0,0.04); 
 }
 
 td,th { 
-	padding: 0.5em 
+	margin: 0;
+	padding: 0.5em;
+	border: 1px solid rgba(0,0,0,0.04);
 }
 
 th { 
-	text-align: left; 
+	text-align: center; 
 	font-weight: bold; 
-	color: white; 
-	background-color: #777; 
+	color: black; 
+	background-color: white; 
 }

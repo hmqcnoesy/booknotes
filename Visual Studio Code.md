@@ -8,31 +8,38 @@ forces a new instance of Code to be opened.
 Use <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
 to open the command palette,
 which reveals all of Code's features.  The
-`Ctrl-P` command allows you to search for a 
-file and open it, like `Ctrl-,` in Visual Studio.
-`Ctrl-P` then `>` is equivalent to `Ctrl-Shift-P`.
-`Ctrl-P` then `?` shows help available and can
-guide you to commands you need.
+<kbd>Ctrl</kbd> + <kbd>P</kbd> command allows you to search for a 
+file and open it, like <kbd>Ctrl</kbd> + <kbd>,</kbd> in Visual Studio.
+<kbd>Ctrl</kbd> + <kbd>P</kbd> then </kbd>></kbd> is equivalent 
+to <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>.
+<kbd>Ctrl</kbd> + <kbd>P</kbd> then </kbd>?</kbd> shows help 
+available and can guide you to commands you need.
 
-Use `Ctrl-1`, `Ctrl-2`, `Ctrl-3`, to move into
-or open additional side by side windows, up to
+Use <kbd>Ctrl</kbd> + <kbd>1</kbd>, 
+<kbd>Ctrl</kbd> + <kbd>2</kbd>, <kbd>Ctrl</kbd> + <kbd>3</kbd>
+to move into or open additional side by side windows, up to
 a total of three across. 
 
-Use `Ctrl+D` to progressively multi-select text matching
+Use <kbd>Ctrl</kbd> + <kbd>D</kbd> to progressively 
+multi-select text matching
 the currently selected text.  For instance, in a
-code file, select a variable name, then `Ctrl+D` will 
-find and highlight the next instance of it.  `Ctrl-D`
+code file, select a variable name, then 
+<kbd>Ctrl</kbd> + <kbd>D</kbd> will 
+find and highlight the next instance of it.  
+<kbd>Ctrl</kbd> + <kbd>D</kbd>
 again will find a third instance, and so on.  Each time,
 the found text becomes selected in multi-selector.
 To accomplish the same process for all instances of
 selected text in a document without having to progressively
 select each found instance:  with the text selected,
-use `Ctrl-Shift-L`.  `Alt+Click` allows mouse-driven
+use <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd>.
+<kbd>Alt</kbd> + <kbd>Click</kbd> allows mouse-driven
 multi-selection anywhere.  To make a vertical multi-
-selection (like Visual Studio's `Shift-Alt-DownArrow`)
-use `Ctrl-Alt-Arrow`.
+selection (like Visual Studio's 
+<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>DownArrow</kbd>)
+use <kbd>Ctrl</kbd> + <kbd>Alt-Arrow</kbd>.
 
-Intellisense is available using `Ctrl+Space`.  The
+Intellisense is available using <kbd>Ctrl</kbd> + <kbd>Space</kbd>.  The
 intellisense is file-type-aware.  For instance,
 in a markdown file, the intellisense shows options
 for `img`, `code`, etc. 
@@ -63,5 +70,5 @@ when the snippet is invoked:
 ```
 
 To move current line or multiple selected lines up or
-down a row, use `Alt+Arrow`.
+down a row, use <kbd>Alt</kbd> + <kbd>Arrow</kbd>.
 
