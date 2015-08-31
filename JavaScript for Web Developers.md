@@ -166,9 +166,28 @@ function doAdd(num1, num2) {
  
 oddly, `arguments[x]` and corresponding named arg occupy different spots in memory, but are kept in sync
 
+
 ##Variables
-Five primitive types: `undefined, null, boolean, number, string` are accessed by value. Reference types dont' allow direct access to memory locations, only access by ref
+Five primitive types: `undefined`, 
+`null`, `boolean`, `number`, `string` 
+are accessed by value. Reference types 
+don't allow direct access to memory 
+locations, only access by ref.  Primitive
+types are stored on the stack and assigning
+to a different variable
+and passing as parameters causes a copy
+of the primitive value to be made. 
  
+Reference types are objects stored on the
+heap.  The value of a ref type variable is
+a pointer to the location of the object on
+the heap.  Assigning a ref value to a 
+different variable and passing a ref type
+variable as an argument make a copy of the
+stack value, which is the pointer to the
+object, so both variables will reference 
+the same object.
+
 ref types have dynamic properties:
 ```javascript
 var obj = new Object();
@@ -212,26 +231,57 @@ alert(obj instanceof Array); // false
 ```
 
 ##Scope
-Global variables and functions are created as properties and methods on the window object, which is one execution context.
+Global variables and functions are created 
+as properties and methods on the window
+object, which is one execution context 
+(scope).
 
-Each function call has its own execution context.  When function code is entered, that function's execution context is pushed onto a context stack.  When function is finished the stack is popped and returns to previous execution context.
+Each function call has its own execution 
+context.  When function code is entered, 
+that function's execution context is pushed
+onto a context stack.  When function is
+finished the stack is popped and returns to
+previous execution context.
 
-A scope chain is thus created - the first in the chain is always the variable object (inaccessible obj used behind scense for ex context) of the context whose code is executing the last of the chain is always the global context. identifiers are resolved by searching the scope chain. Search begins @ front, continues until identifier found
+A scope chain is thus created - the first
+in the chain is always the variable object
+(inaccessible obj used behind scense for
+ex context) of the context whose code is
+executing the last of the chain is always 
+the global context. identifiers are resolved
+by searching the scope chain. Search begins
+at front, continues until identifier found
 
-`catch` and `with` statements add their own variable objects to the front of scope chain
+`catch` and `with` statements add their
+own variable objects to the front of scope
+chain.
 
-When `var` is omitted when creating a variable, it is added to the global variable object in strict mode, you must use var.
+When `var` is omitted when creating a
+variable, it is added to the global variable
+object.  In strict mode, you must use `var`.
 
-Local variables with same name as global variables effectively hide the global ones because the search stops at the local variable object when its found.
+Local variables with same name as global
+variables effectively hide the global 
+ones because the search stops at the 
+local variable object when its found.
 
 ##Garbage Collection
-Mark and sweep is used by most browsers - could be a list of in-context variables, or a bit flag on each variable.
+Mark and sweep is used by most browsers - 
+could be a list of in-context variables, 
+or a bit flag on each variable.
 
-IE, FF, Opera, Chrome, Safari all use mark/sweep. Netscape used ref counting, but circular refs problematic.
+IE, FF, Opera, Chrome, Safari all use 
+mark/sweep. Netscape used ref counting, 
+but circular refs problematic.
 
-IE8 and earlier used COM objects for DOM and BOM instead of native javascript objects. COM uses ref counting, so this was a problem.
-To remedy, make sure you set js object refs = null when they are done.
-That will allow them to get GC'd using ref counting.
+IE8 and earlier used COM objects for DOM 
+and BOM instead of native javascript 
+objects. COM uses ref counting, so this 
+was a problem.  To remedy, make sure you set js object 
+refs = null when they are done.
+That will allow them to get GC'd using 
+ref counting.
+
 
 ##Objects
 ```javascript
@@ -413,8 +463,11 @@ idx.forEach(function(item) {
 });
 ```
 
+
 ##Dates
-Dates are stored as number of milliseconds since 1/1/70
+Dates are stored as number of milliseconds 
+since 1/1/70
+
 ```javascript
 var now = new Date(); // current datetime
 var bday = new Date(Date.parse("May 25, 1977"));
@@ -425,4 +478,73 @@ var start = Date.now();
 doSlowStuff();
 var stop = Date.now();
 alert(stop - start);
+```
+
+The `.toString()` method on a `Date` is
+useful for debugging only, not for display
+because of the wide differences in browser
+implementations of the formatting.  Same
+goes for `.toLocaleString()`.
+
+Other handy methods on the `Date` type 
+include:
+
+|Method               | Description        |
+|---------------------|--------------------|
+|`getTime()`          |returns millisecond representation of the date |
+|`setTime(ms)`        |sets millisecond representation, changing the value of the date |
+|`getFullYear()`      |gets full year number, e.g. 2015 |
+|`setFullYear(year)`  |sets full year number |
+|`getMonth()`         |gets full month number where 0 is January |
+|`setMonth(mon)`      |sets full month number |
+|`getDate()`          |gets the day number of the month ( 1 through 31) |
+|`setDate(date)`      |sets the day number of the month |
+|`getDay()`           |gets the day number of the week where 0 is Sunday |
+|`getHours()`         |gets the number of hours of the date (0 through 23) |
+|`setHours(hours)`    |sets the number of hours |
+|`getMinutes()`       |gets the number of minutes of the data (0 through 59) |
+|`setMinutes(min)`    |sets the number of minutes |
+|`getSeconds()`       |gets the number of seconds of the date (0 through 59) |
+|`setSeconds(sec)`    |sets the number of seconds |
+|`getMilliseconds()`  |gets the number of milliseconds of the date (0 through 999) |
+|`getMilliseconds()`  |gets the number of milliseconds of the date (0 through 999) |
+|`setMilliseconds(ms)`|sets the number of milliseconds |
+|`getTimezoneOffset()`|retuns the number of minutes offset from UTC |
+
+In addition to all the getters and setters
+listed above, there are UTC versions, for
+example `setUTCSeconds(sec)`.
+
+
+##RegExp
+The JavaScript syntax for creating regex
+expressions is borrowed from Perl:
+
+```javascript
+var regex = /pattern/flags;
+var example = /[bc]at/im;
+```
+
+Supported flags are: `g` (global), `i`
+(case-insensitive), and `m` (multiline).
+
+If needed, regex expressions can be created 
+using the constructor.  This is useful
+when the expression is not know at design
+time:
+
+```javascript
+var example = new RegExp("[bc]at", "im");
+```
+
+Calling the `test()` method on a regex
+and passing a string to test returns 
+a bool indicating if the tested string
+matches the expression:
+
+```javascript
+var regex = /[bc]at/i;
+console.log(regex.test('bat')); //true
+console.log(regex.test('cat')); //true
+console.log(regex.test('hat')); //false
 ```
