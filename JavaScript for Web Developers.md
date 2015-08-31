@@ -46,12 +46,12 @@ Boolean(null); // false
  
 Truthy and Falsy values
 
-true                  | false
-----------------------|---------------
-any non-empty string  | empty string
-any non-zero number   | 0, NaN
-any object            | null
- -                    | undefined
+|true                  |false         |
+|----------------------|--------------|
+|any non-empty string  |empty string  |
+|any non-zero number   |0, NaN        |
+|any object            |null          |
+|-                     |undefined     |
  
 number type: ints and floats are handled differently but are both just number types
 ```javascript
