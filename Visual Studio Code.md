@@ -5,41 +5,45 @@ Use `code .` to open the current folder.  The
 instance of the Code application, and `-n`
 forces a new instance of Code to be opened.
 
-Use <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
+Use <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd>
 to open the command palette,
 which reveals all of Code's features.  The
-<kbd>Ctrl</kbd> + <kbd>P</kbd> command allows you to search for a 
-file and open it, like <kbd>Ctrl</kbd> + <kbd>,</kbd> in Visual Studio.
-<kbd>Ctrl</kbd> + <kbd>P</kbd> then </kbd>></kbd> is equivalent 
-to <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>.
-<kbd>Ctrl</kbd> + <kbd>P</kbd> then </kbd>?</kbd> shows help 
+<kbd>Ctrl</kbd><kbd>P</kbd> command allows you to 
+search for a 
+file and open it, like <kbd>Ctrl</kbd><kbd>,</kbd> 
+in Visual Studio. <kbd>Ctrl</kbd><kbd>P</kbd> then 
+</kbd>></kbd> is equivalent 
+to <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd>.
+<kbd>Ctrl</kbd><kbd>P</kbd> then </kbd>?</kbd> 
+shows help 
 available and can guide you to commands you need.
 
-Use <kbd>Ctrl</kbd> + <kbd>1</kbd>, 
-<kbd>Ctrl</kbd> + <kbd>2</kbd>, <kbd>Ctrl</kbd> + <kbd>3</kbd>
+Use <kbd>Ctrl</kbd><kbd>1</kbd>, 
+<kbd>Ctrl</kbd><kbd>2</kbd>, <kbd>Ctrl</kbd><kbd>3</kbd>
 to move into or open additional side by side windows, up to
 a total of three across. 
 
-Use <kbd>Ctrl</kbd> + <kbd>D</kbd> to progressively 
+Use <kbd>Ctrl</kbd><kbd>D</kbd> to progressively 
 multi-select text matching
 the currently selected text.  For instance, in a
 code file, select a variable name, then 
-<kbd>Ctrl</kbd> + <kbd>D</kbd> will 
+<kbd>Ctrl</kbd><kbd>D</kbd> will 
 find and highlight the next instance of it.  
-<kbd>Ctrl</kbd> + <kbd>D</kbd>
+<kbd>Ctrl</kbd><kbd>D</kbd>
 again will find a third instance, and so on.  Each time,
 the found text becomes selected in multi-selector.
 To accomplish the same process for all instances of
 selected text in a document without having to progressively
 select each found instance:  with the text selected,
-use <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd>.
-<kbd>Alt</kbd> + <kbd>Click</kbd> allows mouse-driven
+use <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>L</kbd>.
+<kbd>Alt</kbd><kbd>Click</kbd> allows mouse-driven
 multi-selection anywhere.  To make a vertical multi-
 selection (like Visual Studio's 
-<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>DownArrow</kbd>)
-use <kbd>Ctrl</kbd> + <kbd>Alt-Arrow</kbd>.
+<kbd>Shift</kbd><kbd>Alt</kbd><kbd>DownArrow</kbd>)
+use <kbd>Ctrl</kbd><kbd>Alt-Arrow</kbd>.
 
-Intellisense is available using <kbd>Ctrl</kbd> + <kbd>Space</kbd>.  The
+Intellisense is available using <kbd>Ctrl</kbd>
+<kbd>Space</kbd>.  The
 intellisense is file-type-aware.  For instance,
 in a markdown file, the intellisense shows options
 for `img`, `code`, etc. 
@@ -70,5 +74,4 @@ when the snippet is invoked:
 ```
 
 To move current line or multiple selected lines up or
-down a row, use <kbd>Alt</kbd> + <kbd>Arrow</kbd>.
-
+down a row, use <kbd>Alt</kbd><kbd>Arrow</kbd>.
