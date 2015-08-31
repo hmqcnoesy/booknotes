@@ -75,3 +75,61 @@ when the snippet is invoked:
 
 To move current line or multiple selected lines up or
 down a row, use <kbd>Alt</kbd><kbd>Arrow</kbd>.
+To copy the current line or multiple selected lines
+use <kbd>Alt</kbd><kbd>Shift</kbd><kbd>Arrow</kbd>.
+
+
+[Emmet](http://docs.emmet.io) is used for zen coding.  For example,
+`div.container>ul>li*5` followed by <kbd>Tab</kbd>
+becomes:  
+
+```html
+
+<div class="container">
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+```
+
+User settings in Code are applied for the entire installation.
+Workspace settings, if specified, will create a .settings
+folder in the current working folder, with a settings.json
+file within.  The settings specified in settings.json apply
+to that folder only, which is handy for per-project settings
+to be checked into source control.
+
+JSON schema information is supported with the 
+`json.schemas` property in the settings.
+
+JavaScript intellisense is supported by TypeScript
+definitions via DefinitelyTyped.  If not installed yet,
+get the TypeScript Definition Manager:
+
+```
+npm i -g tsd
+```
+
+Then initialize tsd in the project folder:
+
+```
+tsd init
+```
+
+And use it to retrieve desired definitions:
+
+```
+tsd query jquery --action install
+```
+
+The above command will look for jquery and install
+its type definition file in the project's "typings"
+subfolder, where Code looks for type info.  By 
+default, tsd queries Boris Yankov's 
+[DefinitelyTyped](https://github.com/borisyankov/DefinitelyTyped/)
+repository.
+
