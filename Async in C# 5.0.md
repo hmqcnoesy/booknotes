@@ -87,5 +87,4 @@ continue servicing HTTP requests during long
 running operations.
 
 
-###Parallel code
-
+###
