@@ -354,3 +354,46 @@ shouldn't ever be a problem.
 
 ##What await actually does
 
+When `await` is reached in code, the 
+current thread must be released and the
+current method must return.  When the
+awaited task is complete, the method 
+must continue from where it was, as if
+it hadn't returned earlier.  To achieve
+this, the runtime must store info about
+the current situation so that it can 
+recreate the situation when it comes
+time to resume the execution.  This
+info gathering and storage is far reaching
+and complex.  Local variables, scoped
+variables, parameters, etc. are all stored
+as well as an execution context, security
+context, and call context.  All of the 
+stored info must be reconstructed for 
+continution of execution following `await`.
+
+Because of this compiler magic that 
+reconstructs a moment in time when the 
+awaited task is ready, the `await`
+keyword cannot be used in certain places.
+`catch` and `finally` blocks can't contain
+`await` because an exception is still 
+unwinding the stack there.  Similarly,
+`await` cannot be used in `lock` blocks,
+LINQ expressions, or in code marked
+`unsafe`.
+
+When a `Task` is complete, the `IsFaulted`
+property indicates if an exception was 
+thrown during the task execution.  When
+using `await`, the exception will be 
+rethrown so as to get the exception into
+the method containing the `await`.  An
+unhandled exception in an `async` method
+is stashed in the `Task` returned to the
+caller, where the exception will be thrown
+where it is awaited.
+
+
+###Async methods are synchronous until needed
+
