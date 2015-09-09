@@ -397,4 +397,4 @@ where it is awaited.
 
 ###Async methods are synchronous until needed
 
-Async methods
+Async methods are cool.
