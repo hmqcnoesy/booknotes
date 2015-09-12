@@ -397,4 +397,139 @@ where it is awaited.
 
 ###Async methods are synchronous until needed
 
-Async methods are cool.
+A method marked `async` runs in the current
+thread until an `await` is encountered.  Even
+then sometimes it doesn't need to do any
+asynchronous work because the task given to
+the `await` operator is already complete: it
+may have been created complete, it may have 
+been returned by an async method that never 
+reached an `await`, it may have finished an
+actual asynchronous operation but the current
+thread was coincidentally paused at the time.
+The task returned by an async method and given
+to `await` may have been returned by a method
+that reached an `await` but that task was also
+already complete.  Because of this, a chain
+of asynchronous calls is likely to complete
+synchronously if the deepest `await` doesn't 
+completes synchronously.  This situation may
+arise when a method caches results of a slow
+operation in memory, such that the first time
+it is called it completes via an execution
+path that encounters an `await`, but subsequent
+calls complete via an execution path that 
+return the data from memory, without any
+`await` operators.
+
+
+##The Task-based asynchronous pattern
+
+Microsoft has recommended practices for 
+dealing with asynchronous APIs:
+
+- Use few parameters, the same ones that
+would be used for a synchronous version.
+Avoid `ref` and `out` whenever possible.
+- Return `Task` or `Task<T>`.  If a result
+of the async operation is needed, return 
+`Task<T>` where `T` is the type of result
+needed.
+- Name the method `NameAsync()` where `Name`
+is the name of the equivalent synchronous
+method.
+- An exception caused by a mistake in the
+usage of the method may be thrown in the 
+method.  Other exceptions should be put in
+the `Task` object.
+
+
+###Using Task for compute-intensive operations
+
+`Task` provides a simple way to perform
+operations in a non-blocking way:
+
+```csharp
+await Task.Run(() => PerformComputeIntenseStuff(a, b));
+```
+
+
+###Creating a puppet task
+
+What do you do when you're using API that 
+isn't available as a TAP API?  Use the
+`TaskCompletionSource<T>`:
+
+```csharp
+private Task<bool> GetUserPermission() 
+{
+	var tcs = new TaskCompletionSource<bool>();
+	var dialog = new PermissionDialog();
+	dialog.Closed += delegate { tcs.SetResult(dialog.PermissionGranted); };
+	dialog.Show();
+	return tcs.Task;
+}
+```
+
+
+##Utilities for async code
+
+The `Task.WhenAll()` method can take multiple
+`Task` objects and combine them into a single
+`Task`.  It guarantees correct behavior when
+one of the tasks causes an exception.  It returns
+an array of the results of the tasks given to it,
+although you still can access each original task
+object's result directly:
+
+```csharp
+// was:
+private async void Click(object sender, EventArgs e) 
+{
+	foreach (string domain in _domains) 
+	{
+		var img = await GetFavicon(domain);
+		AddFavicon(img);
+	}
+}
+
+// preferrable:
+private async void Click(object sender, EventArgs e) 
+{
+	var tasks = new List<Task<Image>>();
+	foreach (string domain in _domains) 
+	{
+		tasks.Add(GetFavicon(domain));
+	}	
+	
+	Task<Image[]> all = Task.WhenAll(tasks);
+	var images = await all;
+	
+	foreach(var img in images) 
+	{
+		AddFavicon(img);	
+	}
+}
+```
+
+Similar to `WhenAll()`, the `WhenAny()` method
+can let you use the first available result 
+from a collection.  A good use of it is to write
+a timeout method:
+
+```csharp
+private static async Task<T> WithTimeout<T>(Task<T> task, int time)
+{
+	var delayTask = Task.Delay(time);
+	var firstToFinish = await Task.WhenAny(task, delayTask);
+	
+	if (firstToFinish == delayTask) 
+	{
+		task.ContinueWith(HandleException);
+		throw new TimeoutException();	
+	}	
+	
+	return await task;
+}
+```
+
