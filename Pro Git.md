@@ -81,8 +81,8 @@ When Git is first installed, set the
 username and email using:
 
 ```shell
-git config --global user.name "John Doe"
-git config --global user.email "johndoe@example.com"
+$ git config --global user.name "John Doe"
+$ git config --global user.email "johndoe@example.com"
 ```
 
 Using the `--global` option ensures
@@ -105,13 +105,13 @@ value for the key wins.
 Get help using:
 
 ```shell
-git help <verb>
+$ git help <verb>
 ```
 
 For instance:
 
 ```shell
-git help config
+$ git help config
 ```
 
 This opens an HTML file in the app
@@ -127,3 +127,129 @@ https://groups.google.com/d/msg/msysgit/bBVP3DKyKzc/fpzK8moJXOgJ
 
 ##Git basics
 
+###Initializing a repository in an existing directory
+
+To start a repo from an existing folder:
+
+```shell
+$ git init
+```
+
+This will create the `.git` subfolder, but
+not start tracking anything.  To clone an
+existing repo, use:
+
+```shell
+$ git clone http://github.com/libgit2/libgit2
+```
+
+This creates a copy of the entire repo,
+including all files' version history, in
+the current working directory (in a subfolder
+named libgit2).  The cloned
+repo is so complete that if the server were
+to be lost, it could be perfectly reconstructed
+from repos stored on clients. 
+
+The `git clone` command creates the `.git`
+subfolder in its entirety and "checks out"
+the latest copy - that is it creates a copy
+in the working folder, ready for modification.
+
+To check status of files in a repo, use:
+
+```shell
+$ git status
+```
+
+A "nothing to commit, working directory clean"
+message indicates that no tracked files are
+modified, and there are no untracked files
+(unless they are explicitly ignored).
+
+Adding a file will result in a new untracked
+file when running `git status`:
+
+```shell
+$ echo "New stuff" > new.txt
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include what will be committed)
+  
+    new.txt
+	
+```
+
+This message means Git sees the file, but 
+has not been instructed to track it as 
+part of the repo, and won't include it in
+a commit until told to.  This is the default
+behavior so that binary files or other
+artifacts are not automatically included in
+commits.  To start tracking the untracked
+file, use `git add <f>` where f is a file
+or a directory (in which cases all files
+below will be added):
+
+```shell
+$ git add new.txt
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+  
+    new file:    new.txt
+```
+
+Now the file is staged.  If committed now,
+the version of the file that was staged
+will be added to the repo.
+
+Likewise, a file that is already tracked,
+once modified, will show its status as
+"Changes not staged for commit".  The
+`git add` command works here to stage the
+modified file. If a change is made to a 
+staged file after it is staged, `git status`
+will report the file has both changes to
+be committed, and changes not staged for
+commit:
+
+```shell
+$ vim file.txt
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+  
+    modified:    file.txt
+	
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+  
+    modified:    file.txt
+```
+
+The staged copy is the version of the file
+exactly as it was when the `git add` command
+was executed.  The working copy is detected
+as having changed and so is listed as an
+unstaged modification.  To get the current
+version staged for commit, simply 
+`git add` again.
+
+A less wordy alternative to `git status` is
+`git status -s`:
+
+```shell
+$ git status -s
+ M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
+```
+
+Untracked files have `??`
