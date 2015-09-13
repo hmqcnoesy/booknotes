@@ -334,4 +334,47 @@ must be committed.
 ###Moving files
 
 Git doesn't track file movement.  Renaming
-a file to Git 
+a file is essentially the same as deleting
+the original file and creating a new file
+with the new name.  So the `git mv` 
+command:
+
+```shell
+$ git mv file_from file_to
+```
+
+is really the same as:
+
+```shell
+$ git rm file_from
+$ git add file_to
+``` 
+
+Although `git status` in both cases can
+detect that it is the same file, and will
+show the status as having been renamed.
+Go figure.
+
+
+###Viewing the commit history
+
+Run `git log` to view a list of commits
+with their messages, in reverse chronological
+order.
+
+The `p` option shows differences.  The `-2`
+option limits to the last 2 commits.
+The `--pretty=format:"<format>"` option can
+use a format specifier to output exactly 
+the info needed.  Format specifiers can
+contain options like `%H` for commit hash,
+`%an` for author name, `%cn` for committer
+name, and `%s` for subject.
+
+There are a plethora of additional options
+for `git log`, none of which are anywhere
+near as useful as a simple graphical tool
+for viewing or comparing history.
+
+###Undoing things
+
