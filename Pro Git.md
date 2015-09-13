@@ -252,4 +252,86 @@ M  lib/simplegit.rb
 ?? LICENSE.txt
 ```
 
-Untracked files have `??`
+To tell Git to ignore files, create a
+`.gitignore` file:
+
+```
+#contents of .gitignore
+*.[oa]
+*~
+```
+
+In the above example, all files ending
+in `.o` and `.a` are ignored, as well 
+as files ending in `~`.  Pattern rules are
+as follows:
+
+- Blank lines or lines starting with `#`
+are ignored
+- Standard glob patterns work
+- End a pattern with a `/` to specify a directory
+- Negate a pattern by starting with `!`
+
+Glob patterns are simplified regex that
+shells use:
+
+- `*` matches zero or more chars
+- `[abc]` matches a, b, or c
+- `?` matches a single char
+- `[0-9]` matches a single char between 0 and 9
+
+Use `git diff` to see actual changes to files
+that are unstaged.  Use `git diff --staged`
+to see staged differences.  This sucks in a
+terminal window and is best left to graphical
+tools.
+
+
+###Committing your changes
+
+Once the staging version is set up correctly,
+it is time to commit - saving a permanent
+snapshot of the files as staged:
+
+```shell
+$ git commit
+```
+
+This opens the default text editor, prompting
+for the commit comments.  When the editor is
+exited, Git creates the commit snapshot along
+with the message saved.  A commit message
+can be included inline as well, using the 
+`-m` option:
+
+```shell
+$ git commit -m "git sucks"
+```
+
+###Skipping the staging area
+
+A shortcut to skip the staging area:
+
+```shell
+$ git commit -a -m "git sucks"
+```
+
+
+###Removing files
+
+To remove a file from a repo, it must
+be removed from tracked files:
+
+```shell
+$ rm unwanted.txt
+$ git rm unwanted.txt
+```
+
+The above stages the removal, which then 
+must be committed.
+
+
+###Moving files
+
+Git doesn't track file movement.  Renaming
+a file to Git 
