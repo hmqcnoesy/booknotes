@@ -376,5 +376,158 @@ for `git log`, none of which are anywhere
 near as useful as a simple graphical tool
 for viewing or comparing history.
 
+
 ###Undoing things
+
+The `--amend` option when committing
+will change the last commit, using the
+current staged changes to overwrite the
+latest snapshot. 
+
+
+###Unstaging a staged file
+
+To remove a file from staging, use
+`git reset HEAD <file>`
+
+
+###Unmodifying a modified file
+
+To revert a file to what it was at the 
+last commit, use `git checkout -- <file>`.
+This command copies the last committed
+version of the file from the repo into 
+the working directory.  This is a 
+dangerous command, since the working
+directory version has no backup, and 
+gets copied over immediately.
+
+
+###Working with remotes
+
+To show remotes configured for a repo:
+
+```shell
+$ git remote
+origin
+```
+
+The `-v` option shows remotes' URLs:
+
+```shell
+$ git remote -v
+origin http://github.com/hmqcnoesy/booknotes (fetch)
+origin http://github.com/hmqcnoesy/booknotes (push)
+```
+
+If the repo has multiple remotes configured,
+they will all be listed.
+
+
+###Adding remote repositories
+
+To add a new remote, use:
+
+```shell
+$ git remote add cheese http://github.com/otheruser/booknotes
+$ git remote -v
+origin http://github.com/hmqcnoesy/booknotes (fetch)
+origin http://github.com/hmqcnoesy/booknotes (push)
+origin http://github.com/otheruser/booknotes (fetch)
+origin http://github.com/otheruser/booknotes (push)
+```
+
+The above would allow collaboration on
+the booknotes project with the other user.
+
+
+###Fetching and pulling from remotes
+
+To get data from a remote project:
+
+```shell
+$ git fetch [remotename]
+```
+
+The `fetch` command retrieves all data from
+the specified remote that you don't 
+currently have.  If the remote name is 
+not provided, the command assumes the
+`origin` remote.  It doesn't automatically
+merge with your work, or modify anything in
+the working directory.  You can merge
+manually if and when you're ready. To
+automatically merge changes with your 
+working directory, use `pull` instead:
+
+```shell
+$ git pull [remotename]
+```
+
+
+###Pushing to your remotes
+
+To push your committed changes to a remote
+repo:
+
+```shell
+$ git push [remotename] [localbranchname]
+```
+
+The command assumes the `origin` remote
+and `master` branch if values are not
+provided.  This obviously works only
+when pushing to a remote you have write
+access to.  Also, if a commit has been
+performed after the time you pulled (or
+cloned) the push will be rejected.  The
+latest committed version from the remote
+must be pulled before a new push can be
+successful.
+
+
+###Inspecting a remote
+
+To show info about a remote:
+
+```shell
+$ git remote show [remotename]
+```
+
+###Removing and renaming remotes
+
+To rename a remote:
+
+```shell
+$ git remote rename origin github
+$ git remote 
+github
+```
+
+And to remove:
+
+```shell
+$ git remote rm github
+```
+
+
+###Tagging
+
+To list your tags available:
+
+```shell
+$ git tag
+```
+
+To create a tag:
+
+```shell
+$ git tag -a v1.4 -m "my version 1.4"
+```
+
+To view a specific tag, use `git show`:
+
+```shell
+$ git show v1.4
+```
 
