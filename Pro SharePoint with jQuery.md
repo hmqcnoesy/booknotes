@@ -32,3 +32,33 @@ editing and in the head add either the normal
 
 ##Viewing SharePoint data using jQuery
 
+Use the SharePoint web services to 
+retrieve list data:
+
+```javascript
+$.ajax({
+	type: 'GET',
+	url: '/_vti_bin/ListData.svc/ListName',
+	dataType: 'json',
+	success: function(data) {
+		$.each(data.d.results, function(i, result) {
+			alert(result.Id + result.Title);
+		});	
+	}
+});
+```
+
+Or more succinctly, the `$.getJSON()` can be
+used where a URL and success callback are
+passed in.  The success callback function
+takes a parameter representing the returned
+data:
+
+```javascript
+$.getJSON(url, function(data) {
+	// data is object parsed from http response JSON
+});
+```
+
+
+##6
