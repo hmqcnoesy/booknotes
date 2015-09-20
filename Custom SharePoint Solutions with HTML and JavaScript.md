@@ -107,5 +107,27 @@ var msgId = SP.UI.Notify.addNotification('Custom message', true);
 SP.UI.Notify.removeNotification(msgId);
 ```
 
+When using the REST API, always set the 
+following headers:
 
-##8
+```javascript
+headers: {
+	'accept': 'application/json;odata=verbose',
+	'content-type': 'application/json;odata=verbose'
+}
+```
+
+When updating rather than just retrieving 
+data, the `X-RequestDigest` header also
+must be set as a security measure.  Its 
+value can be easily retrieved:
+
+```javascript
+headers: {
+	'X-RequestDigest': $('#__REQUESTDIGEST').val();
+}
+```
+
+Deleting list items is done with a `POST`
+request and the `X-HTTP-Method: DELETE`
+header.
