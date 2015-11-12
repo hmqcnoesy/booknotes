@@ -46,10 +46,31 @@ behavior or functionality of the
 object.  The default accessibility
 of a method is `private`.
 
-A class's *constructor(s)* are 
-methods with the same name as the
-class, having no return type, 
-used to instantiate the class. 
+A class's *constructors* can call
+each other using the syntax:
+
+```csharp
+public class Thing {
+	public Thing() { ... }
+	
+	public Thing(string name) : this()
+	{
+		_name = name;	
+	}	
+}
+```
+
+The constructor referenced using
+the `this` keyword is invoked before
+the parameterized constructor's code
+executes.
+
+Avoid doing work within constructors, 
+especially I/O or
+anything that could cause a delay.
+Objects should be instantiated 
+without the possibility of any slow,
+blocking code.
 
 Generally, the order of *members*
 defined in a class are in order:
@@ -57,3 +78,50 @@ defined in a class are in order:
 - Constructors
 - Fields and Properties
 - Methods
+
+
+Use static classes sparingly, as they
+can cause difficulty in testing.
+
+A singleton can be declared using:
+
+```csharp
+public class Thing {
+	private Thing() {}
+	private static Thing _instance;
+	public static Instance {
+		get {
+			if (_instance == null) {
+				_instance = new Thing();
+			}
+			return _instance;
+		}
+	}
+}
+```
+
+The private constructor ensures
+that the class cannot be instantiated
+using `new`.  The static field holds
+the one instance to be used always,
+and the instance property getter 
+creates the static instance only if
+necessary, and returns it.
+
+A class property can be lazy-loaded
+easily:
+
+```csharp
+class Thing {
+	private ChildThing _childThing;
+	public ChildThing ChildThing
+	{
+		if (_childThing == null) 
+		{
+			_childThing = new ChildThing();
+		}
+		return _childThing;
+	}
+}
+```
+		
