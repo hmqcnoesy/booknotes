@@ -46,10 +46,31 @@ behavior or functionality of the
 object.  The default accessibility
 of a method is `private`.
 
-A class's *constructor(s)* are 
-methods with the same name as the
-class, having no return type, 
-used to instantiate the class. 
+A class's *constructors* can call
+each other using the syntax:
+
+```csharp
+public class Thing {
+	public Thing() { ... }
+	
+	public Thing(string name) : this()
+	{
+		_name = name;	
+	}	
+}
+```
+
+The constructor referenced using
+the `this` keyword is invoked before
+the parameterized constructor's code
+executes.
+
+Avoid doing work within constructors, 
+especially I/O or
+anything that could cause a delay.
+Objects should be instantiated 
+without the possibility of any slow,
+blocking code.
 
 Generally, the order of *members*
 defined in a class are in order:
@@ -57,3 +78,24 @@ defined in a class are in order:
 - Constructors
 - Fields and Properties
 - Methods
+
+
+Use static classes sparingly, as they
+can cause difficulty in testing.
+
+A singleton can be declared using:
+
+```csharp
+public class Thing {
+	private Thing() {}
+	private Thing _instance;
+	public static Instance {
+		get {
+			if (_instance == null) {
+				_instance = new Thing();
+			}
+			return _instance;
+		}
+	}
+}
+```
