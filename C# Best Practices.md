@@ -88,7 +88,7 @@ A singleton can be declared using:
 ```csharp
 public class Thing {
 	private Thing() {}
-	private Thing _instance;
+	private static Thing _instance;
 	public static Instance {
 		get {
 			if (_instance == null) {
@@ -99,3 +99,29 @@ public class Thing {
 	}
 }
 ```
+
+The private constructor ensures
+that the class cannot be instantiated
+using `new`.  The static field holds
+the one instance to be used always,
+and the instance property getter 
+creates the static instance only if
+necessary, and returns it.
+
+A class property can be lazy-loaded
+easily:
+
+```csharp
+class Thing {
+	private ChildThing _childThing;
+	public ChildThing ChildThing
+	{
+		if (_childThing == null) 
+		{
+			_childThing = new ChildThing();
+		}
+		return _childThing;
+	}
+}
+```
+		
