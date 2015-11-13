@@ -108,6 +108,9 @@ and the instance property getter
 creates the static instance only if
 necessary, and returns it.
 
+
+##Properties
+
 A class property can be lazy-loaded
 easily:
 
@@ -125,3 +128,46 @@ class Thing {
 }
 ```
 		
+C# 6 adds a useful operator for 
+null testing:
+
+```csharp
+var result = thing?.ChildThing?.Name;
+```
+
+Above, if thing is null, the entire
+expression is evaulated to null.  If
+not, the thing instance's ChildThing
+is checked.  If it is null, the 
+expression is null, but if not the 
+expression finally evaluates to the
+ChildThing's Name.  Remember the 
+`?.` operator as: *if null then null,
+if not then dot*.
+
+
+## Methods
+
+When deciding to use a method vs a
+property, remember that a property
+should execute immediately, never 
+using blocking I/O or anything that
+would prevent an immediate return.
+Use a method for things that take
+time or produce side effects (or
+require parameters).
+
+Overriding the `ToString()` method
+of `object` can help in debugging -
+the Visual Studio debugger uses
+a class's `ToString()` when displaying
+the value of an object:
+
+```csharp
+public class Thing {
+	public override string ToString() {
+		return string.Format("Thing: {0} ({1})", this.Name, this.Desc);
+	}
+}
+```
+
