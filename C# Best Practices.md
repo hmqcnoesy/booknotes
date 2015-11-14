@@ -171,3 +171,10 @@ public class Thing {
 }
 ```
 
+C# 6 adds a syntax for an simple single
+statement method that returns a value:
+
+```csharp
+public override string ToString() => string.Format("Thing: {0} ({1})", this.Name, this.Desc);
+```
+
