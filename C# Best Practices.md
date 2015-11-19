@@ -171,3 +171,106 @@ public class Thing {
 }
 ```
 
+
+## Literal separators
+
+The `_` character can be used anywhere
+in a numeric literal without changing
+the value of the number:
+
+```csharp
+public class Thing 
+{
+	public MaxCount { get; } = 1_000_000_000;
+}
+```
+
+
+## Using static
+
+Static methods can be used without
+qualifying them by their class name,
+and instead having a `using` statement
+to import the static methods of the
+class:
+
+```csharp
+using System.Console;
+
+public class ConsoleApplication1 
+{
+	public static void Main() 
+	{
+		WriteLine("hello world");
+	}
+}
+```
+
+The class in the using statement
+must be a static class. It cannot 
+be a non-static class even if the
+class has static methods.
+
+In the case of a conflicting instance method,
+the instance method wins.  In the case
+of two static methods from different classes
+both brought in with `using` statements,
+the compiler will generate an error.
+
+
+## Conditional Access
+
+Testing for null values is simplified:
+Instead of:
+
+```csharp
+int? paramCount = null;
+
+if (command != null && command.Parameters != null) {
+	paramCount = command.Parameters.Count;	
+}
+```
+
+C# 6 allows:
+
+```csharp
+var paramCount = command?.Parameters?.Count;
+```
+
+The C# 6 expression is evaluated by
+first checking command for null.  If
+null, the entire expression evaluates 
+to null, if not, the Parameters collection
+is checked for null.  If null, the 
+expression evaluates to null.  If not,
+the expression evaluates to the Count
+property of Parameters.  The functionality
+of this operator can be remembered thus:
+*if null then null, if not then dot*.
+
+
+## Await and catch / finally
+
+C# 6 now allows `await` calls within
+`catch` and `finally` blocks.
+
+
+## Exception filters
+
+Exceptions can be caught based on
+boolean values in the catch statement
+itself.  If the expression is true,
+the catch block is entered.  If false,
+subsequent catch blocks are evaluated:
+
+```csharp
+try {
+	command.ExecuteNonQuery();
+} catch (Exception ex) if (ex.Message.Contains("ORA-00260") {
+	// try it again?	
+} catch (Exception ex) {
+	tx.Rollback();
+	throw;	
+}
+```
+
