@@ -531,3 +531,30 @@ To view a specific tag, use `git show`:
 $ git show v1.4
 ```
 
+A "lightweight" tag can be created by
+leaving out the `-a` and `-m` options,
+but isn't recommended.
+
+To tag a committed snapshot:
+
+```shell
+$ git tag -a v1.4 <checksum>
+```
+
+By default, `git push` doesn't transfer
+tags to a remote.  That would have to
+be done manually with 
+`git push [remotename] [tagname]` or push
+them all with `git push --tags`.
+
+
+###Git aliases
+
+Aliases can be configured:
+
+```shell
+$ git config --global alias.c commit`
+```
+
+The above command would allow the user
+to use `$ git c` instead of `$ git commit`.
