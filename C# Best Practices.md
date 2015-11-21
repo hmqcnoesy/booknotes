@@ -171,6 +171,7 @@ public class Thing {
 }
 ```
 
+<<<<<<< HEAD
 
 ## Literal separators
 
@@ -273,4 +274,40 @@ try {
 	throw;	
 }
 ```
+=======
+C# 6 adds a syntax for an simple single
+statement method that returns a value:
+
+```csharp
+public override string ToString() => string.Format("Thing: {0} ({1})", this.Name, this.Desc);
+```
+
+A `ref` argument must be set to a value
+in the calling code.  In the called method,
+the `ref` parameter can be changed, but
+there is no requirement that it be 
+changed.  So a method declared with a 
+`ref` parameter expects an incoming value.
+
+An `out` argument must be declared, but
+cannot be set in calling code.  In the
+called method, the `out` parameter *must*
+be set before returning, in any code
+path.  So a method declared with an
+`out` parameter expects *no* incoming
+value.
+
+
+## Strings
+
+The C# 6 string interpolation feature
+improves on `string.Format()`:
+
+```csharp
+public override ToString() {
+	return $"Thing: {this.Name} ({this.Desc})";
+}
+```
+
+>>>>>>> 81c78027afffb31db219e1c997eab1e488ae5ee4
 
