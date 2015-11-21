@@ -274,7 +274,8 @@ try {
 	throw;	
 }
 ```
-=======
+
+
 C# 6 adds a syntax for an simple single
 statement method that returns a value:
 
@@ -308,6 +309,3 @@ public override ToString() {
 	return $"Thing: {this.Name} ({this.Desc})";
 }
 ```
-
->>>>>>> 81c78027afffb31db219e1c997eab1e488ae5ee4
-
