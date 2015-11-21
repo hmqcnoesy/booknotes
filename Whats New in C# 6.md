@@ -22,7 +22,6 @@ Console.WriteLine($"The thing {thing.Name} ({thing.Desc}) has {thing.Children.Co
 ```
 
 
-
 ##Auto property initializers
 
 Instead of:
