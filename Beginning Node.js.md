@@ -222,3 +222,251 @@ function doThing(callback) {
 
 ##Core Node.js
 
+When `require()` is used, Node.js runs 
+the specified destination JavaScript file
+in a new, isolated scope, and returns the
+value specified by `module.exports` from
+the file.  To store the value of the
+`module.exports`, assign the return of
+`require` to a variable:
+
+```javascript
+var thing = require('./thing.js');
+```
+
+Note that a call to `require()` is a 
+blocking call.  Execution will wait until
+the call is complete.
+
+The return value of a call to `require()`
+is cached so subsequent calls passing in
+the same destination file (irrespective of
+path) will get the cached `module.exports`
+value returned originally.  So if a mutable
+object is returned, each call to `require`
+for a particular file will return the same
+shared object instance.
+
+
+###Object factories
+
+If the default behavior of returning the
+same object for `require()` calls that
+resolve to the same file is not desired,
+a simple object factory setup can be used:
+
+```javascript
+module.exports = function() {
+	return {
+		//object to be created with each call to require
+	};	
+}
+```
+
+And "requiring" the module like this:
+
+```javascript
+var foo = (require('./foo'))();
+```
+
+The `module.exports` object is implicitly an
+empty object that a module can add properties
+to.  The `exports` alias can be used as a 
+shorthand for `module.exports`.  Node just 
+creates a variable like this:
+
+```javascript
+var exports = module.exports;
+```
+
+So it is important to note that the `exports`
+variable could accidentally be reassigned:
+
+```javascript
+exports.a = 123;
+console.log(module.exports.a); // 123
+
+exports = 'whoops!';
+console.log(module.exports); // { a: 123 }
+```
+
+So `exports` should be used for ***attaching***
+but never ***assigning***.
+
+
+Modules best practices
+
+- Dont' use `.js` in calls to `require()`
+- Use relative paths (e.g. `./foo`) in 
+  calls to `require()` for your own 
+  project modules.  Leave out paths in calls
+  to `require()` for node_modules and core
+  modules.
+- Use `require()` to get a single file
+  per folder, i.e. `index.js`, specifying
+  the folder name.
+
+
+### Useful globals
+
+The `console` is available in any code in a
+node application.  Typical methods are 
+available on the `console` object, such as
+`log`.
+
+The `setTimeout` and `setInterval` functions
+are also globally available.
+
+The `__filename` and `__dirname` are available
+in every file in a node app.  They store the 
+value of the current file and current file's
+directory path.
+
+The `process` variable is accessible anywhere
+as well, and holds data and functionality
+dealing with the Node.js process.  The `argv`
+property of `process` contains an array of
+the arguments passed to the Node.js process.
+For example this command:
+
+```shell
+node app.js foo -bar baz
+```
+
+Would result in an `argv` value like:
+
+```javascript
+['c:\\program files\\node.js\\node.exe', 
+'c:\\users\\username\\app.js', 
+'foo', 
+'-bar', 
+'baz']
+``` 
+
+The `Buffer` class is also available globally.
+Strings and buffers convert into each other
+very easily:
+
+```javascript
+var str = 'this is a string';
+
+var buf = new Buffer(str, 'utf8');
+
+var roundTrip = buf.toString('utf8');
+```
+
+Apparently, 'utf-8' and 'utf8' both work.
+
+All the global methods and properties are 
+members of `global`, much like the
+`window` object in a browser:
+
+```javascript
+console.log(process === global.process); // true
+```
+
+But unlike `window`, a module's variables
+are placed in an isolated scope.  Members
+can but shouldn't be added to `global`.
+
+
+### Core Modules
+
+Core modules are included using `require()`
+without a path to the module, but just
+the module name itself.
+
+
+#### path
+
+The `path` module has useful methods to
+resolve inconsistencies between filesystems.
+For instance, `path.normalize(str)` will
+change a path `str` to a valid path for the
+current system.  And `path.join()` takes
+an arbitrary number of args and joins them
+together into a valid path for the current
+system.  It also automatically handles 
+path delimiters:
+
+```javascript
+var path = require('path');
+console.log(path.join('foo', '/bar', 'baz'));
+//  logs "foo/bar/baz" or "foo\bar\baz"
+```
+
+The `dirname()` method returns the directory
+to a file's path, `basename()` returns a 
+file name without an extension, and `extname()`
+returns a file's extension:
+
+```javascript
+var path = require('path');
+var f = 'c:\\dev\\test.html';
+var d = path.dirname(f); // c:\dev
+var b = path.basename(f); // test.html
+var e = path.extname(f); // .html
+```
+
+#### fs
+
+The `fs` module has filesystem functionality
+such as `writeFileSync()` and `readFileSync()`:
+
+```javascript
+var path = require('path');
+var fs = require('fs');
+fs.writeFileSync(path.join(__dirname, 'test.txt'), 'file contents', 'utf8');
+var contents = fs.readFileSync(path.join(__dirname, 'test.txt'), 'utf8');
+console.log(contents); // file contents
+```
+
+The `-Sync` versions of these methods should
+be used only in certain scenarios.  Usually the
+versions with callbacks are appropriate:
+
+```javascript
+var fs = require('fs');
+fs.readFile('test.txt', 'utf8', function(err, data) {
+	if (err) {
+		console.log(err);
+		return;	
+	}
+	
+	console.log(data);
+});
+```
+
+
+#### os
+
+The `os` module has methods exposing system info,
+such as `totalmem()` and `freemem()` and `cpus()`:
+
+```javascript
+var os = require('os');
+console.log(os.totalmem());
+console.log(os.freemem());
+console.log(os.cpus().length);
+```
+
+
+#### util
+
+The `util` module has general functionality,
+such as the `log()` method which prints a 
+timestamp with your message.  The `format()`
+method is similar to `printf` in C.  Available
+placeholders include `%s` for strings and `%d`
+for numbers:
+
+```javascript
+var util = require('util');
+util.log('The %s is %d dollars', 'thing', 50);
+```
+
+`util` also has methods `isArray`, `isDate`
+and `isError`.
+
+
+## Node.js Packages
