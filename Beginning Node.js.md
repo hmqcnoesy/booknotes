@@ -470,3 +470,67 @@ and `isError`.
 
 
 ## Node.js Packages
+
+Scanning for a node module required via a call
+to `require()` follows these rules:
+
+1. if the value passed to `require` starts with
+`./`, `../`, or `/` it is assumed to be a file
+based module and the path specified is used to 
+find the module
+2. if the value passed to `require` does not
+start with one of those strings, it is assumed
+to be a core module or stored in node_modules.
+ - Searching for core modules is done first.
+ - If there is not a matching core module,
+ the node_module folder in the current directory
+ is searched.
+ - If there is not a matching module in the
+ current directory's node_module folder, the
+ parent directory's node_module folder is 
+ searched, and so on until the module is found
+ or until the search hits the root and gives up.
+
+So the only difference between a file based 
+module and a node_module module is the way each
+one is referenced in the `require` call and the
+way the filesystem is searched for the .js file.
+
+Sometimes multiple files need to work together
+as a module, in which case they can be put in 
+a folder together, with an index.js "entry point"
+file.  Then the module is required using a call
+to `require` with the folder name as the parameter.
+
+The scanning process for node_module modules 
+makes it simpler to use `require` anywhere in an
+application and have it automatically resolve to 
+the right code.  It also makes it easy to share
+modules between different apps - the module can
+be stored in a common ancestor directory's 
+node_module folder.
+
+
+### JSON
+
+JSON files can be required just as a module is,
+but instead of executing the code in the module,
+when `require` is called, a JavaScript object is 
+returned:
+
+```javascript
+{
+	"foo": "bar",
+	"baz": "boo"
+}
+```
+
+```javascript
+// if above file is foo.json
+var obj = require('./foo');
+console.log(obj.baz);  // boo
+```
+
+The above is much easier than opening files 
+and parsing them with `JSON` (which is also
+available on `global`).

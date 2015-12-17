@@ -16,16 +16,17 @@ code {
 }
 
 pre { 
-	background-color: black; 
+	background-color: #101530; 
+	color: white;
 	padding: 0 1em 0 1em; 
 	border-radius: 0.4em; 
 	font-family: Consolas, monospace; 
 	overflow-x: auto; 
+	font-size: 1.2em;
 }
 
 pre code .monaco-markdown { 
-	font-family: Consolas, monospace; 
-	font-size: 1.2em;
+	font-family: Consolas, monospace;
 }
 
 kbd {
@@ -63,4 +64,24 @@ th {
 	font-weight: bold; 
 	color: black; 
 	background-color: white; 
+}
+
+.token.comment {
+	color: lightgreen;
+}
+
+.token.string {
+	color: #ff6200;
+}
+
+.token.keyword {
+	color: deepskyblue;
+}
+
+.token.number {
+	color: orange;
+}
+
+.token.identifier {
+	color: lightsteelblue;
 }
