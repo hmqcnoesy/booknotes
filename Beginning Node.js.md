@@ -534,3 +534,7 @@ console.log(obj.baz);  // boo
 The above is much easier than opening files 
 and parsing them with `JSON` (which is also
 available on `global`).
+
+
+## Events and streams
+
