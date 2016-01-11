@@ -81,9 +81,10 @@ unary + operator can be substituted for `Number()`:
 ```
  
 strings are immutable
+
 ```javascript
 String(x); //same as .toString() except returns "null" and "undefined" when appropriate.
- ```
+```
 
 objects
 ```javascript

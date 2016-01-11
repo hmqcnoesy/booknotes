@@ -5,7 +5,7 @@ var path = require('path');
 var allFiles = fs.readdirSync(__dirname);
 var fileContents = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
 var $ = cheerio.load(fileContents);
-var options = '<option></option>';
+var options = '<option value="README.md">Read Me</option>';
 
 for (var i = 0; i < allFiles.length; i++) {
     if (!/\.md/.test(allFiles[i])) continue;

@@ -9,6 +9,10 @@ body {
     margin: auto;
 }
 
+select {
+    max-width: 100%;
+}
+
 h2 {
 	padding-top: 1.5em;
 	border-bottom: 1px dotted gainsboro;
