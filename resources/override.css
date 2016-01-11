@@ -1,7 +1,12 @@
+html { 
+    background-color: #101530;
+}
 body { 
 	background-color: #fff; 
 	padding: 1em; 
 	font-family: Helvetica Neue, Helvetica, Segoe UI, Arial, sans-serif;
+    max-width: 900px;
+    margin: auto;
 }
 
 h2 {
@@ -18,7 +23,7 @@ code {
 pre { 
 	background-color: #101530; 
 	color: white;
-	padding: 0 1em 0 1em; 
+	padding: 1em; 
 	border-radius: 0.4em; 
 	font-family: Consolas, monospace; 
 	overflow-x: auto; 
@@ -66,22 +71,22 @@ th {
 	background-color: white; 
 }
 
-.token.comment {
+.token.comment, .hljs-comment {
 	color: lightgreen;
 }
 
-.token.string {
+.token.string, .hljs-string {
 	color: #ff6200;
 }
 
-.token.keyword {
+.token.keyword, .hljs-keyword {
 	color: deepskyblue;
 }
 
-.token.number {
+.token.number, .hljs-number {
 	color: orange;
 }
 
-.token.identifier {
+.token.identifier, .hljs-name, .hljs-tag {
 	color: lightsteelblue;
 }

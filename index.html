@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>Matt&apos;s Notes</title>
+    <link rel="stylesheet" href="resources/override.css">
+</head>
+<body>
+    <select id="selTitle"><option></option><option value="Async in C# 5.0.md">Async in C# 5.0</option><option value="Beginning Node.js.md">Beginning Node.js</option><option value="C# .NET Equality.md">C# .NET Equality</option><option value="C# Best Practices.md">C# Best Practices</option><option value="Custom SharePoint Solutions with HTML and JavaScript.md">Custom SharePoint Solutions with HTML and JavaScript</option><option value="Expert JavaScript.md">Expert JavaScript</option><option value="Head First Python.md">Head First Python</option><option value="JavaScript for Web Developers.md">JavaScript for Web Developers</option><option value="Learn Powershell in a Month of Lunches.md">Learn Powershell in a Month of Lunches</option><option value="Matts Angle Brackets.md">Matts Angle Brackets</option><option value="Matts Curly Braces.md">Matts Curly Braces</option><option value="Matts Semicolons.md">Matts Semicolons</option><option value="MongoDB for .net developers.md">MongoDB for .net developers</option><option value="Optimizing SQL Queries in Oracle.md">Optimizing SQL Queries in Oracle</option><option value="Oracle Performance Tuning for Developers.md">Oracle Performance Tuning for Developers</option><option value="Pro AngularJS.md">Pro AngularJS</option><option value="Pro Git.md">Pro Git</option><option value="Pro SharePoint with jQuery.md">Pro SharePoint with jQuery</option><option value="Professional ASP.NET MVC 5.md">Professional ASP.NET MVC 5</option><option value="README.md">README</option><option value="SharePoint 2013 Fundamentals.md">SharePoint 2013 Fundamentals</option><option value="Visual Studio Code.md">Visual Studio Code</option><option value="Web Development with Node &amp; Express.md">Web Development with Node &amp; Express</option><option value="Whats New in C# 6.md">Whats New in C# 6</option></select>
+    
+    <div id="divMarkdown">
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+    <script>
+        var converter = new showdown.Converter();
+        document.getElementById('selTitle').addEventListener('change', function() {
+            if (!this.value) return;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE ) {
+                    if(xhr.status == 200){
+                        document.getElementById('divMarkdown').innerHTML = converter.makeHtml(xhr.responseText);
+                        var codeBlocks = document.querySelectorAll('pre code');
+                        for (var i = 0; i < codeBlocks.length; i++) {
+                            hljs.highlightBlock(codeBlocks[i]);
+                        }
+                    }
+                }
+            }
+
+            xhr.open("GET", encodeURIComponent(this.value), true);
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
