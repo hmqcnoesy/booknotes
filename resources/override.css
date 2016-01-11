@@ -31,7 +31,7 @@ pre {
 	border-radius: 0.4em; 
 	font-family: Consolas, monospace; 
 	overflow-x: auto; 
-	font-size: 1.2em;
+	font-size: 85%;
 }
 
 pre code .monaco-markdown { 
