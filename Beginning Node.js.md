@@ -538,3 +538,49 @@ available on `global`).
 
 ## Events and streams
 
+A typical inheritance pattern in JavaScript
+involves a "parent" such as:
+
+```javascript
+function Animal(name) {
+	this.name = name;
+} 
+Animal.prototype.walk = function(destination) {
+	console.log(this.name + ' is walking to ' + destination);
+}
+
+var animal = new Animal('elephant');
+animal.walk('Melbourne'); // elephant is walking to melbourne
+```
+
+An inheriting type could then be used:
+
+```javascript
+function Bird(name) {
+	Animal.call(this, name);
+}
+Bird.prototype.__proto__ = Animal.prototype;
+Bird.prototype.fly = function(destination) {
+	console.log(this.name + ' is flying to ' + destination);
+}
+
+var b = new Bird('finch');
+b.walk('slc');
+b.fly('chandler')
+```
+
+Using the `__proto__` property is not recommended.
+A better way to set up this prototype chain in Node.js:
+
+```javascript
+var utils = require('utils');
+function Bird(name) {
+	Animal.call(this, name);
+}
+utils.inherits(Bird, Animal);
+Bird.prototype.fly = function() { /*...*/ };
+```
+
+The `utils` module uses `Object.create()` behind the
+scenes to "properly" create a prototype chain.
+
