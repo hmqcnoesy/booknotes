@@ -538,6 +538,9 @@ available on `global`).
 
 ## Events and streams
 
+
+### JavaScript and inheritance
+
 A typical inheritance pattern in JavaScript
 involves a "parent" such as:
 
@@ -583,4 +586,88 @@ Bird.prototype.fly = function() { /*...*/ };
 
 The `utils` module uses `Object.create()` behind the
 scenes to "properly" create a prototype chain.
+
+
+### Node.js events
+
+Events can be emitted using the `events` module (built-in)
+and the associated `EventEmitter` object:
+
+```javascript
+var EventEmitter = require('events').EventEmitter;
+var emitter = new EventEmitter();
+
+emitter.on('cheese', function(arg1, arg2) {
+    console.log('cheese raised', arg1, arg2);
+});
+
+emitter.emit('cheese', { a: 123 }, { b: 456 });
+```
+
+Any arbitratry number of subscribers can handle a
+single emitted event, and they are called in the 
+order that they registered for the event.  Also,
+any arguments passed in to the event handlers are
+shared among all handlers.
+
+To remove a handler, a reference to the exact 
+handling function must be passed to `removeListener`:
+
+```javascript
+var EventEmitter = require('events').EventEmitter;
+var emitter = new EventEmitter();
+
+var fooHandler = function(a,b) {
+    console.log('foo handled');
+    emitter.removeListener('foo', fooHandler);
+};
+
+emitter.on('foo', fooHandler);
+
+emitter.emit('foo'); // foo handled
+emitter.emit('foo'); // no console message
+```
+
+The handling of an event one time only need not
+use `removeListener`.  Instead, `once` can be used
+in place of `on`:
+
+```javascript
+var EventEmitter = require('events').EventEmitter;
+var emitter = new EventEmitter();
+
+emitter.once('foo', function() {
+    console.log('handled');
+});
+
+emitter.emit('foo'); // handled
+emitter.emit('foo'); // not handled
+```
+
+`EventEmitter` has a method `listeners` than returns
+and array of functions that have been registered for
+the name of the passed in event:
+
+```javascript
+var funcs = emitter.listeners('foo');
+console.log(funcs);  // [[Function: a], [Function: b]]
+```
+
+The `EventEmitter` raises a `newListener` event when
+a new listener is added and a `removeListener` event
+when one is removed. 
+
+Memory leaks occur when subscribing to events in a 
+callback or loop but forgetting to unsubscribe.  `EventEmitter`
+will print a warning to the console if more than 10 
+subscribers register for a single event.  
+
+The `error` event is raised when an unhandled exception
+occurs during executions of a Node.js program.  If there
+is ***no*** listener for the `error` event registered, 
+the default behavior occurs:  a stack trace is printed to
+the console and the program is exited.
+
+
+### Creating your own EventEmitter
 
