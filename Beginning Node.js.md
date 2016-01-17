@@ -766,7 +766,92 @@ the `Stream` type which in turn is based on the
 `EventEmitter`.  
 
 ```javascript
-var EE = require('events');
 var stream = require('stream');
+var readable = new stream.Readable({});
+var writable = new stream.Writable({});
+var duplex = new stream.Duplex({});
+var transform = new stream.Transform({});
+```
 
-var s
+All streams support the `pipe` method which pipes
+the output of the stream to the parameter given:
+
+```javascript
+var fs = require('fs');
+var readableStream = fs.createReadStream('./streamed.txt');
+readableStream.pip(process.stdout);
+```
+
+Returned streams can be piped in a chain pattern:
+
+```javascript
+var fs = require('fs');
+var gzip = require('zlib').createGzip();
+
+var inp = fs.createReadStream('test.txt');
+var out = fs.createWriteStream('test.txt.gz');
+
+inp.pipe(gzip).pipe(out);
+```
+
+
+### Consuming readable streams
+
+Because streams are based on `EventEmitter`, it is
+easy to listen for events on a stream object, such
+as `'readable'` which is raised when there is new data
+available to be read from the stream, which is done 
+using the `read` method on the stream.  When there is 
+nothing left to read from the stream the `read` method
+returns `null`:
+
+```javascript
+process.stdin.on('readable', function() {
+    var buf = process.stdin.read();
+    if (buf == null) {
+        console.log('read complete');
+        return;
+    }
+    
+    console.log('got: ');
+    process.stdout.write(buf.toString());
+});
+```
+
+
+### Writing to writable streams
+
+A writable stream has a `write` method and an `end` method.
+
+```javascript
+var fs = require('fs');
+var ws = fs.createWriteStream('message.txt');
+ws.write('foo');
+ws.write('bar');
+ws.end();
+```
+
+
+## Getting started with HTTP
+
+One of the core modules in Node.js is `'http'` which has
+a `createServer` method, whose callback argument is a function
+that is called on each received HTTP request.  The callback
+takes a request and response as parameters which are a
+readable and writable stream, respectively.  The function
+returns a server object which has a `listen` method that 
+starts the server listening to HTTP requests:
+
+```javascript
+var http = require('http');
+
+var server = http.createServer(function(req, res) {
+    console.log(req.headers);
+    res.write('hey'); 
+    res.end();
+});
+
+server.listen(8080);
+console.log('listening on 8080');
+```
+
