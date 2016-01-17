@@ -671,3 +671,102 @@ the console and the program is exited.
 
 ### Creating your own EventEmitter
 
+The `EventEmitter` class is the basis for many derived
+types in open source software projects.  These are 
+modules that inherit from `EventEmitter` and export 
+the resulting object.
+
+```javascript
+var EE = require('events').EventEmitter;
+var utils = require('utils');
+
+var Thing = function() {
+   EE.call(this); 
+};
+
+utils.inherits(Thing, EE);
+
+Thing.prototype.connect = function() {
+  /*...*/
+  this.emit('connected');  
+};
+
+module.exports = Thing;
+```
+
+Such an object can then be used:
+
+```javascript
+var Thing = require('./thing.js');
+var thing = new Thing();
+thing.on('connected', function() {
+   console.log('received a connected message'); 
+});
+
+thing.connect();
+```
+
+The `process` global in Node.js is an example
+of one such type that inherites from `EventEmitter`.
+For instance, it emits an `uncaughtException`
+event, which can be subscribed (but processing
+should never continue after handling it because
+it is raised only when execution is in an unreliable
+state:
+
+```javascript
+process.on('uncaughtException', function(err) {
+   console.log(err.exception);
+   console.log(err.stack); 
+   process.exit(1); // return error status, no more processing
+});
+
+throw new Error('this will break something');
+```
+
+The `process` global also emits the `exit` event
+but the process is being torn down at that point
+so it is not possible to cancel the exit or run
+any async code:
+
+```javascript
+process.on('exit', function() {
+    console.log('this should get logged at the end.');
+});
+```
+
+
+### Streams
+
+Streams are essential for performance, for example,
+serving a large file without the help of streams
+would require loading the entire file in memory
+before starting to send the first bits of the file
+to the client.  With the help of a stream, however,
+the file can be sent without completely loading all
+the bits into memory, by sending the file chunk by
+chunk.
+
+Different types of streams in Node.js include
+*Readable*, *Writable*, *Duplex*, and *Transform*.
+
+- Readable: a stream that can be read but not
+written to, for example, `process.stdin`.
+- Writable: a stream that can be written to
+but not read from, for example, `process.stdout`.
+- Duplex: a stream that can be read and written
+to, for example, the network socket.
+- Transform: a special case of a duplex stream,
+where the output is computed from the input, for
+example compression or encryption streams.
+
+The building blocks for streams are available
+via `require('stream')`.  Streams are built on
+the `Stream` type which in turn is based on the
+`EventEmitter`.  
+
+```javascript
+var EE = require('events');
+var stream = require('stream');
+
+var s
