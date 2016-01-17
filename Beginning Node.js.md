@@ -855,3 +855,41 @@ server.listen(8080);
 console.log('listening on 8080');
 ```
 
+The HTTP header `Transfer-Encoding: chunked` notifies 
+the server that the client can accept a response in
+a stream, chunk by chunk.  When the response is 
+sent in these chunks the first line of each chunk is 
+a hexadecimal value indicated the size of the chunk
+in bytes.  The response is ended with a 0-sized chunk.
+
+If the `statusCode` property of the response object
+is not set, it defaults to 200.  To set it explicitly,
+use `res.statusCode = 404;`.
+
+To set any header value for a response, use 
+`setHeader('Header-Name', 'header value');`, for
+example `res.setHeader('Content-Type', 'text/hmtl');`.
+There is a handy npm package named "mime" that can
+lookup mime types based on file types:
+
+```javascript
+var mime = require('mime');
+console.log(mime.lookup('./somefile.txt'));
+console.log(mime.lookup('./index.html'));
+```
+
+Important request properties include `req.method`
+and `req.url`.
+
+Since the response object is a writable stream,
+data can be piped into it.  So a file from the 
+filesystem could be written into the response
+stream:
+
+```javascript
+fs.createReadStream('./file.html').pipe(res);
+```
+
+
+### Introducing Connect 
+
