@@ -893,3 +893,74 @@ fs.createReadStream('./file.html').pipe(res);
 
 ### Introducing Connect 
 
+Connect is a middleware framework.  `npm i connect`
+will install only the core framework.  Each piece
+of middleware is separated into its own module.
+
+The `connect` function is at the heart of a
+Connect application.  It returns a dispatcher
+function that can be passed to `http.createServer`:
+
+```javascript
+var connect = require('connect');
+var http = require('http');
+
+var app = connect();
+
+http.createServer(app).listen(3000);
+```
+
+As-is, the example above will return a 404 response
+for every request, which is the default behavior.
+To properly handle requests, the dispatcher must
+be configured with the `use` method, which registers
+a piece of middleware with Connect.  The `use` method
+takes three parameters:
+
+- a request object which inherits from the core
+http request object
+- a response objecct which inherits from the core
+http response object
+- an optional "next" callback which allows passing 
+control to the next registered middleware, or informing
+Connect about an error condition.
+
+The simplest possible middleware would be one that
+ignores the request and response and simply forwards
+control to the next registered middleware:
+
+```javascript
+var connect = require('connect');
+
+var app = connect();
+app.use(function(req, res, next) { next(); });
+ /* ... */
+ ```
+ 
+ A slightly more useful example would be one that
+ logs each request's URL and method:
+ 
+ ```javascript
+ var connect = require('connect');
+ 
+ var app = connect();
+ app.use(function(req, res, next) {
+    console.log(req.method, req.url); 
+ });
+ /* ... */
+ ```
+
+Or a middleware that echoes a request back as the 
+response:
+
+```javascript
+function echoer(req, res, next) {
+    
+}
+
+var connect = require('connect');
+var app = connect();
+app.use(echoer);
+
+
+```
