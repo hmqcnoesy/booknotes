@@ -934,33 +934,50 @@ var connect = require('connect');
 
 var app = connect();
 app.use(function(req, res, next) { next(); });
- /* ... */
- ```
+app.listen(3000);
+```
  
- A slightly more useful example would be one that
- logs each request's URL and method:
+A slightly more useful example would be one that
+logs each request's URL and method:
  
- ```javascript
- var connect = require('connect');
+```javascript
+var connect = require('connect');
  
- var app = connect();
- app.use(function(req, res, next) {
-    console.log(req.method, req.url); 
- });
- /* ... */
- ```
+var app = connect();
+app.use(function(req, res, next) {
+   console.log(req.method, req.url); 
+   next();
+});
+app.listen(3000);
+```
 
-Or a middleware that echoes a request back as the 
-response:
+The `use` function takes an optional string first parameter
+that specifies the endpoint to trigger the middleware. If
+omitted, all endpoints trigger the middleware, if included,
+only a matching endpoint triggers.  This is sometimes 
+referred to as "mounting".  For example, to use the logging
+code above only when requests come in for '/log':
 
 ```javascript
-function echoer(req, res, next) {
-    
+var connect = require('connect');
+var app connect();
+
+function logit(req, res, next) {
+	console.log(req.method, req.url);
+	next();
 }
 
-var connect = require('connect');
-var app = connect();
-app.use(echoer);
-
-
+app.use('/log', logit); 
+app.listen(3000);
 ```
+
+In the above example, all requests **starting with** the 
+specified path (/log) are handled by the `logit` middleware.
+All other requests do not trigger middleware.  Note that
+middleware code itself shouldn't check `req.url`.  It should
+assume that `app.use` mounted the middleware correctly so 
+that it is triggered if and only if appropriate.
+
+
+### Using an object as middleware
+
