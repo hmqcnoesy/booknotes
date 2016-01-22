@@ -979,5 +979,75 @@ assume that `app.use` mounted the middleware correctly so
 that it is triggered if and only if appropriate.
 
 
-### Using an object as middleware
+### Creating configurable middleware
+
+Middleware is configurable by passing in arguments to a 
+function that returns the middleware function.  A closure
+around the variables allows configuration of the function's
+behavior:
+
+```javascript
+var connect = require('connect');
+function logit(includeTimestamps) {
+	return function(req, res, next) {
+		if (includeTimestamps) console.log(new Date(), req.method, req.url);
+		else console.log(req.method, req.url);	
+		next();
+	};
+}
+
+var logit1 = logit(true);
+var logit2 = logit(false);
+
+var app = connect();
+app.use(logit1);
+app.use(logit2);
+app.use(function(req, res, next) {
+	res.end();
+});
+
+app.listen(3000);
+```
+
+
+### Chaining middleware
+
+Chaining allows different pieces of middleware to cooperate, because
+request and response objects passed to each middleware are mutable.
+For instance, one middleware could try to parse a request body from
+JSON into an object and put that object in `req.body` for other 
+middlewares further down the line to use.  Then any middlewares later
+in the pipeline would be able to simply access `req.body` instead of
+worrying about how to parse the JSON on its own.
+
+Middleware has the responsibility of continuing the pipeline by  
+calling `next()`, but by the same token has the option of ending the
+processing pipline by *not* calling next.  For example, a middleware
+could change for the header `Authorization: Basic QWxhZGRbp...=` and
+decode the base64 string, checking for the correct credentials.  If
+the correct credentials were not supplied, the middleware could leave
+out the call to `next()` and instead set the response status to 401
+and call `res.end()`.
+
+Another way the processing pipeline can be short-circuited is by
+passing an error object to `next`.  This informs connect that an
+error occurred, and no other middlewares are called, and the error
+message is sent to the client with a response status of 500.  So
+in this example the second middleware never executes:
+
+```javascript
+var connect = require('connect');
+function mw1(req, res, next) {
+	next(new Error('something terrible happened'));
+}
+
+function mw2(req, res, next) {
+	console.log('this is the second mw');
+}
+
+var app = connect();
+app.use(mw1);
+app.use(mw2);
+app.listen(3000);
+```
 
