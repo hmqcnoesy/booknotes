@@ -220,7 +220,7 @@ function doThing(callback) {
 ```
 
 
-##Core Node.js
+## Core Node.js
 
 When `require()` is used, Node.js runs 
 the specified destination JavaScript file
@@ -891,7 +891,7 @@ fs.createReadStream('./file.html').pipe(res);
 ```
 
 
-### Introducing Connect 
+## Introducing Connect 
 
 Connect is a middleware framework.  `npm i connect`
 will install only the core framework.  Each piece
