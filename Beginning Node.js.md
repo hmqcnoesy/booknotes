@@ -1051,3 +1051,21 @@ app.use(mw2);
 app.listen(3000);
 ```
 
+However, a middleware can specifically be used to handle middleware
+errors.  Such a middleware takes four arguments: `error,req,res,next`
+and is called *only* in the case of an error.  For example, this fourth
+middleware is executed, but the third is not:
+
+```javascript
+var connect = require('connect');
+var app = connect();
+app.use(function(req, res, next) { console.log('this is executed'); next();});
+app.use(function(req, res, next) { next(new Error('something bad')); });
+app.use(function(req, res, next) { console.log('this won\'t get called'); next(); });
+app.use(function(error, req, res, next) { console.log(error); next(); });
+app.listen(3000);
+```
+
+
+## Introducing Express
+
