@@ -220,7 +220,7 @@ function doThing(callback) {
 ```
 
 
-##Core Node.js
+## Core Node.js
 
 When `require()` is used, Node.js runs 
 the specified destination JavaScript file
@@ -854,4 +854,218 @@ var server = http.createServer(function(req, res) {
 server.listen(8080);
 console.log('listening on 8080');
 ```
+
+The HTTP header `Transfer-Encoding: chunked` notifies 
+the server that the client can accept a response in
+a stream, chunk by chunk.  When the response is 
+sent in these chunks the first line of each chunk is 
+a hexadecimal value indicated the size of the chunk
+in bytes.  The response is ended with a 0-sized chunk.
+
+If the `statusCode` property of the response object
+is not set, it defaults to 200.  To set it explicitly,
+use `res.statusCode = 404;`.
+
+To set any header value for a response, use 
+`setHeader('Header-Name', 'header value');`, for
+example `res.setHeader('Content-Type', 'text/hmtl');`.
+There is a handy npm package named "mime" that can
+lookup mime types based on file types:
+
+```javascript
+var mime = require('mime');
+console.log(mime.lookup('./somefile.txt'));
+console.log(mime.lookup('./index.html'));
+```
+
+Important request properties include `req.method`
+and `req.url`.
+
+Since the response object is a writable stream,
+data can be piped into it.  So a file from the 
+filesystem could be written into the response
+stream:
+
+```javascript
+fs.createReadStream('./file.html').pipe(res);
+```
+
+
+## Introducing Connect 
+
+Connect is a middleware framework.  `npm i connect`
+will install only the core framework.  Each piece
+of middleware is separated into its own module.
+
+The `connect` function is at the heart of a
+Connect application.  It returns a dispatcher
+function that can be passed to `http.createServer`:
+
+```javascript
+var connect = require('connect');
+var http = require('http');
+
+var app = connect();
+
+http.createServer(app).listen(3000);
+```
+
+As-is, the example above will return a 404 response
+for every request, which is the default behavior.
+To properly handle requests, the dispatcher must
+be configured with the `use` method, which registers
+a piece of middleware with Connect.  The `use` method
+takes three parameters:
+
+- a request object which inherits from the core
+http request object
+- a response objecct which inherits from the core
+http response object
+- an optional "next" callback which allows passing 
+control to the next registered middleware, or informing
+Connect about an error condition.
+
+The simplest possible middleware would be one that
+ignores the request and response and simply forwards
+control to the next registered middleware:
+
+```javascript
+var connect = require('connect');
+
+var app = connect();
+app.use(function(req, res, next) { next(); });
+app.listen(3000);
+```
+ 
+A slightly more useful example would be one that
+logs each request's URL and method:
+ 
+```javascript
+var connect = require('connect');
+ 
+var app = connect();
+app.use(function(req, res, next) {
+   console.log(req.method, req.url); 
+   next();
+});
+app.listen(3000);
+```
+
+The `use` function takes an optional string first parameter
+that specifies the endpoint to trigger the middleware. If
+omitted, all endpoints trigger the middleware, if included,
+only a matching endpoint triggers.  This is sometimes 
+referred to as "mounting".  For example, to use the logging
+code above only when requests come in for '/log':
+
+```javascript
+var connect = require('connect');
+var app connect();
+
+function logit(req, res, next) {
+	console.log(req.method, req.url);
+	next();
+}
+
+app.use('/log', logit); 
+app.listen(3000);
+```
+
+In the above example, all requests **starting with** the 
+specified path (/log) are handled by the `logit` middleware.
+All other requests do not trigger middleware.  Note that
+middleware code itself shouldn't check `req.url`.  It should
+assume that `app.use` mounted the middleware correctly so 
+that it is triggered if and only if appropriate.
+
+
+### Creating configurable middleware
+
+Middleware is configurable by passing in arguments to a 
+function that returns the middleware function.  A closure
+around the variables allows configuration of the function's
+behavior:
+
+```javascript
+var connect = require('connect');
+function logit(includeTimestamps) {
+	return function(req, res, next) {
+		if (includeTimestamps) console.log(new Date(), req.method, req.url);
+		else console.log(req.method, req.url);	
+		next();
+	};
+}
+
+var logit1 = logit(true);
+var logit2 = logit(false);
+
+var app = connect();
+app.use(logit1);
+app.use(logit2);
+app.use(function(req, res, next) {
+	res.end();
+});
+
+app.listen(3000);
+```
+
+
+### Chaining middleware
+
+Chaining allows different pieces of middleware to cooperate, because
+request and response objects passed to each middleware are mutable.
+For instance, one middleware could try to parse a request body from
+JSON into an object and put that object in `req.body` for other 
+middlewares further down the line to use.  Then any middlewares later
+in the pipeline would be able to simply access `req.body` instead of
+worrying about how to parse the JSON on its own.
+
+Middleware has the responsibility of continuing the pipeline by  
+calling `next()`, but by the same token has the option of ending the
+processing pipline by *not* calling next.  For example, a middleware
+could change for the header `Authorization: Basic QWxhZGRbp...=` and
+decode the base64 string, checking for the correct credentials.  If
+the correct credentials were not supplied, the middleware could leave
+out the call to `next()` and instead set the response status to 401
+and call `res.end()`.
+
+Another way the processing pipeline can be short-circuited is by
+passing an error object to `next`.  This informs connect that an
+error occurred, and no other middlewares are called, and the error
+message is sent to the client with a response status of 500.  So
+in this example the second middleware never executes:
+
+```javascript
+var connect = require('connect');
+function mw1(req, res, next) {
+	next(new Error('something terrible happened'));
+}
+
+function mw2(req, res, next) {
+	console.log('this is the second mw');
+}
+
+var app = connect();
+app.use(mw1);
+app.use(mw2);
+app.listen(3000);
+```
+
+However, a middleware can specifically be used to handle middleware
+errors.  Such a middleware takes four arguments: `error,req,res,next`
+and is called *only* in the case of an error.  For example, this fourth
+middleware is executed, but the third is not:
+
+```javascript
+var connect = require('connect');
+var app = connect();
+app.use(function(req, res, next) { console.log('this is executed'); next();});
+app.use(function(req, res, next) { next(new Error('something bad')); });
+app.use(function(req, res, next) { console.log('this won\'t get called'); next(); });
+app.use(function(error, req, res, next) { console.log(error); next(); });
+app.listen(3000);
+```
+
+
+## Introducing Express
 
