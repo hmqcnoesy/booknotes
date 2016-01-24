@@ -2,77 +2,71 @@
 
 ## Alphabet 1
 
- *We'll start with some simple sentences right away. Russian does not have articles, nor does it normally use the verb “to be” in the Present tense.*
-
-###### An em-dash is used instead of "the verb “to be” between the two nouns: «Мокка — кофе» ("A mocha is coffee").
-
-Russian uses a version of the Cyrillic Alphabet. Many letters look similar to their Latin counterparts. As Cyrillic typography was remodeled around 300 years ago, both alphabets have a similar style.
-
-For information on how to install a Russian keyboard layout, please click [here](https://www.duolingo.com/comment/11449014).
-
-To switch Duolingo from Latin transliterations to Cyrillic, click the little **Aa-Яя** switch near the top of the screen during a lesson. 
-
 ### Letters and Sounds
 
-**К**, **О**, **М**, **Т**, **А** sound similar to their Latin counterparts (to be more precise, "о" is the sound in "more"). However, in handwriting and typed italics, the letter **Т** can look rather like a lower case 'm' in the Latin alphabet. E.g. in the verb *просить* (to ask for, to request), *т* = t.
+**К**, **О**, **М**, **Т**, **А** sound similar to their Latin counterparts (to be more precise, "о" is the sound in "more"). 
+However, in handwriting and typed italics, the letter **Т** can look rather like a lower case 'm' in the Latin alphabet. E.g. 
+in the verb *просить* (to ask for, to request), *т* = t.
 
-**Е** actually sounds more like "ye", as in "yell", not as in "Hear ye, hear ye!" (this will work for now; it's more complicated after a consonant).
+**Е** actually sounds more like "ye", as in "yell", not as in "Hear ye, hear ye!" (this will work for now; it's more complicated 
+after a consonant).
 
-**В** sounds like 'v', **Б** sounds like 'b'. **Н** is "n" and **И** is "i" ('eeh'). The remaining letters are included in the table below:
+**В** sounds like 'v', **Б** sounds like 'b'. **Н** is "n" and **И** is "i" ('eeh'). The remaining letters are included 
+in the table below:
 
 <table>
 <thead>
 <tr>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
+<th></th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Ёё⁰ (**you**r)</td>
-<td align="center">Вв (**v**ase)</td>
-<td align="center">Бб (**b**ed)</td>
+<td>Ёё⁰ (**you**r)</td>
+<td>Вв (**v**ase)</td>
+<td>Бб (**b**ed)</td>
 </tr>
 <tr>
-<td align="center">Ээ (r**e**d)</td>
-<td align="center">Нн¹ (**n**ap)</td>
-<td align="center">Дд¹ (**d**ab)</td>
+<td>Ээ (r**e**d)</td>
+<td>Нн¹ (**n**ap)</td>
+<td>Дд¹ (**d**ab)</td>
 </tr>
 <tr>
-<td align="center">Уу (s**oo**n)</td>
-<td align="center">Хх² (Ba**ch**)</td>
-<td align="center">Гг (**g**ap)</td>
+<td>Уу (s**oo**n)</td>
+<td>Хх² (Ba**ch**)</td>
+<td>Гг (**g**ap)</td>
 </tr>
 <tr>
-<td align="center">Ии (m**ee**t)</td>
-<td align="center">Йй (**y**es)</td>
-<td align="center">Лл¹ (ni**l**)</td>
+<td>Ии (m**ee**t)</td>
+<td>Йй (**y**es)</td>
+<td>Лл¹ (ni**l**)</td>
 </tr>
 <tr>
-<td align="center">Юю (**you**)</td>
-<td align="center">Рр (trilled R)</td>
-<td align="center">Пп (**p**oor)</td>
+<td>Юю (**you**)</td>
+<td>Рр (trilled R)</td>
+<td>Пп (**p**oor)</td>
 </tr>
 <tr>
-<td align="center">Ыы³ (h**i**t)</td>
-<td align="center">Сс (**S**am)</td>
-<td align="center">Зз (**z**ebra)</td>
+<td>Ыы³ (h**i**t)</td>
+<td>Сс (**S**am)</td>
+<td>Зз (**z**ebra)</td>
 </tr>
 <tr>
-<td align="center">Яя (**ya**rd)</td>
-<td align="center">Фф (**ph**oton)</td>
-<td align="center">Цц (ca**ts**)</td>
+<td>Яя (**ya**rd)</td>
+<td>Фф (**ph**oton)</td>
+<td>Цц (ca**ts**)</td>
 </tr>
 <tr>
-<td align="center">Жж⁴ (sei**z**ure)</td>
-<td align="center">Шш⁴ (**sh**un)</td>
-<td align="center">Щщ⁴</td>
+<td>Жж⁴ (sei**z**ure)</td>
+<td>Шш⁴ (**sh**un)</td>
+<td>Щщ⁴</td>
 </tr>
 <tr>
-<td align="center">Чч (**ch**eer)</td>
-<td align="center"></td>
-<td align="center">Ъ and Ь⁵</td>
+<td>Чч (**ch**eer)</td>
+<td></td>
+<td>Ъ and Ь⁵</td>
 </tr>
 </tbody>
 </table>
@@ -80,34 +74,42 @@ To switch Duolingo from Latin transliterations to Cyrillic, click the little **A
 
 *   ⁰ **Ёё** The umlaut-like double dots are optional in writing. Syllables containing this letter are always stressed.
 *   ¹ **т, д, н, л** are pronounced near your teeth
-*   ² **х**('kh') is somewhat similar to the H in "hue". It is like making  the "sh" sound, only it is pronounced where you make the "K" sound.
-*   ³ **ы** has no equivalent in English. It is an "eeh"-like sound, but less distinct, sounds closer to "e" in "lover", and has your tongue deeper that in "heat" or "hit".
-*   ⁴ for **ш** and **ж** your tongue is lower than in English and slightly bent back. **Щ** has all your tongue raised—it is a longer and more hissy sound. **Ч** corresponds to **щ** (i.e. a bit different than "ch")
+*   ² **х**('kh') is somewhat similar to the H in "hue". It is like making  the "sh" sound, only it is pronounced where 
+you make the "K" sound.
+*   ³ **ы** has no equivalent in English. It is an "eeh"-like sound, but less distinct, sounds closer to "e" in "lover", 
+and has your tongue deeper that in "heat" or "hit".
+*   ⁴ for **ш** and **ж** your tongue is lower than in English and slightly bent back. **Щ** has all your tongue raised—it 
+is a longer and more hissy sound. **Ч** corresponds to **щ** (i.e. a bit different than "ch")
 *   ⁵ **ъ** and **ь** are separators and have no sound.
 
 
-**Л** can have a flat top, like **П**, or a pointy top like **А** (it comes from the Greek Λ). Д and Л have a similar top in many fonts, though it's up to the designer. Handwritten **Д** looks like *D*, and **д** like a *g* or a *д* (the last two affect the italic shapes).
+**Л** can have a flat top, like **П**, or a pointy top like **А** (it comes from the Greek Λ). Д and Л have a similar top 
+in many fonts, though it's up to the designer. Handwritten **Д** looks like *D*, and **д** like a *g* or a *д* (the last 
+two affect the italic shapes).
 
 An Italic **Г** in lower case usually looks this: *г*.
-
-![(a picture with a table of Russian letters)](http://i.imgur.com/9BB1fM4.png)
 
 That's it with the introduction! We will discuss reading words in more detail in later skills.
 
 
 ## Basics 1
 
- ### Welcome to our course!
+### Welcome to our course!
 
 Now you are ready to proceed to the main part of the tree!
 
-We are happy that you have chosen our Russian course. Just to make it clear, we are using American English in this course—but don't worry, we will accept all versions of English where appropriate. Just be careful around expressions like "bathroom" or "1st floor", because these may mean different things than what you are used to.
+We are happy that you have chosen our Russian course. Just to make it clear, we are using American English in this course—but 
+don't worry, we will accept all versions of English where appropriate. Just be careful around expressions like "bathroom" or 
+"1st floor", because these may mean different things than what you are used to.
 
 Russian is an inflected language, so the forms of nouns and modifying adjectives correspond to their role in the sentence. 
 
-These forms are called **cases**. Russian has 6 cases: Nominative, Accusative, Genitive, Prepositonal, Dative and Instrumental. The Nominative is the dictionary form; as for the others, we are going to cover them gradually, one by one.
+These forms are called **cases**. Russian has 6 cases: Nominative, Accusative, Genitive, Prepositonal, Dative and Instrumental. 
+The Nominative is the dictionary form; as for the others, we are going to cover them gradually, one by one.
 
-This allows for a more loose word order. But not random! A typical word order is *subject—verb—object*. “Old” information (the things you tell *about*) is normally closer to the beginning of the sentence which is why pronouns tend to be closer to the beginning than a noun would be :
+This allows for a more loose word order. But not random! A typical word order is *subject—verb—object*. “Old” information (the 
+things you tell *about*) is normally closer to the beginning of the sentence which is why pronouns tend to be closer to the 
+beginning than a noun would be :
 
 *   *I know him.* → Я **его́** зна́ю.
 *   *I know Maria.* → Я зна́ю **Мари́ю**.
@@ -115,7 +117,9 @@ This allows for a more loose word order. But not random! A typical word order is
 
 That includes words like “here”, “in this way”, “then” and so on.
 
-Unlike English, adverbs are NOT universally grouped at the end. So pay attention to the typical positions for the expressions of time, place and manner. Eg. “very much” is typically in the end-position in English, but in Russian it is just before the thing that is "very" or “very much”:
+Unlike English, adverbs are NOT universally grouped at the end. So pay attention to the typical positions for the expressions 
+of time, place and manner. Eg. “very much” is typically in the end-position in English, but in Russian it is just before the 
+thing that is "very" or “very much”:
 
 *   *She likes to read **very much*** = Она́ **о̓чень** лю́бит чита́ть
 
@@ -124,24 +128,30 @@ Good luck!
 
 ### Vowel reduction
 
-Like in English, vowel letters aren't *all* pronounced just like in the alphabet. In Russian, unstressed syllables have vowels *reduced*:
+Like in English, vowel letters aren't *all* pronounced just like in the alphabet. In Russian, unstressed syllables have vowels 
+*reduced*:
 
 *   **А and О** become the same uh-sound
 *   **И and Е** (Э) become the same sound similar to "i" in "hit"
-*   **Я** actually becomes an i-like sound, not an uh-like (except in a few words). This also affects "а" after ч,ш,щ,ж or ц in many words (sadly, not all).
+*   **Я** actually becomes an i-like sound, not an uh-like (except in a few words). This also affects "а" after ч,ш,щ,ж or ц 
+in many words (sadly, not all).
 
 
 So, when a vowel is not stressed, it becomes weaker, somewhat shorter, and also some vowels become indistinguishable.
 
-The unstressed syllable is strongest just before the stress. In all other places it is even weaker than that (though, some long words, especially compounds, may acquire a secondary stress). This makes the system different from the English one, where stronger and weaker syllables tend to alternate.
+The unstressed syllable is strongest just before the stress. In all other places it is even weaker than that (though, some 
+long words, especially compounds, may acquire a secondary stress). This makes the system different from the English one, where 
+stronger and weaker syllables tend to alternate.
 
 ### CASE SYSTEM
 
 Depending on their role in the sentence, Russian words may take different forms. We call them cases.
 
-For now, we only study simple sentences that either use the dictionary form, the *Nominative* case, or use the *Accusative* (direct object of an action), which has the same form for many classes of nouns.
+For now, we only study simple sentences that either use the dictionary form, the *Nominative* case, or use the *Accusative* 
+(direct object of an action), which has the same form for many classes of nouns.
 
-The case is defined by its use. Nevertheless, these forms have names, usually calques from Latin that reflect some typical use (but not the only one):
+The case is defined by its use. Nevertheless, these forms have names, usually calques from Latin that reflect some typical 
+use (but not the only one):
 
 *   Nominative (subject)
 *   Accusative (direct object)
@@ -151,14 +161,16 @@ The case is defined by its use. Nevertheless, these forms have names, usually ca
 *   Instrumental (means of action)
 
 
-As you can see, names are of little use until you know what sentence, verb or preposition requires that you use that particular form.
+As you can see, names are of little use until you know what sentence, verb or preposition requires that you use that particular 
+form.
 
 
 ## Phrases 1
 
- ### Hello
+### Hello
 
-Russian has a more informal greeting **«Приве́т»** and a more formal **«Здра́вствуй(те)»**. Here, we focus on the first, since it is the shorter one. 
+Russian has a more informal greeting **«Приве́т»** and a more formal **«Здра́вствуй(те)»**. Here, we focus on the first, since 
+it is the shorter one. 
 
 When on phone, use **«Алло́» (Алё)**.
 
@@ -288,36 +300,36 @@ Russian has two very common polite patterns for questions that English does not:
 <table>
 <thead>
 <tr>
-<th align="center">TYPE</th>
-<th align="center">ending</th>
-<th align="center">Example</th>
+<th>TYPE</th>
+<th>ending</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">**-а/-я** -nouns</td>
-<td align="center">**ы/и**</td>
-<td align="center">ма́мы, зе́мли</td>
+<td>**-а/-я** -nouns</td>
+<td>**ы/и**</td>
+<td>ма́мы, зе́мли</td>
 </tr>
 <tr>
-<td align="center">**-ь** -nouns, feminine</td>
-<td align="center">**и**</td>
-<td align="center">крова́ти</td>
+<td>**-ь** -nouns, feminine</td>
+<td>**и**</td>
+<td>крова́ти</td>
 </tr>
 <tr>
-<td align="center">most **consonant-ending**  masculines</td>
-<td align="center">**ы/и**</td>
-<td align="center">столы́, ма́льчики</td>
+<td>most **consonant-ending**  masculines</td>
+<td>**ы/и**</td>
+<td>столы́, ма́льчики</td>
 </tr>
 <tr>
-<td align="center">**-о/-е** -nouns</td>
-<td align="center">**а/я**</td>
-<td align="center">о́кна, моря́</td>
+<td>**-о/-е** -nouns</td>
+<td>**а/я**</td>
+<td>о́кна, моря́</td>
 </tr>
 <tr>
-<td align="center">some **consonant-ending**  masculines</td>
-<td align="center">**а/я**</td>
-<td align="center">доктора́, глаза́</td>
+<td>some **consonant-ending**  masculines</td>
+<td>**а/я**</td>
+<td>доктора́, глаза́</td>
 </tr>
 </tbody>
 </table>
@@ -399,26 +411,26 @@ We’ll deal with that later. But the pattern is consistent. When you ***are*** 
 <table>
 <thead>
 <tr>
-<th align="center">AT</th>
-<th align="center">TO</th>
-<th align="center">FROM</th>
+<th>AT</th>
+<th>TO</th>
+<th>FROM</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">**в** + Prep</td>
-<td align="center">**в**  + Acc</td>
-<td align="center">**из** + Gen</td>
+<td>**в** + Prep</td>
+<td>**в**  + Acc</td>
+<td>**из** + Gen</td>
 </tr>
 <tr>
-<td align="center">**на** + Prep</td>
-<td align="center">**на** + Acc</td>
-<td align="center">**с** + Gen</td>
+<td>**на** + Prep</td>
+<td>**на** + Acc</td>
+<td>**с** + Gen</td>
 </tr>
 <tr>
-<td align="center">**у** + Gen</td>
-<td align="center">**к** + Dat</td>
-<td align="center">**от** + Gen</td>
+<td>**у** + Gen</td>
+<td>**к** + Dat</td>
+<td>**от** + Gen</td>
 </tr>
 </tbody>
 </table>
@@ -474,37 +486,37 @@ It is not too important for you at the moment, but you may notice how О and Е 
 <thead>
 <tr>
 <th>***ENDING***</th>
-<th align="center" />
+<th />
 <th>**Genitive sg.**</th>
 <th />
 <th>soft stem</th>
-<th align="center" />
+<th />
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>**-a/-я**</td>
-<td align="center">мама</td>
+<td>мама</td>
 <td>мам**ы**</td>
 <td />
 <td>земля</td>
-<td align="center">земл**и**</td>
+<td>земл**и**</td>
 </tr>
 <tr>
 <td>**∅**-masc, **-о/-е** neut</td>
-<td align="center">сок / молоко</td>
+<td>сок / молоко</td>
 <td>сок**а** / молок**а**</td>
 <td />
 <td>конь</td>
-<td align="center">кон**я**</td>
+<td>кон**я**</td>
 </tr>
 <tr>
 <td>**-ь** *fem*</td>
-<td align="center">мышь</td>
+<td>мышь</td>
 <td>мыш**и**</td>
 <td />
 <td />
-<td align="center" />
+<td />
 </tr>
 </tbody>
 </table>
@@ -571,29 +583,29 @@ Nouns in Russian belong to one of three genders: feminine, masculine or neuter. 
 <table>
 <thead>
 <tr>
-<th align="center">ending in Nom.sg.</th>
+<th>ending in Nom.sg.</th>
 <th>gender</th>
 <th>examples</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">**-а/-я**</td>
+<td>**-а/-я**</td>
 <td>feminine</td>
 <td>ма́ма, земля́, Росси́я, маши́на</td>
 </tr>
 <tr>
-<td align="center">**consonant**</td>
+<td>**consonant**</td>
 <td>masculine</td>
 <td>сок, ма́льчик, чай, интерне́т, апельси́н</td>
 </tr>
 <tr>
-<td align="center">**-о/-е**</td>
+<td>**-о/-е**</td>
 <td>neuter</td>
 <td>окно́, яйцо́, мо́ре</td>
 </tr>
 <tr>
-<td align="center">**-ь**</td>
+<td>**-ь**</td>
 <td>feminine or masculine; consult a dictionary</td>
 <td>ло́шадь, ночь, мать, любо́вь / день, конь, медве́дь, учи́тель</td>
 </tr>
