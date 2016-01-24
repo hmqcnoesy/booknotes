@@ -1069,3 +1069,283 @@ app.listen(3000);
 
 ## Introducing Express
 
+Node web apps are built on the `http` module and
+`createServer`.  Connect builds on this foundation
+adding a middleware pipeline.  Express takes the
+Connect additions a step further, supplying common
+functionality necessary for a web application.
+
+An application dispatcher is created in the same
+way Connect does it:
+
+```javascript
+var express = require('express');
+var app = express();
+app.use(/*...*/);
+express.listen(2000);
+``` 
+
+Error handling and other middleware all function the
+same as with Connect.  All Connect middleware are
+Express middlewares, but not all Express middlewares
+are Connect middlewares because Express modifies the 
+request and response objects, and Express middleware
+likely depends on those modifications, which Connect
+does not provide.
+
+One piece of middleware included in Express is `static`
+which allows static content to be served from a 
+specific location:
+
+```javascript
+var express = require('express');
+var app = express();
+var path = require('path');
+
+var filesPath = path.join(__dirname, 'public');
+app.use(express.static(filesPath));
+
+app.listen(3000);
+```
+
+Another middleware included in Express is the body
+parser which parses posted HTML form data or JSON
+data from a request body and puts the parsed object
+into `req.body`:
+
+```javascript
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser());
+app.use(function(req, res) {
+    if (req.body) console.log(JSON.stringify(req.body));
+    res.end();
+});
+```
+
+Cookie support also comes with Express.  To set a cookie,
+use the `cookie` property of the response:
+
+```javascript
+var express = require('express');
+var app = express();
+app.use(function(req, res){
+    res.cookie('name', 'foo');
+    res.end();
+});
+
+app.listen(2000);
+```
+
+To get cookies back out, they have to be parsed because
+cookies are all piled together in one string.  The
+middleware to parse the cookie name and value pairs is
+`cookie-parser`:
+
+```javascript
+var express = require('express');
+var app = express();
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+app.use(function(req, res) {
+    if (req.cookie.name == 'foo') {
+        /*...*/
+    }
+    res.end();
+});
+
+app.listen(3000);
+```
+
+Compression is another useful features that comes with
+Express.  To automatically compress HTTP responses > 1kB
+just add in the compression middleware:
+
+```javascript
+var express = require('express');
+var app = express();
+var compression = require('compression');
+var path = require('path');
+app.use(express.static(__dirname));
+app.listen(3000);
+```
+
+I have been able to get the above to work only with 
+serving static content via `express.static`, not with
+any dynamically generated responses.
+
+The `connect-timeout` Express middleware is handy for
+preventing a hung middleware from staying hung forever:
+
+```javascript
+var express = require('express');
+var app = express();
+var timeout = require('connect-timeout');
+
+app.use('/broken', timeout(5000), function(req, res, next) {
+    // don't call next, simulates a hang
+});
+
+app.listen(3000);
+``` 
+
+Beware when using the above middleware, as a "hung" middleware
+may suddenly come back to life and continue processing, 
+including a possible call to `next` even after the 503 
+response has been sent by the timeout middleware.
+
+
+### Express response object
+
+The express response object inherits from the standard Node.js
+server response object described previously.  It adds functions
+though, for convenience and flexibility.  For instance, the
+chainable function `.status()` can be used to set the HTTP status 
+code of the response:
+
+```javascript 
+var express = require('express');
+var app = express();
+
+app.use(function(req, res) {
+    res.status(201).end();
+});
+
+app.listen(3000);
+```
+
+Also, an improvement over `.setHeader()` is the `.set()` method
+which takes an object argument to set multiple response 
+headers at once:
+
+```javascript
+var express = require('express');
+var app = express();
+
+app.use(function(req, res) {
+    res.status(201)
+       .set({ "content-type": 'text/plain', "x-custom": 'custom value' })
+       .end();
+});
+
+app.listen(3000);
+```
+
+Of course, if all you need to set is the header, an Express 
+response object has a method for that:  `res.type('text/plain')`.
+The argument can be a variety of value types: `text/html`, `html`
+and `.html` all work the same.
+
+Redirect responses are easy with an optional status code as a 
+first parameter (default is 302), and a url for the second:
+
+```javascript
+res.redirect('http://www.google.com');
+res.redirect(301, '/other');
+```
+
+In previous examples, calls to `res.write` actually streamed
+the response back to the client.  The response header 
+`Transfer-Encoding: Chunked` was included (because of the 
+call to `res.write` and the response body contained a line
+with the count of bytes in the chunk, then the chunk, then
+a line with a zero indicating a final, empty chunk.  For
+instance, this server-side code:
+
+```javascript
+var express = require('express');
+var app = express();
+app.use(function(req, res) {
+    for (var i = 0; i < 3; i++) {
+        res.write(i.toString() + '\r\n');
+    }
+    res.end();
+});
+app.listen(3000);
+```
+
+would result in an HTTP response like the following 
+(assuming the server believes the client can handle 
+the chunked response based on the request headers):
+
+```http
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Date: Sun, 24 Jan 2016 03:22:42 GMT
+Connection: keep-alive
+Transfer-Encoding: chunked
+
+3
+0
+
+3
+1
+
+3
+2
+
+0
+```
+
+Notice that each chunk is 3 bytes, as indicated by the
+"3" lines.  These chunks were streamed to the client 
+as the bytes were written to the response using `res.write`.
+A call to `res.send` on the other hand, will not stream,
+rather, it sends all bytes at once.  It also can accept a 
+status code as a first parameter, and if you pass it an
+object, it will set the content type to `application/json`:
+
+```javascript
+res.send(404, 'not the droids you\'re looking for');
+res.send({name: "thing1"});
+```
+
+
+### Express request object
+
+The request object in Express also inherits from the
+standard Node.js server request, and adds common 
+handy functionality.  For instance, the case-insensitve
+`get` method gets a header value:
+
+```javascript
+var ctype = req.get('content-type');
+var val = req.get('x-custom-header');
+```
+
+Express parses URLs of requests into handy properties
+such as the `path` and `query`:
+
+```javascript
+var id = req.query.id;
+var area = req.query.area;
+var path = req.path;
+```
+
+An important thing to note:  the `req.url` property is
+always relative to where the executing middleware was
+mounted:
+
+```javascript
+var express = require('express');
+var app = express();
+app.use('/one', function(req, res) {
+    res.send(req.path);
+});
+app.use('/', function(req, res) {
+    res.send(req.path);
+});
+app.listen(3000);
+```
+
+So in the example code above, a request to /foo will show
+"/foo" in the response, but a request to /one/two will 
+show "/two" in the response.  If you need the complete
+URL instead of the one relative to where the middleware 
+is mounted, use `req.originalUrl`.
+
+
+### Understanding REST
+
