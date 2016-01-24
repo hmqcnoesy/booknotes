@@ -2,37 +2,37 @@
 
 ## House
 
- ### Points of compass
+### Points of compass
 
 
 <table>
 <thead>
 <tr>
-<th align="center" />
-<th align="center">Example</th>
-<th align="center">translation</th>
+<th />
+<th>Example</th>
+<th>translation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">**на** + Acc.</td>
-<td align="center">на север</td>
-<td align="center">north *(about motion)*</td>
+<td><strong>на</strong> + Acc.</td>
+<td>на север</td>
+<td>north *(about motion)*</td>
 </tr>
 <tr>
-<td align="center">**на** + Prep.</td>
-<td align="center">на севере (+Gen)</td>
-<td align="center">in the north (of)</td>
+<td><strong>на</strong> + Prep.</td>
+<td>на севере (+Gen)</td>
+<td>in the north (of)</td>
 </tr>
 <tr>
-<td align="center">**к** + Dat.</td>
-<td align="center">к северу (+от Gen)</td>
-<td align="center">to the north (of), north of</td>
+<td><strong>к</strong> + Dat.</td>
+<td>к северу (+от Gen)</td>
+<td>to the north (of), north of</td>
 </tr>
 <tr>
-<td align="center">**с** + Gen.</td>
-<td align="center">с севера</td>
-<td align="center">from the north</td>
+<td><strong>с</strong> + Gen.</td>
+<td>с севера</td>
+<td>from the north</td>
 </tr>
 </tbody>
 </table>
@@ -64,26 +64,26 @@ Just a reminder that there are certain short masculine nouns for places which ha
 <table>
 <thead>
 <tr>
-<th align="center">bare 3rd pers.pl.</th>
-<th align="center">English: passive (mostly)</th>
+<th>bare 3rd pers.pl.</th>
+<th>English: passive (mostly)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Меня́ **зову́т** Том.</td>
-<td align="center">*My name's Tom.*</td>
+<td>Меня́ <strong>зову́т</strong> Том.</td>
+<td>My name's Tom.</td>
 </tr>
 <tr>
-<td align="center">Тут **де́лают** маши́ны.</td>
-<td align="center">*Cars are made here.*</td>
+<td>Тут <strong>де́лают</strong> маши́ны.</td>
+<td>Cars are made here.</td>
 </tr>
 <tr>
-<td align="center">Так **не говоря́т**.</td>
-<td align="center">*People don't talk like that.*</td>
+<td>Так <strong>не говоря́т</strong>.</td>
+<td>People don't talk like that.</td>
 </tr>
 <tr>
-<td align="center">В нача́ле **гото́вят** лук.</td>
-<td align="center">*First, the onions are cooked.*</td>
+<td>В нача́ле <strong>гото́вят</strong> лук.</td>
+<td>First, the onions are cooked.</td>
 </tr>
 </tbody>
 </table>
@@ -105,7 +105,7 @@ The perfective counterpart is «хвати́ть».
 
 ## Reflexive
 
- ### In theory
+### In theory
 
 The reflexive is used when a subject performs an action "on itself". In English it is generally not stated explicitly. When you say that someone *shaves* or *stops*, it is understood that the action relates to themselves, unless a different "object" is provided.
 
@@ -170,7 +170,7 @@ It often works for animals and people (to scratch, to butt, to swear). However, 
 
 ## Time expressions 2
 
- ### More popular time expressions
+### More popular time expressions
 
 *   **теп́ерь** is the word for "now" when you mean that there is a *change* from how it was *before* ("Now I live in Rome", "What do we do now!?", "Now you know Russian"). We are pretty lenient on the distinction in the course, though.
 *   use **«через» + Accusative** to express an amount of time that should pass before the event comes («через неделю» = in a week, a week later).
@@ -197,7 +197,7 @@ It's small, but it has some popular imperfective verbs like «вставать»
 
 ## Imperative and Adverbs
 
- ### Two types of imperative
+### Two types of imperative
 
 Not hard at all.
 
@@ -229,7 +229,7 @@ By the way, that "obvious" point is why imperfectives are not, as a rule, used f
 
 ## Verbs of Motion
 
- ### Run: there and back again
+### Run: there and back again
 
 Russian verbs of motion come in two varieties:
 
@@ -280,7 +280,7 @@ other prefixes add their meaning; to get an imperfective verb, attach the same p
 
 ## City and People
 
- ### Stop right there!
+### Stop right there!
 
 What you call a place where some transport stops, that depends on the transport. The trains stop at «ста́нция» while bus and tram stops are «остано́вка» (*«авто́бусная», «тролле́йбусная», «трамва́йная»*). 
 
@@ -301,7 +301,7 @@ Railway is «**желе́зная доро́га**» in Russian (lit. 'iron road
 
 ## Imperative 2
 
- ### Perfective vs. Imperfective
+### Perfective vs. Imperfective
 
 Certainly use *imperfective* when specifying the manner in which the action should be performed.
 
@@ -322,15 +322,15 @@ use **imperfective** when **NOT letting** something.
 <tbody>
 <tr>
 <td>yes + imperf.</td>
-<td>«Можно открыть окно?» — «Да, открывай». *(I don't mind)*</td>
+<td>«Можно открыть окно?» — «Да, открывай». <em>(I don't mind)</em></td>
 </tr>
 <tr>
 <td>yes + perf.</td>
-<td>«Можно открыть окно?» — «Да, открой». *(support)*</td>
+<td>«Можно открыть окно?» — «Да, открой». <em>(support)</em></td>
 </tr>
 <tr>
 <td>neg. + imperf.</td>
-<td>Не открывай ничего. *(do not allow)*</td>
+<td>Не открывай ничего. <em>(do not allow)</em></td>
 </tr>
 </tbody>
 </table>
@@ -362,7 +362,7 @@ There is a distinction in Russian between putting things in a random or "lying f
 
 ## Something
 
- ### который
+### который
 
 «Который» ("that/which") is like an adjective, only it takes the gender of whichever object it "represents", and the case that corresponds to its role in the part of the sentence you use it in:
 
@@ -399,7 +399,7 @@ They are somewhat interchangeable when you mean there's free choice from a limit
 
 ## Technics and Home
 
- ### пойду́
+### пойду́
 
 Here we introduce the prefixed *perfective* for "to go(walk)" — **пойти́**.  It is a perfective verb with a focus on "setting out" somewhere, just like other verbs of motion with «по-» («пое́хать», «побежа́ть», «полете́ть», «пове́сти»).
 
@@ -419,41 +419,41 @@ A personal vehicle will always use *ехать/ездить*.
 
 ## Future & Past with Perfectives
 
- ### Formation
+### Formation
 
 Take a perfective verb and do the same thing you do to imperfectives in the Present. Seriously. The reason is that perfective verbs have no Present form in Russian.
 
 <table>
 <thead>
 <tr>
-<th align="center">IMPERFECTIVE</th>
-<th align="center">PERFECTIVE</th>
+<th>IMPERFECTIVE</th>
+<th>PERFECTIVE</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Я чита́ю. = I am reading.</td>
-<td align="center">Я прочита́ю = I will read.</td>
+<td>Я чита́ю. = I am reading.</td>
+<td>Я прочита́ю = I will read.</td>
 </tr>
 <tr>
-<td align="center">Я гото́влю суп. = I am making soup.</td>
-<td align="center">Я пригото́влю суп. = I will make soup.</td>
+<td>Я гото́влю суп. = I am making soup.</td>
+<td>Я пригото́влю суп. = I will make soup.</td>
 </tr>
 <tr>
-<td align="center">Она у́чит слова́. = She is learning words.</td>
-<td align="center">Она́ вы́учит слова́. = She'll learn the words.</td>
+<td>Она у́чит слова́. = She is learning words.</td>
+<td>Она́ вы́учит слова́. = She'll learn the words.</td>
 </tr>
 <tr>
-<td align="center">Ма́льчик идёт домо́й. = The boy is going home.</td>
-<td align="center">Ма́льчик пойдёт домо́й. = The boy will go home.</td>
+<td>Ма́льчик идёт домо́й. = The boy is going home.</td>
+<td>Ма́льчик пойдёт домо́й. = The boy will go home.</td>
 </tr>
 <tr>
-<td align="center">Мы слу́шаем сона́ту. = We're listening to the sonata.</td>
-<td align="center">Мы послу́шаем сона́ту. = We'll listen to the sonata.</td>
+<td>Мы слу́шаем сона́ту. = We're listening to the sonata.</td>
+<td>Мы послу́шаем сона́ту. = We'll listen to the sonata.</td>
 </tr>
 <tr>
-<td align="center">Я де́лаю столы́. = I make desks.</td>
-<td align="center">Я сде́лаю три стола́. = I'll make three desks.</td>
+<td>Я де́лаю столы́. = I make desks.</td>
+<td>Я сде́лаю три стола́. = I'll make three desks.</td>
 </tr>
 </tbody>
 </table>
@@ -477,7 +477,7 @@ That stuff with «Она готовит»/«Я готов**л**ю». In *И-conj
 
 ## Being Instrumental
 
- ### Working and being
+### Working and being
 
 Instrumental, while being a relatively niche case, is used for a number of verbs that mean "being" something (or someone) and "being interested" in something. For example, with **быть** when in the Past or the Future. 
 
@@ -508,48 +508,48 @@ Here is a reference table, as well as some examples (words for *white, blue, nar
 <table>
 <thead>
 <tr>
-<th align="center" />
-<th align="center">masc/neut</th>
-<th align="center">fem</th>
-<th align="center">pl</th>
+<th />
+<th>masc/neut</th>
+<th>fem</th>
+<th>pl</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">**ENDINGS**</td>
-<td align="center">**-ым/-им**</td>
-<td align="center">**-ой/-ей**</td>
-<td align="center">**-ыми/-ими**</td>
+<td><strong>ENDINGS</strong></td>
+<td><strong>-ым/-им</strong></td>
+<td><strong>-ой/-ей</strong></td>
+<td><strong>-ыми/-ими</strong></td>
 </tr>
 <tr>
-<td align="center">eg. бе́лый</td>
-<td align="center">бе́лым</td>
-<td align="center">бе́лой</td>
-<td align="center">бе́лыми</td>
+<td>eg. бе́лый</td>
+<td>бе́лым</td>
+<td>бе́лой</td>
+<td>бе́лыми</td>
 </tr>
 <tr>
-<td align="center">eg. си́ний</td>
-<td align="center">си́ним</td>
-<td align="center">си́ней</td>
-<td align="center">си́ними</td>
+<td>eg. си́ний</td>
+<td>си́ним</td>
+<td>си́ней</td>
+<td>си́ними</td>
 </tr>
 <tr>
-<td align="center">eg. у́зкий</td>
-<td align="center">у́зким</td>
-<td align="center">у́зкой</td>
-<td align="center">у́зкими</td>
+<td>eg. у́зкий</td>
+<td>у́зким</td>
+<td>у́зкой</td>
+<td>у́зкими</td>
 </tr>
 <tr>
-<td align="center">eg. большо́й</td>
-<td align="center">больши́м</td>
-<td align="center">большо́й</td>
-<td align="center">больши́ми</td>
+<td>eg. большо́й</td>
+<td>больши́м</td>
+<td>большо́й</td>
+<td>больши́ми</td>
 </tr>
 <tr>
-<td align="center">eg. лу́чший</td>
-<td align="center">лу́чшим</td>
-<td align="center">лу́чшей</td>
-<td align="center">лу́чшими</td>
+<td>eg. лу́чший</td>
+<td>лу́чшим</td>
+<td>лу́чшей</td>
+<td>лу́чшими</td>
 </tr>
 </tbody>
 </table>
@@ -562,7 +562,7 @@ Note how after hushes (*ж, ш, щ, ч*), **ой** is used for end-stressed adje
 
 ## Placing Objects
 
- ### Object placement in Russian
+### Object placement in Russian
 
 This concept is hard to translate but easy to grasp. Frankly, Russians (on average) tend to be more precise about the manner in which an object "is" somewhere or is "put" somewhere. 
 
@@ -609,7 +609,7 @@ Better late than never, I guess. There are a few verbs that only ever denote pos
 
 ## Kitchen and Food
 
- ### есть
+### есть
 
 The verb «есть» (to eat) doesn't have a true perfective partner according to some sources. Its perfective counterpart would depend on the meaning:
 
@@ -640,7 +640,7 @@ The zero-ending option is definitely the most popular these days, at least in sp
 
 ## Speaking2
 
- ### счита́ть vs. ду́мать
+### счита́ть vs. ду́мать
 
 When expressing your opinion, you may use either of the two. «Счита́ть» implies that you think so because of your views, or because that would be your decision, or because you gave it some thought. «Ду́мать» can mean a lot of things, a random, incidental thought included. 
 
@@ -659,7 +659,7 @@ Basically, you just have to know that «счита́ть» may mean something ot
 
 ## Subjunctive and Conditional
 
- ### Want me to do it?
+### Want me to do it?
 
 The Subjunctive is, basically, when you speak of actions that are not *real* but rather *desired*, *asked to be performed* or just actions that *might have happened*.
 
@@ -681,8 +681,7 @@ In more formal English it would look like *"Mother asks that you be home tomorro
 
 So, use the past to form the subjunctive in any structures like "A told B to do something", "A did X so that B would do Y", "We need that A do X" etc. The analogy with the English "that" (which might come off as overly formal) is probably a good way to grasp all these structures, since, unfortunately, in more idiomatic English the sentence structures would be quite different to the Russian.
 
-◉ *Pay attention to the use of aspect. When asking someone NOT to do something, **imperfective** is normally used.*
-
+*   *Pay attention to the use of aspect. When asking someone NOT to do something, **imperfective** is normally used.*
 *   With verbs of asking, you only use the past form if you do use a subjunctive phrase. If you've opted to use a Dative "recipient" instead, the verb is in the infinitive:* Мы попросили его подождать.
 
 
@@ -699,7 +698,7 @@ Russian does not distinguish (grammatically) between "would be" and "would have 
 
 ## Compound Future
 
- ### Imperfective future
+### Imperfective future
 
 There is another way of expressing the future in Russian besides the perfective covered earlier, namely (you guessed it) the imperfective. Its primary use is to show some prolonged or repeated activity in the future rather than to focus on a single action done at some particular point in time. (It tends to be overused by foreign learners). 
 
@@ -726,7 +725,7 @@ We mostly skip the past use because English does not actually distinguish betwee
 
 ## Prefixed Verbs of Motion
 
- ### Back in Motion
+### Back in Motion
 
 Having covered the basic verbs of motion earlier, it's time to go a bit deeper.
 
