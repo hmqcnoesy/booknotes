@@ -2,7 +2,7 @@
 
 ## Time and Numbers
 
- ### Using numbers with nouns
+### Using numbers with nouns
 
 Let's focus on the Nominative for now (this also works when Acc.=Nom). Russian numbers may seem a bit weird. The case of the noun depends on the last word of the number:
 
@@ -10,29 +10,29 @@ Let's focus on the Nominative for now (this also works when Acc.=Nom). Russian n
 <thead>
 <tr>
 <th>last word</th>
-<th align="center">means</th>
+<th>means</th>
 <th>Case</th>
-<th align="center">example</th>
+<th>example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>оди́н *(одна́, одно́, одни́ )*</td>
-<td align="center">1</td>
+<td>оди́н <em>(одна́, одно́, одни́ )</em></td>
+<td>1</td>
 <td>Nom. sg.</td>
-<td align="center">оди́н дом, одна́ ма́ма, два́дцать одно́ окно́, оди́н сто́л</td>
+<td>оди́н дом, одна́ ма́ма, два́дцать одно́ окно́, оди́н сто́л</td>
 </tr>
 <tr>
-<td>два *(две)*, три, четы́ре</td>
-<td align="center">2, 3, 4</td>
+<td>два <em>(две)</em>, три, четы́ре</td>
+<td>2, 3, 4</td>
 <td>Gen. sg.</td>
-<td align="center">две ко́шки, два стола́, три ма́льчика, три́дцать четы́ре стола́</td>
+<td>две ко́шки, два стола́, три ма́льчика, три́дцать четы́ре стола́</td>
 </tr>
 <tr>
 <td>Larger than that</td>
-<td align="center">5, 6, 12, 100 etc.</td>
+<td>5, 6, 12, 100 etc.</td>
 <td>Gen. pl.</td>
-<td align="center">пять ко́шек, пять ма́льчиков, два́дцать пять ко́шек, миллио́н ко́шек</td>
+<td>пять ко́шек, пять ма́льчиков, два́дцать пять ко́шек, миллио́н ко́шек</td>
 </tr>
 </tbody>
 </table>
@@ -90,7 +90,7 @@ This course doesn't cover this. But it's still useful to know.
 
 ## People 2
 
- ### A student
+### A student
 
 Russian has different words for a school student (aka *a pupil*, BrE) and a college-level student, which both have masculine and feminine versions:
 
@@ -113,30 +113,30 @@ When you are counting people, use "челове́к" for numbers that end in «�
 <thead>
 <tr>
 <th />
-<th align="center">meaning</th>
-<th align="center">examples</th>
+<th>meaning</th>
+<th>examples</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>**учи́ться**</td>
-<td align="center">to study (e.g. to attend classes or to do self-study)</td>
-<td align="center">Днём я учу́сь.</td>
+<td><strong>учи́ться</strong></td>
+<td>to study (e.g. to attend classes or to do self-study)</td>
+<td>Днём я учу́сь.</td>
 </tr>
 <tr>
-<td>**учи́ться в**(на) + Prep.</td>
-<td align="center">to study somewhere; to be in *nth* grade/*nth* year</td>
-<td align="center">Де́вочка у́чится в шко́ле, в 3-м кла́ссе.</td>
+<td><strong>учи́ться в</strong>(на) + Prep.</td>
+<td>to study somewhere; to be in <em>nth</em> grade/<em>nth</em> year</td>
+<td>Де́вочка у́чится в шко́ле, в 3-м кла́ссе.</td>
 </tr>
 <tr>
-<td>учи́ть + Acc.*subject*</td>
-<td align="center">to learn, to memorize something («наизу́сть» ="by heart")</td>
-<td align="center">Я учу́ слова́. Я учу́ ру́сский язы́к.</td>
+<td>учи́ть + Acc.<em>subject</em></td>
+<td>to learn, to memorize something («наизу́сть» ="by heart")</td>
+<td>Я учу́ слова́. Я учу́ ру́сский язы́к.</td>
 </tr>
 <tr>
 <td>учи́ть + Acc + Dat</td>
-<td align="center">to teach somebody something</td>
-<td align="center">Я учу́ студе́нтов ру́сскому.</td>
+<td>to teach somebody something</td>
+<td>Я учу́ студе́нтов ру́сскому.</td>
 </tr>
 </tbody>
 </table>
@@ -149,7 +149,7 @@ When you are counting people, use "челове́к" for numbers that end in «�
 
 ## Weather and Nature
 
- ### It's raining
+### It's raining
 
 "To go" is the verb used for precipitation in Russian:
 
@@ -191,7 +191,7 @@ Needless to say, these do not use any grammatical subject and are quite useful w
 
 ## Sport
 
- ### win/lose
+### win/lose
 
 Here you encounter two *perfective* verbs; these two very obviously refer to a specific result:
 
@@ -204,18 +204,18 @@ Note the formation of the past. If you remember *был, была́*—all Russi
 <table>
 <thead>
 <tr>
-<th align="center">**masc**</th>
-<th align="center">**fem**</th>
-<th align="center">**neut**</th>
-<th align="center">**pl**</th>
+<th><strong>masc</strong></th>
+<th><strong>fem</strong></th>
+<th><strong>neut</strong></th>
+<th><strong>pl</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">—</td>
-<td align="center">**-а**</td>
-<td align="center">**-о**</td>
-<td align="center">**-и**</td>
+<td>—</td>
+<td><strong>-а</strong></td>
+<td><strong>-о</strong></td>
+<td><strong>-и</strong></td>
 </tr>
 </tbody>
 </table>
@@ -238,22 +238,22 @@ In this skill, we introduce the one-way verb "to run". You may not remember but 
 <table>
 <thead>
 <tr>
-<th align="center">SING.</th>
-<th align="center">PLUR.</th>
+<th>SING.</th>
+<th>PLUR.</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Я **бегу́**</td>
-<td align="center">Мы бежи́м</td>
+<td>Я <strong>бегу́</strong></td>
+<td>Мы бежи́м</td>
 </tr>
 <tr>
-<td align="center">Ты бежи́шь</td>
-<td align="center">Вы бежи́те</td>
+<td>Ты бежи́шь</td>
+<td>Вы бежи́те</td>
 </tr>
 <tr>
-<td align="center">Он бежи́т</td>
-<td align="center">Они **бегу́т**</td>
+<td>Он бежи́т</td>
+<td>Они <strong>бегу́т</strong></td>
 </tr>
 </tbody>
 </table>
@@ -266,36 +266,36 @@ In this skill, we introduce the one-way verb "to run". You may not remember but 
 <table>
 <thead>
 <tr>
-<th align="center">**ENDINGS**</th>
-<th align="center">masculine</th>
-<th align="center">neuter</th>
-<th align="center">feminine</th>
+<th><strong>ENDINGS</strong>/th>
+<th>masculine</th>
+<th>neuter</th>
+<th>feminine</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Nom.</td>
-<td align="center">**-ый(о́й)/-ий **</td>
-<td align="center">**-ое/-ее**</td>
-<td align="center">**-ая/-яя**</td>
+<td>Nom.</td>
+<td><strong>-ый(о́й)/-ий </strong>/td>
+<td><strong>-ое/-ее</strong>/td>
+<td><strong>-ая/-яя</strong>/td>
 </tr>
 <tr>
-<td align="center">Acc.</td>
-<td align="center">Nom. or Gen.</td>
-<td align="center">-ое/-ее</td>
-<td align="center">-ую/-юю</td>
+<td>Acc.</td>
+<td>Nom. or Gen.</td>
+<td>-ое/-ее</td>
+<td>-ую/-юю</td>
 </tr>
 <tr>
-<td align="center">Gen.</td>
-<td align="center">-ого/-его</td>
-<td align="center">see masc.</td>
-<td align="center">-ой/-ей</td>
+<td>Gen.</td>
+<td>-ого/-его</td>
+<td>see masc.</td>
+<td>-ой/-ей</td>
 </tr>
 <tr>
-<td align="center">Prep.</td>
-<td align="center">-ом/-ем</td>
-<td align="center">see masc.</td>
-<td align="center">-ой/-ей</td>
+<td>Prep.</td>
+<td>-ом/-ем</td>
+<td>see masc.</td>
+<td>-ой/-ей</td>
 </tr>
 </tbody>
 </table>
@@ -327,7 +327,7 @@ In Russian the idea of "the whole" of something can be expressed by either «ц�
 
 ## Past & Infinitive
 
- ### The infinitive stem
+### The infinitive stem
 
 In Russian the Past tense and the Infinitive are formed from the same stem.
 
@@ -337,33 +337,33 @@ The forms are actually much easier than in the Present because there are only fo
 <thead>
 <tr>
 <th>VERB</th>
-<th align="center">**masc**</th>
-<th align="center">**fem**</th>
-<th align="center">**neut**</th>
-<th align="center">**pl**</th>
+<th><strong>masc</strong></th>
+<th><strong>fem</strong></th>
+<th><strong>neut</strong></th>
+<th><strong>pl</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>**ending**</td>
-<td align="center">—</td>
-<td align="center">**-а**</td>
-<td align="center">**-о**</td>
-<td align="center">**-и**</td>
+<td><strong>ending</strong></td>
+<td>—</td>
+<td><strong>-а</strong></td>
+<td><strong>-о</strong></td>
+<td><strong>-и</strong></td>
 </tr>
 <tr>
 <td>быть</td>
-<td align="center">был</td>
-<td align="center">была́</td>
-<td align="center">бы́ло</td>
-<td align="center">бы́ли</td>
+<td>был</td>
+<td>была́</td>
+<td>бы́ло</td>
+<td>бы́ли</td>
 </tr>
 <tr>
 <td>есть</td>
-<td align="center">ел</td>
-<td align="center">е́ла</td>
-<td align="center">е́ло</td>
-<td align="center">е́ли</td>
+<td>ел</td>
+<td>е́ла</td>
+<td>е́ло</td>
+<td>е́ли</td>
 </tr>
 </tbody>
 </table>
@@ -389,7 +389,7 @@ For some verb types the two stems are nearly identical (понима́ть, го
 
 ## Shopping
 
- ### Give me that!
+### Give me that!
 
 By now, you have probably noticed a surprising lack of "that one" in Russian. The thing is, Russian mostly uses "этот" both for "this" and "that", unless you need to make a contrast between "this one here" and "that one there". 
 
@@ -429,7 +429,7 @@ Actually, with adjectives other than *большо́й/мале́нький* you
 
 ## Dative and Plurals
 
- ### The Dative Case in Russian
+### The Dative Case in Russian
 
 You have already seen that many **expressions of feelings and experience** use the Dative: *”Мне нра́вится...”, “Ма́ме хорошо́”, “Ему́ 5 лет”, “Мне ка́жется ...”* etc. 
 
@@ -455,7 +455,7 @@ Plurals have only **one pattern** shared by all nouns (e.g., «я говорю́
 
 ## Speaking 1
 
- ### Sequence of tenses in Russian
+### Sequence of tenses in Russian
 
 There is no sequence of tenses in Russian whatsoever.
 
@@ -496,7 +496,7 @@ Rather than referring to ongoing actions or past(future) actions in general, per
 
 ## Perfective Verbs -1
 
- ### Aspect in Russian
+### Aspect in Russian
 
 Verbs in Russian come in two 'flavours' : *perfective* (eg. “пригото́вить”) and *imperfective* (eg. “гото́вить”). 
 
@@ -569,7 +569,7 @@ That also means that sometimes you'd better memorize a pair even if it is techni
 
 ## Instrumental Case
 
- ### Fortunately, this is the very last case!
+### Fortunately, this is the very last case!
 
 It is used for some very specific meanings, that’s why we've put off covering it for so long.
 
@@ -610,7 +610,7 @@ Actually, Russian also has a handful of inconsistent cases that only exist for s
 
 ## Body, Life and Death
 
- ### You have big eyes
+### You have big eyes
 
 Be careful NOT to use «есть» when describing properties of body parts, if their existence is normal and unlikely to surprise anyone:
 
@@ -624,46 +624,36 @@ The Russian words for limbs and what they have on the end of them can be a littl
 
 ## Genitive Plural
 
- ### The formation of Genitive Plural
+### The formation of Genitive Plural
 
 All other forms (except the Nominative) are the same for all plural nouns, regardless of gender. The Genitive is the other exception. Here is how it is formed:
 
-*   
+-   **-а, -я, -о nouns**: just remove the last vowel sound. Extends to **-ия** and **-ие** nouns (which become **-ий**). A vowel is inserted if a consonant cluster forms at the end. We will address a few common cases of *fleeting vowels* later in the course. 
 
-**-а, -я, -о nouns**: just remove the last vowel sound. Extends to **-ия** and **-ие** nouns (which become **-ий**). A vowel is inserted if a consonant cluster forms at the end. We will address a few common cases of *fleeting vowels* later in the course. 
+    -   ма́ма, неде́ля → **мам**, неде́ль
+    -   сло́во, окно́ → **слов**, о́кон
+    -   фами́лия, мело́дия → фами́лий, мело́дий
+    -   ко́шка → ко́шек
 
-    *   ма́ма, неде́ля → **мам**, неде́ль
-    *   сло́во, окно́ → **слов**, о́кон
-    *   фами́лия, мело́дия → фами́лий, мело́дий
-    *   ко́шка → ко́шек
+-   **hard consonant**: typical “masculine” nouns ending in *hard* non-sibilant consonants get the ending **-ов**. Those in “-й” get **-ев**, and so do nouns in “-ц” when the ending is unstressed (which won't help you much). 
 
-*   
+    -   стол, оте́ц, го́род → **столо́в**, отцо́в, городо́в
+    -   ме́сяц → ме́сяцев
 
-**hard consonant**: typical “masculine” nouns ending in *hard* non-sibilant consonants get the ending **-ов**. Those in “-й” get **-ев**, and so do nouns in “-ц” when the ending is unstressed (which won't help you much). 
+-   **soft consonant**: feminine and masculine nouns ending in **-ь** or hushes (Ж, Ш, Щ, Ч) will get **-ей** as the ending. Neuter nouns ending in **-е** also use this pattern.
 
-    *   стол, оте́ц, го́род → **столо́в**, отцо́в, городо́в
-    *   ме́сяц → ме́сяцев
+    -   ночь, крова́ть → **ноче́й**, крова́тей
+    -   учи́тель, муж → учителе́й, муже́й
+    -   мо́ре → **море́й**
 
-*   
-
-**soft consonant**: feminine and masculine nouns ending in **-ь** or hushes (Ж, Ш, Щ, Ч) will get **-ей** as the ending. Neuter nouns ending in **-е** also use this pattern.
-
-    *   ночь, крова́ть → **ноче́й**, крова́тей
-    *   учи́тель, муж → учителе́й, муже́й
-    *   мо́ре → **море́й**
-
-*   
-
-«и́мя» and «вре́мя» become **имён, времён** (though, for «се́мя» and «стре́мя» it is «семя́н» and «стремя́н»)
+-   «и́мя» and «вре́мя» become **имён, времён** (though, for «се́мя» and «стре́мя» it is «семя́н» and «стремя́н»)
 
 ### Not so easy
 
-*   
+- be careful around nouns that form plurals irregularly, like друг →**друзья́**. Here are the genitive plurals of «друг», «мать», «дочь», «сын», «стул», «брат», «лист» and «де́рево» :
 
-be careful around nouns that form plurals irregularly, like друг →**друзья́**. Here are the genitive plurals of «друг», «мать», «дочь», «сын», «стул», «брат», «лист» and «де́рево» :
-
-    *   **друзе́й, матере́й, дочере́й, сынове́й**
-    *   **сту́льев, бра́тьев, ли́стьев, дере́вьев**
+    -   **друзе́й, матере́й, дочере́й, сынове́й**
+    -   **сту́льев, бра́тьев, ли́стьев, дере́вьев**
 
 
 
@@ -696,7 +686,7 @@ There are one-word forms for many adjectives, though few of them are popular. He
 
 ## Predicates and States(+Adverbs)
 
- ### Practical Short Adjectives
+### Practical Short Adjectives
 
 Adjectives in Russian have a long form and a short one. A long one is used before nouns and as a part of a predicate. A short "predicative" form can ONLY be used as a predicate (with a "to be" verb).  Usually it looks ***the same as an adverb***. 
 
@@ -718,7 +708,7 @@ That's what we are going to do. And you get adverbs for free.
 
 ## Education
 
- ### Ordinal numbers
+### Ordinal numbers
 
 Russian ordinal numbers behave like adjectives. Also, thankfully, if you have a long number *only the last word* is affected when the gender and/or case change:
 
@@ -773,7 +763,7 @@ Finally, a word (or two) about grades/school years. For the sake of convenience,
 
 ## Countries and Places
 
- ### Sweden, a Swede, Swedish
+### Sweden, a Swede, Swedish
 
 In Russian, the name of the country, the name of a person from there and their language are all different words. They are related, however, and few patterns exist:
 
