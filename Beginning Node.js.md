@@ -1347,5 +1347,50 @@ URL instead of the one relative to where the middleware
 is mounted, use `req.originalUrl`.
 
 
-### Understanding REST
+### Express application routes
 
+Instead of always using `app.use` you can use `app.VERB` 
+where VERB is one of the common HTTP verbs: get, post, 
+put, delete.  This registers a middleware that is called
+only when the HTTP verb matches the method name. 
+
+```javascript
+var express = require('express');
+var app = express();
+app.get('/', function(req, res) {
+    res.send('you got it');
+});
+app.post('/', function(req, res) {
+    res.send('you posted it');
+}); 
+app.listen(3000);
+```
+
+There is also an `all` method that is called for the 
+specified route, regardless of the HTTP verb used.
+
+Express has a `.route` method that can be used to 
+specify a single route, then chain the verb methods so
+the route doesn't have to be supplied each time:
+
+```javascript
+var express = require('express');
+var app = express();
+app.route('/')
+    .get(function(req, res, next) {
+        res.send('got');
+    })
+    .post(function(req, res, next) {
+        res.send('posted');
+    })
+    .put(function(req, res, next) {
+        res.send('put');
+    })
+    .delete(function(req, res, next) {
+        res.send('deleted');
+    });
+app.listen(3000);
+```
+
+
+### A deeper look at the path option
