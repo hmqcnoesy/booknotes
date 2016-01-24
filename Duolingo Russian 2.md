@@ -36,7 +36,7 @@ It is optional. Actually, many short masculine nouns that denote substances used
 
 ## The Accusative: the Direct Object
 
- ### Accusative
+### Accusative
 
 Until now, you've been using the base form of the word in sentence like «Он ест **яблоко**».
 
@@ -59,18 +59,18 @@ Now we are left with masculine nouns ending in a consonant (сок, медве́
 <table>
 <thead>
 <tr>
-<th align="center">**-а/-я**</th>
-<th align="center">**—** (masc.)</th>
-<th align="center">**neuter**</th>
-<th align="center">**-ь** (fem.)</th>
+<th><strong>-а/-я</strong></th>
+<th><strong>—</strong> (masc.)</th>
+<th><strong>neuter</strong></th>
+<th><strong>-ь</strong> (fem.)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">**-у/-ю**</td>
-<td align="center">Nom. / Gen.</td>
-<td align="center">Nominative</td>
-<td align="center">Nominative</td>
+<td><strong>-у/-ю</strong></td>
+<td>Nom. / Gen.</td>
+<td>Nominative</td>
+<td>Nominative</td>
 </tr>
 </tbody>
 </table>
@@ -91,52 +91,52 @@ The other notable thing is that it does not have a strong connotation of 'need',
 
 ## Verbs in the Present 1
 
- ### Е- and И- conjugation
+### Е- and И- conjugation
 
 The verbs in Russian change according to person and number. Each form has a different ending. There are only two patterns (apart from some phonetic changes). 
 
 <table>
 <thead>
 <tr>
-<th align="center" />
-<th align="center">endings</th>
+<th />
+<th>endings</th>
 <th>Е- / И- examples</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">**я**</td>
-<td align="center">-**ю** (у)</td>
+<td><strong>я</strong></td>
+<td>-<strong>ю</strong> (у)</td>
 <td>чита́ю, пишу́ / говорю́, ви́жу</td>
 </tr>
 <tr>
-<td align="center">**ты**</td>
-<td align="center">-**ешь** / -**ишь**</td>
+<td><strong>ты</strong></td>
+<td>-<strong>ешь</strong> / -<strong>ишь</strong></td>
 <td>чита́ешь, пи́шешь / говори́шь, ви́дишь</td>
 </tr>
 <tr>
-<td align="center">**он/она́**</td>
-<td align="center">-**ет** / -**ит**</td>
+<td><strong>он/она́</strong></td>
+<td>-<strong>ет</strong> / -<strong>ит</strong></td>
 <td>чита́ет, пи́шет / говори́т, ви́дит</td>
 </tr>
 <tr>
-<td align="center" />
-<td align="center" />
+<td />
+<td />
 <td />
 </tr>
 <tr>
-<td align="center">**мы**</td>
-<td align="center">-**ем** / -**им**</td>
+<td><strong>мы</strong></td>
+<td>-<strong>ем</strong> / -<strong>им</strong></td>
 <td>чита́ем, пи́шем / говори́м, ви́дим</td>
 </tr>
 <tr>
-<td align="center">**вы**</td>
-<td align="center">-**ете** / -**ите**</td>
+<td><strong>вы</strong></td>
+<td>-<strong>ете</strong> / -<strong>ите</strong></td>
 <td>чита́ете, пи́шете / говори́те, ви́дите</td>
 </tr>
 <tr>
-<td align="center">**они́**</td>
-<td align="center">-**ют**(ут) / -**ят** (ат)</td>
+<td><strong>они́</strong></td>
+<td>-<strong>ют</strong>(ут) / -<strong>ят</strong> (ат)</td>
 <td>чита́ют, пи́шут / говоря́т, ви́дят</td>
 </tr>
 </tbody>
@@ -164,7 +164,7 @@ In this course we use the American English definitions:
 
 ## The Infinitive, Likes and Dislikes
 
- ### I like/I love ?
+### I like/I love ?
 
 In Russian, you can express liking things and activities pretty much the same way as in English, with similar verbs. The usage differs a bit, though.
 
@@ -204,7 +204,7 @@ Don't worry about it too much for now, as we'll be tackling reflexives in more d
 
 ## Food
 
- ### Yummy
+### Yummy
 
 > «для»(for) always takes Genitive nouns
 
@@ -246,30 +246,30 @@ More on that later. For now, just go with the flow.
 <thead>
 <tr>
 <th />
-<th align="center">NOM</th>
+<th>NOM</th>
 <th>GEN</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>fem</td>
-<td align="center">но́в**ая**/си́н**яя** чашка</td>
-<td>но́в**ой**/си́н**ей** ча̒шки</td>
+<td>но́в<strong>ая</strong>/си́н<strong>яя</strong> чашка</td>
+<td>но́в<strong>ой</strong>/си́н<strong>ей</strong> ча̒шки</td>
 </tr>
 <tr>
 <td>masc</td>
-<td align="center">но́в**ый**/си́н**ий** дом</td>
-<td>но́в**ого**/си́н**его** до́ма</td>
+<td>но́в<strong>ый</strong>/си́н<strong>ий</strong> дом</td>
+<td>но́в<strong>ого</strong>/си́н<strong>его</strong> до́ма</td>
 </tr>
 <tr>
 <td>neut</td>
-<td align="center">но́в**ое**/си́н**ее** окно́</td>
-<td>но́в**ого**/си́н**его** окна</td>
+<td>но́в<strong>ое</strong>/си́н<strong>ее</strong> окно́</td>
+<td>но́в<strong>ого</strong>/си́н<strong>его</strong> окна</td>
 </tr>
 <tr>
 <td>pl.</td>
-<td align="center">но́в**ые**/си́н**ие** ча́шки</td>
-<td>но́в**ых**/си́н**их** ча́шек</td>
+<td>но́в<strong>ые</strong>/си́н<strong>ие</strong> ча́шки</td>
+<td>но́в<strong>ых</strong>/си́н<strong>их</strong> ча́шек</td>
 </tr>
 </tbody>
 </table>
@@ -290,7 +290,7 @@ The following universal rules of Russian spelling will give you the rest of the 
 
 ## Conjunctions
 
- ### а vs. и
+### а vs. и
 
 In Russian, **и** is used to show similarity. Otherwise you should use **а**, which shows *contrast*. To be more specific, here are the typical patterns:
 
@@ -336,7 +336,7 @@ This conjunction has a rather interesting use, to show when someone perceives so
 
 ## There is
 
- ### Word order
+### Word order
 
 To say "there is/are" in Russian, do the following:
 
@@ -380,7 +380,7 @@ In English "to be" is perfectly fine, so we accept that.
 
 ## Questions
 
- ### Where
+### Where
 
 Russian makes a distinction between being somewhere (тут/здесь, там) , going there (сюда, туда) and coming *from* there (отсюда, оттуда)—so naturally question words follow suit:
 
@@ -396,36 +396,36 @@ Russian uses **«Кто»**(who) when asking about identity and occupation and �
 <table>
 <thead>
 <tr>
-<th align="center">CASE</th>
-<th align="center">What</th>
-<th align="center">Who</th>
-<th align="center">Whose</th>
+<th>CASE</th>
+<th>What</th>
+<th>Who</th>
+<th>Whose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">Nom.</td>
-<td align="center">что</td>
-<td align="center">кто</td>
-<td align="center">чей, чьё, чья ,чьи</td>
+<td>Nom.</td>
+<td>что</td>
+<td>кто</td>
+<td>чей, чьё, чья ,чьи</td>
 </tr>
 <tr>
-<td align="center">Gen.</td>
-<td align="center">чего́</td>
-<td align="center">кого́</td>
-<td align="center">чьего́, чьего́, чье́й, чьих</td>
+<td>Gen.</td>
+<td>чего́</td>
+<td>кого́</td>
+<td>чьего́, чьего́, чье́й, чьих</td>
 </tr>
 <tr>
-<td align="center">Acc.</td>
-<td align="center">что</td>
-<td align="center">кого</td>
-<td align="center">Gen/Nom; «чью» for Fem.</td>
+<td>Acc.</td>
+<td>что</td>
+<td>кого</td>
+<td>Gen/Nom; «чью» for Fem.</td>
 </tr>
 <tr>
-<td align="center">Prep</td>
-<td align="center">чём</td>
-<td align="center">ком</td>
-<td align="center">чьём, чьём, чьей, чьих</td>
+<td>Prep</td>
+<td>чём</td>
+<td>ком</td>
+<td>чьём, чьём, чьей, чьих</td>
 </tr>
 </tbody>
 </table>
@@ -442,7 +442,7 @@ In a few regions of Russia (Tatarstan, for example)  people may use *зачем*
 
 ## People 1
 
- ### Vocabulary
+### Vocabulary
 
 *   **директор** is usually the main boss, akin to CEO in English. Also the Principal or Head Teacher of a school.
 *   **ученик** is a school student or a "follower" or "disciple" of some "teacher" in a more spiritual sense. AmE speakers may confuse it with "студент", which is strictly a college-level student.
@@ -451,7 +451,7 @@ In a few regions of Russia (Tatarstan, for example)  people may use *зачем*
 
 ## Around you
 
- ### Do that the English way
+### Do that the English way
 
 To express the idea of speaking some language, or something being written in that language, Russian has adverbs literally meaning "Russian-ly", "English-ly" etc.. :
 
@@ -505,7 +505,7 @@ The word for an "animal" is a nominalised neuter adjective, and its case forms f
 
 ## Prepositions and Places
 
- ### Verbs of motion
+### Verbs of motion
 
 Russian distinguishes between "going" on foot and by some sort of vehicle. If you aren't moving within the city, use a 'vehicle verb' **ехать** (one-way movement) or **ездить** (repeated, round trip or in general). More on that later, in "Motion verbs".
 
@@ -523,41 +523,41 @@ Here is a 'cheat sheet' of forms you'll need for places (no living beings, so—
 <thead>
 <tr>
 <th>Nominative</th>
-<th align="center">Acc.</th>
-<th align="center">Prep.</th>
-<th align="center">example</th>
+<th>Acc.</th>
+<th>Prep.</th>
+<th>example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>-а/-я</td>
-<td align="center">-у/-ю</td>
-<td align="center">-е</td>
-<td align="center">Америка → в Америку/в Америке</td>
+<td>-у/-ю</td>
+<td>-е</td>
+<td>Америка → в Америку/в Америке</td>
 </tr>
 <tr>
 <td>∅/-о/-е</td>
-<td align="center">∅/-о/-е</td>
-<td align="center">-е</td>
-<td align="center">стол → на стол / на столе</td>
+<td>∅/-о/-е</td>
+<td>-е</td>
+<td>стол → на стол / на столе</td>
 </tr>
 <tr>
-<td>-ь *feminine*</td>
-<td align="center">-ь</td>
-<td align="center">-и</td>
-<td align="center">дверь → на дверь/на двери</td>
+<td>-ь <em>feminine</em></td>
+<td>-ь</td>
+<td>-и</td>
+<td>дверь → на дверь/на двери</td>
 </tr>
 <tr>
-<td>**-ия**</td>
-<td align="center">-ию</td>
-<td align="center">-ии</td>
-<td align="center">Англия → в Англию/в Англии</td>
+<td><strong>-ия</strong></td>
+<td>-ию</td>
+<td>-ии</td>
+<td>Англия → в Англию/в Англии</td>
 </tr>
 <tr>
-<td>**-ие**</td>
-<td align="center">-ие</td>
-<td align="center">-ии</td>
-<td align="center">здание → в здание / в здании</td>
+<td><strong>-ие</strong></td>
+<td>-ие</td>
+<td>-ии</td>
+<td>здание → в здание / в здании</td>
 </tr>
 </tbody>
 </table>
@@ -586,7 +586,7 @@ For "here", the words **здесь** and **тут** are almost completely interc
 
 ## Verbs Present 2
 
- ### → and ⇆
+### → and ⇆
 
 There are two options for verbs of **going**: a specific 1-directional verb and also repeated motion, multi-directional verb. For now, stick to this rule for **идти́ / ходи́ть**:
 
@@ -594,25 +594,25 @@ There are two options for verbs of **going**: a specific 1-directional verb and 
 <thead>
 <tr>
 <th />
-<th align="center">ENG</th>
-<th align="center">RUS</th>
+<th>ENG</th>
+<th>RUS</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>**right now**→</td>
-<td align="center">I *am going*.</td>
-<td align="center">Я **иду́**.→</td>
+<td><strong>right now</strong>→</td>
+<td>I <em>am going</em>.</td>
+<td>Я <strong>иду́</strong>.→</td>
 </tr>
 <tr>
-<td>*habitual* ⇆</td>
-<td align="center">I often *go* there.</td>
-<td align="center">Я ча́сто туда́ **хожу́**.</td>
+<td><em>habitual</em> ⇆</td>
+<td>I often <em>go</em> there.</td>
+<td>Я ча́сто туда́ <strong>хожу́</strong>.</td>
 </tr>
 <tr>
-<td>*generic* ↝↶↺</td>
-<td align="center">The baby already *walks*. I *am walking* (around).</td>
-<td align="center">Ребёнок уже́ **хо́дит**. Я **хожу́**.</td>
+<td><em>generic</em> ↝↶↺</td>
+<td>The baby already <em>walks</em>. I <em>am walking</em> (around).</td>
+<td>Ребёнок уже́ <strong>хо́дит</strong>. Я <strong>хожу́</strong>.</td>
 </tr>
 </tbody>
 </table>

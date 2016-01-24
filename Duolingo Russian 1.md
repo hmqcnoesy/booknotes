@@ -265,8 +265,7 @@ escape (unvoiced). In Russian there are 6 pairs of such consonants: Б/П, В/Ф
 the preceding consonant or become voiced themselves.
 
 
-###### Unlike Ukrainian, Russian only uses [ɣ], [дж'] and [дз] as voiced variants of х, ч, ц. Ukrainian has them as full-fledged consonants—the 
-ones that are an intrinsic part of a word and can appear anywhere.
+###### Unlike Ukrainian, Russian only uses [ɣ], [дж'] and [дз] as voiced variants of х, ч, ц. Ukrainian has them as full-fledged consonants—the ones that are an intrinsic part of a word and can appear anywhere.
 
 
 ## Name and polite "You"
@@ -282,8 +281,7 @@ verbs also in plural. And don't forget that the "excuse" in "Excuse me" is a ver
 *   Nobody is "polite" toward kids
 
 
-###### Contrary to what many native speakers have come to believe in the last ten or fifteen years, the polite "you" is not automatically 
-capitalized in Russian, and never was. Such capitalization is used in some formal styles.
+###### Contrary to what many native speakers have come to believe in the last ten or fifteen years, the polite "you" is not automatically capitalized in Russian, and never was. Such capitalization is used in some formal styles.
 
 ### Grandson, son of Grand
 
@@ -657,8 +655,7 @@ For all other nouns look at the end of the word:
 </table>
 
 
-###### If there's a soft sign, it isn't possible to predict the gender, at least, not accurately. However, about 65-70% of the most used nouns 
-that end in **-ь** are feminine. Also, the common suffixes ending in a soft sign can be learnt. They are:
+###### If there's a soft sign, it isn't possible to predict the gender, at least, not accurately. However, about 65-70% of the most used nouns that end in **-ь** are feminine. Also, the common suffixes ending in a soft sign can be learnt. They are:
 
 *   **-ость/-есть*, *-знь** → feminine
 *   **-тель, -арь, -ырь** → masculine
@@ -666,7 +663,6 @@ that end in **-ь** are feminine. Also, the common suffixes ending in a soft sig
 
 * * *
 
-###### *All nouns with **-чь, щь, -шь, -жь** at the end are feminine. The convention is to spell feminine nouns with a soft sign and masculine 
-ones without one: нож, луч, муж, душ. It doesn't affect pronunciation, anyway.*
+###### *All nouns with **-чь, щь, -шь, -жь** at the end are feminine. The convention is to spell feminine nouns with a soft sign and masculine ones without one: нож, луч, муж, душ. It doesn't affect pronunciation, anyway.*
 
 
