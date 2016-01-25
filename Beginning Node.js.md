@@ -1394,3 +1394,33 @@ app.listen(3000);
 
 
 ### A deeper look at the path option
+
+The `use` middleware registration takes an optional
+string first parameter which is a path **prefix**, 
+i.e. `'/foo'` will match any incoming request that 
+starts with `/foo` (such as `/foo/bar`).  But the 
+verb-based helper methods
+match an **exact path**, i.e. `'/foo'` will match only
+an incoming request for `/foo` and not for requests
+such as `/foo/bar`.  However, the verb methods will
+allow a `*` character as a wildcard, e.g. `'/*'`, 
+and can take a regex instead of a string, e.g.
+`app.use(/^[0-9]{2,3}$/, function(req, res) { ...`.
+URL parameters are also supported, using the 
+`:parametername` and `req.params['parametername']`
+syntax:
+
+```javascript
+var express = require('express');
+var app = express();
+
+app.get('/foo/:bar', function(req, res) {
+    res.send('got ' + req.params['bar']);
+});
+
+app.get('/foo', function(req, res) {
+    res.send('just foo');
+});
+
+app.listen(2000);
+```
