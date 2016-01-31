@@ -1425,3 +1425,119 @@ app.get('/foo', function(req, res) {
 app.listen(3000);
 ```
 
+
+### Express router object
+
+Express has a router object that can be thought of as a
+mini express application within the main express app.
+The object has the `use`, `all`, `get`, etc. functions.
+The router object is created using the `app.Router()`
+constructor, and can be mounted like any other middleware.
+
+
+## Persisting data
+
+There is an offical MongoDB package maintained for Node.js
+(`npm i mongodb`) for communicating with a MongoDB instance
+from within a Node.js app.  A simple example:
+
+```javascript
+var MongoClient = require('mongodb').MongoClient;
+var thing = { name: 'thing1', desc: 'desc1' };
+
+MongoClient.connect('mongodb://127.0.0.1:27017/demo', function(err, db) {
+    if (err) throw err;
+    console.log('connected');
+    
+    var collection = db.collection('things');
+    collection.insert(thing, function(err, docs) {
+        console.log('inserted: ' + thing._id); // object gets auto assigned _id 
+        
+        collection.find('thing1').toArray(function(err, results) {
+            console.log('found: ' + results);
+            
+            collection.remove('thing1', function(err, results) {
+                console.log('removed');
+                db.close();
+            });
+        });
+    });
+});
+```
+
+There is also a `save` method on the `collection` that will overwrite
+an entire document with the version passed 
+(`collection.save(thing, function(err) { ...`).  A more common
+situation is one where you want to update only specific properties
+of an object document.  For this, use `update` passing in the find
+key, the update operator(s), and the onDone function.
+
+The Mongoose ODM is another official MongoDB package, but it allows
+schemas and models to more tightly control the data.
+
+
+### Simplifying callbacks
+
+The MongoDB example code above is a good example of callback issues:
+the asynchronous nature of Node.js means that performing subsequent 
+actions after asynchronous calls are completed in turn results in 
+arrow code that is hard to read and maintain.  Another example:
+
+```javascript
+function one(data, cb) {
+    console.log('one');
+    setTimeout(cb, 1000, data);
+}
+
+function two(data, cb) {
+    console.log('two');
+    setTimeout(cb, 1000, data);
+}
+
+function three(data, cb) {
+    console.log('three');
+    setTimeout(cb, 1000, data);
+}
+
+one('data', function(text1) {
+    two(text1, function(text2) {
+        three(text2, function(text3) {
+            console.log('done');
+        });
+    });
+});
+```
+
+One potential solution is to make named handlers:
+
+```javascript
+function one(data, cb) {
+    console.log('one');
+    setTimeout(cb, 1000, data);
+}
+
+function two(data, cb) {
+    console.log('two');
+    setTimeout(cb, 1000, data);
+}
+
+function three(data, cb) {
+    console.log('three');
+    setTimeout(cb, 1000, data);
+}
+
+// named handlers
+function handleThree(text3) {
+    console.log('done');
+}
+function handleTwo(text2) {
+    third(text2, handleThree);
+}
+function handleOne(text1) {
+    second(text1, handleTwo);
+}
+
+// start the chain
+first('data', handleOne);
+```
+
