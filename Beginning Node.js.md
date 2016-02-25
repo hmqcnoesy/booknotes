@@ -1422,5 +1422,192 @@ app.get('/foo', function(req, res) {
     res.send('just foo');
 });
 
+app.listen(3000);
+```
+
+
+
+###Parameter-based routing
+
+Parameterized routes not only match route patterns
+but also populate route variable values for you:
+
+```javascript
+var express = require('express');
+var app = express();
+
+app.get('/user/:userid', function(req, res) {
+    res.send('User ' + req.params.userid);
+});
+
 app.listen(2000);
 ```
+
+There is also an optional middleware `app.param()` 
+function that is called each time a route with a 
+parameter is matched.  The `.param` middleware is
+called before the matching route method is called
+however, so processing with the parameter can take
+place first:
+
+```javascript
+var express =require('express');
+var app = express();
+
+app.param('userid', function(req, res, next, userid) {
+    // look up the user based on userid
+    req.user = { userId: userid, name: null };
+    next();
+}); 
+
+app.get('/user/:userid', function(req, res) {
+    res.send('user ID is ' + req.user.userId);
+});
+
+app.listen(3000);
+
+
+```
+
+
+### Express router object
+
+A router can be thought of as a mini Express app itself,
+with support for isolated routes and middleware. For 
+instance, a router object has the `use`, `get`, `post`,
+`all`, `param`, and `route` functions.
+
+
+```javascript
+var express = require('express');
+var router = express.Router();
+
+router.route('/')
+    .get(function(req, res, next) {
+        res.send('got /');
+    })
+    .post(function(req, res, next) {
+        res.send('posted to / ');
+    });
+
+router.route('/:foo')
+    .get(function(req, res, next) {
+        res.send('got ' + req.params.foo);
+    })
+    .post(function(req, res, next) {
+        res.send('posted to ' + req.params.foo);
+    });
+    
+express().use(router).listen(3000);
+```
+
+Note that the router object must be registers via
+as middleware via a call to `use`.
+
+
+## Persisting data
+
+There is an offical MongoDB package maintained for Node.js
+(`npm i mongodb`) for communicating with a MongoDB instance
+from within a Node.js app.  A simple example:
+
+```javascript
+var MongoClient = require('mongodb').MongoClient;
+var thing = { name: 'thing1', desc: 'desc1' };
+
+MongoClient.connect('mongodb://127.0.0.1:27017/demo', function(err, db) {
+    if (err) throw err;
+    console.log('connected');
+    
+    var collection = db.collection('things');
+    collection.insert(thing, function(err, docs) {
+        console.log('inserted: ' + thing._id); // object gets auto assigned _id 
+        
+        collection.find('thing1').toArray(function(err, results) {
+            console.log('found: ' + results);
+            
+            collection.remove('thing1', function(err, results) {
+                console.log('removed');
+                db.close();
+            });
+        });
+    });
+});
+```
+
+There is also a `save` method on the `collection` that will overwrite
+an entire document with the version passed 
+(`collection.save(thing, function(err) { ...`).  A more common
+situation is one where you want to update only specific properties
+of an object document.  For this, use `update` passing in the find
+key, the update operator(s), and the onDone function.
+
+The Mongoose ODM is another official MongoDB package, but it allows
+schemas and models to more tightly control the data.
+
+
+### Simplifying callbacks
+
+The MongoDB example code above is a good example of callback issues:
+the asynchronous nature of Node.js means that performing subsequent 
+actions after asynchronous calls are completed in turn results in 
+arrow code that is hard to read and maintain.  Another example:
+
+```javascript
+function one(data, cb) {
+    console.log('one');
+    setTimeout(cb, 1000, data);
+}
+
+function two(data, cb) {
+    console.log('two');
+    setTimeout(cb, 1000, data);
+}
+
+function three(data, cb) {
+    console.log('three');
+    setTimeout(cb, 1000, data);
+}
+
+one('data', function(text1) {
+    two(text1, function(text2) {
+        three(text2, function(text3) {
+            console.log('done');
+        });
+    });
+});
+```
+
+One potential solution is to make named handlers:
+
+```javascript
+function one(data, cb) {
+    console.log('one');
+    setTimeout(cb, 1000, data);
+}
+
+function two(data, cb) {
+    console.log('two');
+    setTimeout(cb, 1000, data);
+}
+
+function three(data, cb) {
+    console.log('three');
+    setTimeout(cb, 1000, data);
+}
+
+// named handlers
+function handleThree(text3) {
+    console.log('done');
+}
+function handleTwo(text2) {
+    third(text2, handleThree);
+}
+function handleOne(text1) {
+    second(text1, handleTwo);
+}
+
+// start the chain
+first('data', handleOne);
+```
+
