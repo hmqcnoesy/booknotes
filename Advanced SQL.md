@@ -33,15 +33,15 @@ INSERT INTO CHILDSTAT VALUES('SIMON','M',DATE '1999-01-03',87,256);
 
 Gives this table:
 
-| FIRSTNAME | GENDER | BIRTHDATE          | HEIGHT | WEIGHT |
-| --------- | ------ | ------------------ | ------ | ------ |
-| ROSEMARY	| F	     | 08-MAY-00 00:00:00 | 35     | 123    |
-| LAUREN	| F	     | 10-JUN-00 00:00:00 | 54     | 876    |
-| ALBERT	| M	     | 02-AUG-00 00:00:00 | 45     | 150    |
-| BUDDY     | M      | 02-OCT-98 00:00:00 | 45     | 189    |
-| FARQUAR	| M	     | 05-NOV-98 00:00:00 | 76     | 198    |
-| TOMMY     | M      | 11-DEC-98 00:00:00 | 78     | 167    |
-| SIMON     | M      | 03-JAN-99 00:00:00 | 87     | 256    |
+| FIRSTNAME | GENDER | BIRTHDATE | HEIGHT | WEIGHT |
+| --------- | ------ | --------- | ------ | ------ |
+| ROSEMARY	| F	     | 08-MAY-00 | 35     | 123    |
+| LAUREN	| F	     | 10-JUN-00 | 54     | 876    |
+| ALBERT	| M	     | 02-AUG-00 | 45     | 150    |
+| BUDDY     | M      | 02-OCT-98 | 45     | 189    |
+| FARQUAR	| M	     | 05-NOV-98 | 76     | 198    |
+| TOMMY     | M      | 11-DEC-98 | 78     | 167    |
+| SIMON     | M      | 03-JAN-99 | 87     | 256    |
 
 ```sql
 select gender, count(*) from childstat group by gender
@@ -62,15 +62,15 @@ from childstat a inner join (
     group by gender) b on a.gender = b.gender;
 ```
 
-| FIRSTNAME | GENDER | BIRTHDATE          | HEIGHT | WEIGHT | GENDER_COUNT |
-| --------- | ------ | ------------------ | ------ | ------ | ------------ |
-| ROSEMARY	| F	     | 08-MAY-00 00:00:00 | 35     | 123    | 2            |
-| LAUREN	| F	     | 10-JUN-00 00:00:00 | 54     | 876    | 2            |
-| ALBERT	| M	     | 02-AUG-00 00:00:00 | 45     | 150    | 5            |
-| BUDDY     | M      | 02-OCT-98 00:00:00 | 45     | 189    | 5            |
-| FARQUAR	| M	     | 05-NOV-98 00:00:00 | 76     | 198    | 5            |
-| TOMMY     | M      | 11-DEC-98 00:00:00 | 78     | 167    | 5            |
-| SIMON     | M      | 03-JAN-99 00:00:00 | 87     | 256    | 5            |
+| FIRSTNAME | GENDER | BIRTHDATE | HEIGHT | WEIGHT | GENDER_COUNT |
+| --------- | ------ | --------- | ------ | ------ | ------------ |
+| ROSEMARY	| F	     | 08-MAY-00 | 35     | 123    | 2            |
+| LAUREN	| F	     | 10-JUN-00 | 54     | 876    | 2            |
+| ALBERT	| M	     | 02-AUG-00 | 45     | 150    | 5            |
+| BUDDY     | M      | 02-OCT-98 | 45     | 189    | 5            |
+| FARQUAR	| M	     | 05-NOV-98 | 76     | 198    | 5            |
+| TOMMY     | M      | 11-DEC-98 | 78     | 167    | 5            |
+| SIMON     | M      | 03-JAN-99 | 87     | 256    | 5            |
 
 
 The analytic function version of this is simpler:
@@ -89,15 +89,15 @@ from childstat a
 order by a.gender, a.weight;
 ```
 
-| FIRSTNAME | GENDER | BIRTHDATE          | HEIGHT | WEIGHT | RUN  |
-| --------- | ------ | ------------------ | ------ | ------ | ---- |
-| ROSEMARY	| F	     | 08-MAY-00 00:00:00 | 35     | 123    | 123  |
-| LAUREN	| F	     | 10-JUN-00 00:00:00 | 54     | 876    | 999  |
-| ALBERT	| M	     | 02-AUG-00 00:00:00 | 45     | 150    | 150  |
-| BUDDY     | M      | 02-OCT-98 00:00:00 | 45     | 189    | 317  |
-| FARQUAR	| M	     | 05-NOV-98 00:00:00 | 76     | 198    | 506  |
-| TOMMY     | M      | 11-DEC-98 00:00:00 | 78     | 167    | 704  |
-| SIMON     | M      | 03-JAN-99 00:00:00 | 87     | 256    | 960  |
+| FIRSTNAME | GENDER | BIRTHDATE | HEIGHT | WEIGHT | RUN  |
+| --------- | ------ | --------- | ------ | ------ | ---- |
+| ROSEMARY	| F	     | 08-MAY-00 | 35     | 123    | 123  |
+| LAUREN	| F	     | 10-JUN-00 | 54     | 876    | 999  |
+| ALBERT	| M	     | 02-AUG-00 | 45     | 150    | 150  |
+| BUDDY     | M      | 02-OCT-98 | 45     | 189    | 317  |
+| FARQUAR	| M	     | 05-NOV-98 | 76     | 198    | 506  |
+| TOMMY     | M      | 11-DEC-98 | 78     | 167    | 704  |
+| SIMON     | M      | 03-JAN-99 | 87     | 256    | 960  |
 
 In the query above, the `sum` function does what it always does, it sums values
 across rows, but the `over` keyword changes it from an aggregate function to an
