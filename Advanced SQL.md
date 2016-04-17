@@ -76,7 +76,8 @@ from childstat a inner join (
 The analytic function version of this is simpler:
 
 ```sql
-select a.*, count(*) over (partition by a.gender) from childstat a;
+select a.*, count(*) over (partition by a.gender) 
+from childstat a;
 ```
 
 Gives the same results as the non-analytic query above.
@@ -84,7 +85,8 @@ Gives the same results as the non-analytic query above.
 As another example, say we needed to get running totals of weight by gender:
 
 ```sql
-select a.*, sum(weight) over (partition by a.gender order by a.weight) run 
+select a.*, 
+  sum(weight) over (partition by a.gender order by a.weight) run 
 from childstat a 
 order by a.gender, a.weight;
 ```
