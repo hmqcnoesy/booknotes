@@ -11,7 +11,7 @@ Some of the built-in programs are ok to be modified.
 There is a help file for VGL programming in `Help\Programmers_Guide.chm`.
 
 
-### Files
+## Files
 - Source code is saved in files with the `.rpf` extension.  
 - Compiled bits are in `.rpc` files.
 - Listing files are created during compilation in `.lis` files, which contain source code, line numbers, global variables accessed, etc.
@@ -35,7 +35,7 @@ Constants require the keyword `CONSTANT`.  Best practice is to use uppercase:
 CONSTANT PI = 3.14159
 ```
 
-Arrays use the keyword and optional specified sizing.  Indices start at 1:
+Arrays use the keyword and optional specified sizing.  
 
 ```
 ARRAY my_list_dynamic
@@ -51,8 +51,27 @@ ARRAY my_array ARRAY_INITIAL(20) { 20 rows to start, but dynamic}
 ARRAY my_floppy ARRAYSIZE(0) ARRAY_INITIAL(20) 
 ```
 
+Array elements are accessed using `[]` notation.  Indices start at 1:
+
+```
+ARRAY my_list
+my_list[1] = 1
+my_list[2] = 3
+my_list[3] = 5
+my_list[4] = 7
+my_list[5] = 11
+```
+
 
 ## Operators, Functions, and Types
+
+The text concatenation operator is `:` (there's also a `#` text subtraction operator):
+
+```
+oper_name = "jane"
+msg = "hello, " : oper_name
+{ msg is "hello, jane" }
+```
 
 Boolean logic should use `AND`, `OR`, and `NOT` rather than characters `&`, `|`, and `!` which are available for backward compatibility with older language versions.
 
@@ -233,6 +252,7 @@ Properties and methods on the form object are accessed via the `.` syntax, i.e. 
 | `confirm_required`     | Set to `TRUE` to force confirmation                                       |
 | `do_confirm_message`   | Message displayed when OK and `confirm_required` is `TRUE`                  |
 | `exit_confirm_message` | Message displayed when Exit and `confirm_required` is `TRUE`                |
+| `prompt_id`            | Set to a unique string to get SM to remember window position/size           |
 
 
 Important form actions include:
@@ -276,3 +296,162 @@ FLASH_MESSAGE(my_form.get_lastkey(), true)
 
 ## Prompts
 
+To request user input, create a prompt.  For example:
+
+```
+JOIN LIBRARY $lib_utils
+JOIN STANDARD_LIBRARY STD_PROMPT
+SET COMPILE_OPTION DECLARE
+DECLARE my_prompt, oper_name
+PROMPT OBJECT my_prompt
+    AT 6.2, 6.5
+    FORMAT TEXT_30
+oper_name = my_prompt.text
+FLASH_MESSAGE(oper_name, TRUE)
+```
+
+The `AT` keyword allows specification of x and y coordinates for the prompt.  The `FORMAT` keyword allows specification of the input datatype and size.  
+
+Other options for prompt objects include `BROWSE ON <value>` which allows specification of a table, allowing the user to pick a record.  The `THEN SELECT` keywords store the user-selected record in the prompt object for later use, but the record is not locked in the database.  Using `THEN SELECT FOR UPDATE` will store the record data and lock the record in the database:
+
+```
+JOIN LIBRARY $lib_utils
+JOIN STANDARD_LIBRARY STD_PROMPT
+SET COMPILE_OPTION DECLARE
+DECLARE samp_id
+PROMPT OBJECT samp_id
+    AT 6.2, 6.5
+    BROWSE ON sample
+    THEN SELECT FOR UPDATE
+```
+
+The `CHOOSE OUTOF array_name` keywords can be used to specify dropdown menu choices for the prompt:
+
+```
+JOIN LIBRARY $lib_utils
+JOIN STANDARD_LIBRARY STD_PROMPT
+SET COMPILE_OPTION DECLARE
+DECLARE my_prompt
+ARRAY date_choices
+date_choices[1] = "Yesterday"
+date_choices[2] = "Today"
+date_choices[3] = "Tomorrow"
+PROMPT OBJECT my_prompt
+    AT 6.2, 6.5
+    CHOOSE OUTOF date_choices
+```
+
+The `BROWSE ON` command can specify more than just a table name.  The command can be used with a datatype, a database table (with or without a column specified), a phrase, and more:
+
+- `BROWSE ON BOOLEAN`: Prompts for "Yes" or "No"
+- `BROWSE ON INTEGER`: Prompts for integer value
+- `BROWSE ON REAL`: Prompts for numeric value
+- `BROWSE ON DATE`: Prompts for date, defaulted to current date
+- `BROWSE ON DATETIME`: Prompts for date, including time component
+- `BROWSE ON INTERVAL`: Prompts for time interval in days/hours/minutes/seconds
+- `BROWSE ON IDENTITY`: Prompts for left-justified uppercase 10-char-wide string value
+- `BROWSE ON IDENTITY_<len>`: Prompts for identity with length other than 10
+- `BROWSE ON DATE_OR_INTERVAL`: Prompts for a date or a interval from current
+- `BROWSE ON SAMPLE_TEST`: Prompts for analyses assigned to the sample specified in `sample_id` property
+- `BROWSE ON FILE`: Prompts for file, starting in directory in `file_directory` property, optionally filtered to types specified in `file_extension` property.
+- `BROWSE ON PHRASE.<phrase_type>`: Prompts for values from specified phrase.
+- `BROWSE ON VALID_PHRASE.<phrase_type>`: Prompts for values from specified phrase, without allowing custom input.
+- `BROWSE ON PHRASE_ID.<phrase_type>`: Prompts for IDs from specified phrase.
+- `BROWSE ON VALID_PHRASE_ID.<phrase_type>`: Prompts for IDs from specified phrase, without allowing custom input.
+
+You can require user input to meet a specified format using the `FORMAT` command:
+
+- `FORMAT DATE`
+- `FORMAT DATETIME`
+- `FORMAT INTERVAL`
+- `FORMAT INTEGER`
+- `FORMAT REAL`
+- `FORMAT CHAR`
+- `FORMAT TEXT_<length>` (max length is specified)
+- `FORMAT FILE`
+- `FORMAT Table.field` (Table must be a valid table name and field must be a valid column)
+
+The `FORMAT` specifier actually causes different prompt classes to be instantiated.  All the prompts inherit from `STD_PROMPT_FIELD`, but for instance using `FORMAT INTEGER` causes a prompt of type `STD_PROMPT_TEXT_INTEGER` to be instantiated.
+
+The `WITH` qualifier allows the prompt object's properties to be set, such as:
+
+```
+PROMPT OBJECT pick_a_number_1_to_100
+    AT 10, 10
+    FORMAT TEXT
+    WITH (minimum = 1, maximum = 100)
+```
+
+Other properties that can be specified using `WITH` include:
+
+- `height` (number of lines)
+- `width` (number of characters)
+- `row` (row position on form)
+- `column` (col position on form)
+- `allowed_chars` (string white list of allowed input characters)
+- `always_validate` (boolean indicating if validation is performed when default values are used)
+- `build_routine` (string name of routine to execute when build key is clicked on prompt)
+- `can_exit_sideways` (allows user to exit prompt using arrow keys)
+- `char_position` (integer position of current character in prompt)
+- `cursor_position` (integer relative cursor position to start position)
+- `double_entry` (boolean requiring double entry before input is accepted)
+- `enabled` (boolean)
+- `text` (string representing current value of prompt)
+- `silent_mode` (boolean sets prompt to use password chars)
+- `value` (string of current contents, can be used for initial value)
+- `visible` (boolean that can be set to `FALSE` to hide the prompt from view)
+
+Many other properties are available on prompts, including many type-specific properties.  They are all covered in the help file.
+
+Callback routines can also be set as properties on a prompt.  For example: `WITH (leave_prompt_routine="my_routine")` will execute `my_routine` when the prompt loses focus.  Other callbacks include `browse_routine`, `enter_prompt_routine`, `insert_routine`, `leave_prompt_routine`, `remove_routine`, `select_routine`, and `validation_routine` (which should return a boolean indicating pass/fail of the validation).  Each of the callback routine definitions should take a single parameter, which is passed as the prompt object itself.
+
+Prompts are added to a form using the form's `add_prompt` action, and text is added using the `add_display` action.
+
+```
+JOIN LIBRARY $lib_utils
+JOIN STANDARD_LIBRARY STD_PROMPT
+DECLARE my_form, pick_a_number
+CREATE OBJECT PROMPT_CLASS_FORM, my_form
+my_form.header = "Number game"
+my_form.height = 4
+my_form.width = 40
+my_form.return_behaviour = FORM_RETURN_WRAP
+my_form.add_display("Pick a number between 1 and 3: ", 2, 1, PROMPT_RENDITION_NORMAL)
+
+PROMPT OBJECT pick_a_number AT 30, 1 FORMAT INTEGER WITH (minimum = 1, maximum = 3, value = 1)
+my_form.add_prompt(pick_a_number)
+
+my_form.start_prompt()
+my_form.wait_prompt()
+my_form.end_prompt()
+
+IF pick_a_number.value = 2 THEN
+	FLASH_MESSAGE("You guessed it!", TRUE)
+ELSE
+	FLASH_MESSAGE("Sorry, you guessed " : NUMBER_TO_TEXT(pick_a_number.value, "9") : " but I was thinking of 2.", TRUE)
+ENDIF
+```
+
+In the above example the user input value is accessed via the prompt object's property `pick_a_number.value`.  It could also be reached via the form's prompt objects array:  `my_form.prompt_objects[1].value`.
+
+Here is an example of a prompt using `BROWSE ON` and a callback:
+
+```
+JOIN LIBRARY $lib_utils
+JOIN STANDARD_LIBRARY STD_PROMPT
+DECLARE my_form, prompt_customer
+CREATE OBJECT PROMPT_CLASS_FORM, my_form
+my_form.width = 50
+my_form.add_display("Customer: ", 2, 1, PROMPT_RENDITION_NORMAL)
+
+PROMPT OBJECT prompt_customer AT 20, 1 BROWSE ON customer WITH (leave_prompt_routine="customer_selected")
+my_form.add_prompt(prompt_customer)
+
+my_form.start_prompt()
+my_form.wait_prompt()
+my_form.end_prompt()
+
+ROUTINE customer_selected(the_prompt)
+    FLASH_MESSAGE("You picked " : the_prompt.text, TRUE)
+ENDROUTINE
+```
