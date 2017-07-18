@@ -8,7 +8,7 @@ Built-in programs usually start with `$`.  Custom programs should avoid names th
 
 Some of the built-in programs are ok to be modified.
 
-There is a help file for VGL programming in `Help\Programmers_Guid.chm`.
+There is a help file for VGL programming in `Help\Programmers_Guide.chm`.
 
 
 ### Files
@@ -22,11 +22,11 @@ There is a help file for VGL programming in `Help\Programmers_Guid.chm`.
 
 Comments are delimited with `{ }`.
 
-Variables do no require explicit declaration.  Just an assignment.  Variable names are case-insensitive.  Underscore characters are effectively removed from variable names during compilation.  So this works:
+Variables do not require explicit declaration.  Just an assignment.  Variable names are case-insensitive.  Underscore characters are effectively removed from variable names during compilation.  So this works:
 
 ```
 var1 = "x"
-FLASH_MESSAGE(VAR_1, true)
+FLASH_MESSAGE(VAR_1, true) { displays "x" in message box }
 ```
 
 Constants require the keyword `CONSTANT`.  Best practice is to use uppercase:
@@ -54,7 +54,7 @@ ARRAY my_floppy ARRAYSIZE(0) ARRAY_INITIAL(20)
 
 ## Operators, Functions, and Types
 
-Boolean logic should use `AND`, `OR`, and `NOT` rather than characters `&`, '|', and '!' which are available for backward compatibility with older language versions.
+Boolean logic should use `AND`, `OR`, and `NOT` rather than characters `&`, `|`, and `!` which are available for backward compatibility with older language versions.
 
 Some built in functions include:
 
@@ -74,7 +74,7 @@ Types can be one of the following:
 - Packed Decimal:  integer as right-justified (padded) string
 - Date: includes time component with ms precision
 - Interval: ms precision
-- Special: types such as `EMPTY` which is returned from a routine using an empty `RETURN` statement
+- Special: types such as `EMPTY` which is implicitly returned from a routine using an empty `RETURN` statement
 
 
 ## Loops
@@ -98,7 +98,7 @@ ENDWHILE
 
 ## Branching
 
-Branching statments can have zero or more `ELSEIF` and zero or one `ELSE` components:
+Branching statments require `IF` followed by a condition expression, followed by `THEN`.  They can have zero or more `ELSEIF`/`THEN` and zero or one `ELSE` components.  The `ENDIF` keyword is required to end the construction:
 
 ```
 IF condition THEN
@@ -115,18 +115,18 @@ ENDIF
 
 ## Routines
 
-Routines are declared using `ROUTINE` and `ENDROUTINE` keywords:
+Routines are declared using the `ROUTINE` and `ENDROUTINE` keywords:
 
 ```
 JOIN LIBRARY $lib_utils
-do_message()
+show_message()
 
-ROUTINE do_message
+ROUTINE show_message
     FLASH_MESSAGE("Something has been done", true)
 ENDROUTINE
 ```
 
-Including parameters:
+Routines can include parameters:
 
 ```
 JOIN LIBRARY $lib_utils
@@ -161,7 +161,18 @@ The `RETURN` statement requires parentheses if returning a value.  The `RETURN` 
 By default, parameters are passed by reference.  To pass a parameter by value (to create a copy of the passed value so the routine uses data local to itself), the `VALUE` keyword is used in the routine's declaration:
 
 ```
-ROUTINE do_stuff(a, VALUE b, VALUE c)
+ROUTINE dostuff(a, VALUE b, VALUE c)
+```
+
+Note that parameters passed by value can enable calls passing literals.  The previous example that would cause a compiler error is OK when using the `VALUE` keyword:
+
+```
+JOIN LIBRARY $lib_utils
+calc_hypoteneuse(4, 9) { messagebox 9.849 }
+
+ROUTINE calc_hypoteneuse(VALUE a, VALUE b)
+    FLASH_MESSAGE(SQRT((a*a) + (b*b)), true)
+ENDROUTINE
 ```
 
 
@@ -185,9 +196,9 @@ By default, a `ROUTINE` is available only in the file where it is defined.  To c
 CALL_ROUTINE routine_name USING param1, param2, ... param_n RETURNING var_name IN LIBRARY lib_name
 ```
 
-Some libraries are not VGL libraries, but standard C libraries.  They can be joined using `JOIN STANDARD_LIBRARY <name>`.  The standard libraries available include: STD_ARRARY, STD_ARRAY_EDITOR, STD_SELECT, STD_BROWSE, STD_DATABASE, STD_FLAGS, STD_GENERAL, STD_LINE_EDITOR, STD_LIST_EDTIOR, STD_MENU, STD_OUTPUT, STD_PROMPT, STD_STRUCTURE, STD_USER_GLOBAL.
+Some libraries are not VGL libraries, but standard C libraries.  They can be joined using `JOIN STANDARD_LIBRARY <name>`.  The standard libraries available include: `STD_ARRARY`, `STD_ARRAY_EDITOR`, `STD_SELECT`, `STD_BROWSE`, `STD_DATABASE`, `STD_FLAGS`, `STD_GENERAL`, `STD_LINE_EDITOR`, `STD_LIST_EDTIOR`, `STD_MENU`, `STD_OUTPUT`, `STD_PROMPT`, `STD_STRUCTURE`, `STD_USER_GLOBAL`.
 
-For example, the STD_PROMPT standard library contains the `prompt_in_window` routine which creates a prompt for a record from a specified table:
+For example, the `STD_PROMPT` standard library contains the `prompt_in_window` routine which creates a prompt for a record from a specified table:
 
 ```
 JOIN LIBRARY $lib_utils
@@ -200,7 +211,7 @@ flash_message(sample_id, TRUE) { shows sample ID selected in window }
 
 ## Forms
 
-VGL forms are created using the standard library STD_PROMPT.  Forms are objects, which are instantiated from classes, such as the PROMPT_CLASS_FORM class defined in STD_PROMPT:
+VGL forms are created using the standard library `STD_PROMPT`.  Forms are objects, which are instantiated from classes, such as the `PROMPT_CLASS_FORM` class defined in `STD_PROMPT`:
 
 ```
 JOIN STANDARD_LIBRARY STD_PROMPT
@@ -209,32 +220,32 @@ CREATE OBJECT PROMPT_CLASS_FORM, my_form
 
 Properties and methods on the form object are accessed via the `.` syntax, i.e. `my_form.height = 25` and `my_form.start_prompt()`.  Form properties include:
 
-| Prop                 | Description                                                             |
-|----------------------|-------------------------------------------------------------------------|
-| height               | Form height in lines                                                    |
-| width                | Form width in characters                                                |
-| row                  | Screen target row for form                                              |
-| column               | Screen target column for form                                           |
-| header               | Text to display in form header                                          |
-| return_behavior      | FORM_RETURN_LEAVE, FORM_RETURN_STAY, FORM_RETURN_WRAP                   |
-| icon                 | Sets icon in header (by name)                                           |
-| active_prompt        | Indicates which prompt is active using index number from prompt_objects |
-| confirm_required     | Set to TRUE to force confirmation                                       |
-| do_confirm_message   | Message displayed when OK and confirm_required is TRUE                  |
-| exit_confirm_message | Message displayed when Exit and confirm_required is TRUE                |
+| Prop                   | Description                                                             |
+|------------------------|-------------------------------------------------------------------------|
+| `height`               | Form height in lines                                                    |
+| `width`                | Form width in characters                                                |
+| `row`                  | Screen target row for form                                              |
+| `column`               | Screen target column for form                                           |
+| `header`               | Text to display in form header                                          |
+| `return_behavior`      | `FORM_RETURN_LEAVE`, `FORM_RETURN_STAY`, `FORM_RETURN_WRAP`                   |
+| `icon`                 | Sets icon in header (by name)                                           |
+| `active_prompt`        | Indicates which prompt is active using index number from `prompt_objects` |
+| `confirm_required`     | Set to `TRUE` to force confirmation                                       |
+| `do_confirm_message`   | Message displayed when OK and `confirm_required` is `TRUE`                  |
+| `exit_confirm_message` | Message displayed when Exit and `confirm_required` is `TRUE`                |
 
 
 Important form actions include:
 
-| Action       | Description                                                   |
-|--------------|---------------------------------------------------------------|
-| add_prompt   | Attaches prompt objects to a form (added to `prompt_objects`) |
-| add_display  | Adds display elements to a form                               |
-| start_prompt | Shows form on screen                                          |
-| wait_prompt  | Activates prompts and displays objects, allowing user input   |
-| end_prompt   | Removes form from screen when exited                          |
-| set_position | Sets to the position specified in `prompt_objects`            |
-| stop_prompt  | Stops the form operation                                      |
+| Action         | Description                                                   |
+|----------------|---------------------------------------------------------------|
+| `add_prompt`   | Attaches prompt objects to a form (added to `prompt_objects`) |
+| `add_display`  | Adds display elements to a form                               |
+| `start_prompt` | Shows form on screen                                          |
+| `wait_prompt`  | Activates prompts and displays objects, allowing user input   |
+| `end_prompt`   | Removes form from screen when exited                          |
+| `set_position` | Sets to the position specified in `prompt_objects`            |
+| `stop_prompt`  | Stops the form operation                                      |
 
 
 A simple example of building and displaying a form uses `add_display` with four params: the text to display, the row on the form to use, the column on the form to use, and the rendition, which is a sum of the following constants `PROMPT_RENDITION_ITALIC`, `PROMPT_RENDITION_NORMAL`, `PROMPT_RENDITION_UNDERLINE`, `PROMPT_RENDITION_INVERSE`, `PROMPT_RENDITION_LOWERED`, `PROMPT_RENDITION_STRIKETHROUGH`.  The `get_lastkey` method will return "DO" if the "OK" button was clicked to exit the form, or will return "EXIT" if the "Cancel" button was clicked.
