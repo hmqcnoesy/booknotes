@@ -455,3 +455,111 @@ ROUTINE customer_selected(the_prompt)
     FLASH_MESSAGE("You picked " : the_prompt.text, TRUE)
 ENDROUTINE
 ```
+
+Prompts using `BROWSE ON` can specify queries to limit available choices instead of allowing any record from the specified table.  This is done by joining to the `STD_ARRAY_SELECT` library and building a list of query criteria using the `ARRAY_SELECT_ADD` routine:
+
+```
+JOIN LIBRARY $lib_utils
+JOIN STANDARD_LIBRARY STD_PROMPT
+JOIN STANDARD_LIBRARY STD_ARRAY_SELECT
+
+DECLARE my_form, customer_id
+CREATE OBJECT PROMPT_CLASS_FORM, my_form
+my_form.width = 50
+my_form.add_display("Customer: ", 2, 1, PROMPT_RENDITION_NORMAL)
+
+ARRAY my_query
+ARRAY_SELECT_ADD(my_query, ARRAY_SELECT_EQ, "IDENTITY", "PEDRO")
+ARRAY_SELECT_ADD(my_query, ARRAY_SELECT_OR, EMPTY, EMPTY)
+ARRAY_SELECT_ADD(my_query, ARRAY_SELECT_EQ, "IDENTITY", "JUAN_CUSTO")
+PROMPT OBJECT customer_id AT 20, 1 BROWSE ON customer WITH (select_array = my_query)
+my_form.add_prompt(customer_id)
+
+my_form.start_prompt()
+my_form.wait_prompt()
+my_form.end_prompt()
+```
+
+The above example will display "PEDRO" and "JUAN_CUSTO" as the available customers to the user, but the user can adjust the criteria to pick another customer if desired.  To enforce selection of a record that meets the criteria, instead of using `WITH (select_array = my_query)`, use `WITH (mandatory_array = my_query)`.
+
+
+## Lists 
+
+Lists are objects added to forms that display information to the user in a listview.  The user can change the sorting to find items, and can select one or more items from the list, which can then be used in subsequent VGL code.
+
+To create a list:
+
+```
+JOIN STANDARD_LIBRARY STD_PROMPT
+JOIN LIBRARY $PROMPT_LIST
+
+DECLARE list_form, the_list
+CREATE OBJECT PROMPT_CLASS_FORM, list_form
+list_form.height = 4
+list_form.width = 50
+
+CREATE OBJECT PROMPT_LIST_CLASS, the_list
+the_list.height = list_form.height - 1
+the_list.width = list_form.width - 2
+the_list.row = 1
+the_list.column = 1
+the_list.add_column("Col1 header", 12)
+the_list.add_column("Col2 header", 25)
+the_list.insert_item("Item 1", EMPTY) { 2nd arg is optional icon name }
+the_list.set_item(2, "Item 1 details")
+the_list.insert_item("Item 2", EMPTY)
+the_list.set_item(2, "Item 2 details")
+the_list.insert_item("Item 3", EMPTY)
+the_list.set_item(2, "Item 3 details")
+
+list_form.add_prompt(the_list)
+list_form.start_prompt()
+list_form.wait_prompt()
+list_form.end_prompt()
+```
+
+As shown in the example above, a list is a type of a prompt object.  The object has properties, actions, and callbacks specific to the `PROMPT_LIST_CLASS` type.  For instance, a callback can be set for `double_click_routine`:  
+
+```
+the_list.double_click_routine = "sample_details"
+ROUTINE sample_details(prompt_object)
+    DECLARE selected_item
+    prompt_object.get_first_selected(selected_item)
+    FLASH_MESSAGE("You selected: " : selected_item, TRUE)
+ENDROUTINE
+```
+
+A list can be styled by settings its integer `style` property.  The default value is `LIST_STYLE_REPORT + LIST_STYLE_SHOW_SEL_ALWAYS + LIST_STYLE_HEADER_DRAG_DROP + LIST_STYLE_FULL_ROW_SELECT`.  Thanks to the integral nature of the style constants, additional settings can be applied by adding or subtracting the constant value from the style property, e.g. `the_list.style = the_list.style + LIST_STYLE_GRID_LINES`.  Additional style constants include:
+
+- LIST_STYLE_ALIGN_LEFT (icons at left)
+- LIST_STYLE_ALIGN_TOP (icons at top)
+- LIST_STYLE_NO_COLUMN_HEADER
+- LIST_STYLE_NO_SCROLL
+- LIST_STYLE_NO_SORT_HEADER
+- LIST_STYLE_ONE_CLICK_ACTIVATE
+- LIST_STYLE_TWO_CLICK_ACTIVATE ("normal" behavior)
+- LIST_STYLE_SINGLE_SEL (disables multi-select behavior)
+- LIST_STYLE_SORT_ASCENDING (initial display is sorted by label text)
+- LIST_STYLE_SORT_DESCENDING (initial display is sorted in desc order)
+
+A list object can have these callback routines specified:
+
+- `double_click_routine` (called when an item is double-clicked)
+- `selected_routine` (called each time an item is clicked)
+
+And a list has these useful actions (among others):
+
+- `autosize_column(column_number, mode)` (mode should be 0 for resizing to content, 1 for resizing to header)
+- `get_first_selected(return_text)` (returns an index of item, but more importantly sets return_text to first selected item's text label)
+- `get_next_selected(return_text)` (can be called like `get_first_selected`, but in a loop until `EMPTY` is returned)
+- `get_item(item_no, column_no)` (returns the text for the item/column specified)
+- `is_item_checked(item_no)` (returns `TRUE` if the item has a checkbox and is checked)
+
+To use icons for list items, join to `$TOOLBOX` which contains constants pointing to standard icons, and set the `use_images` property on the list object to `TRUE`.  In the calls to the list's `insert_item` action, provide the appropriate `$TOOLBOX` constant, such as `the_list.insert_item("First item", ICON_HAPPY_FACE)`.  Custom bitmap images can also be used, see help file for info.
+
+Checkboxes can be displayed on lists so that users don't have to use Ctrl/Shift clicks to make multiple selections:
+
+```
+the_list.style = the_list.style + LIST_STYLE_CHECK_BOXES
+```
+
