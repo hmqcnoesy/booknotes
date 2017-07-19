@@ -65,12 +65,20 @@ my_list[5] = 11
 
 ## Operators, Functions, and Types
 
-The text concatenation operator is `:` (there's also a `#` text subtraction operator):
+The text concatenation operator is `:`:
 
 ```
 oper_name = "jane"
 msg = "hello, " : oper_name
 { msg is "hello, jane" }
+```
+
+There's also a string subtraction operator, `#`, which removes the first occurrence of a string:
+
+```
+msg = "hello, jane"
+new_msg = msg # "ll"
+{ new_msg is "heo, jane" }
 ```
 
 Boolean logic should use `AND`, `OR`, and `NOT` rather than characters `&`, `|`, and `!` which are available for backward compatibility with older language versions.
@@ -93,7 +101,7 @@ Types can be one of the following:
 - Packed Decimal:  integer as right-justified (padded) string
 - Date: includes time component with ms precision
 - Interval: ms precision
-- Special: types such as `EMPTY` which is implicitly returned from a routine using an empty `RETURN` statement
+- Special: types such as `EMPTY` which is implicitly returned from a routine using an empty `RETURN` statement, and `ERROR` which is returned by some routines if passed paramters cause a problem
 
 
 ## Loops
@@ -128,8 +136,6 @@ ELSE
     { another action }
 ENDIF
 ```
-
-
 
 
 ## Routines
@@ -531,16 +537,16 @@ ENDROUTINE
 
 A list can be styled by settings its integer `style` property.  The default value is `LIST_STYLE_REPORT + LIST_STYLE_SHOW_SEL_ALWAYS + LIST_STYLE_HEADER_DRAG_DROP + LIST_STYLE_FULL_ROW_SELECT`.  Thanks to the integral nature of the style constants, additional settings can be applied by adding or subtracting the constant value from the style property, e.g. `the_list.style = the_list.style + LIST_STYLE_GRID_LINES`.  Additional style constants include:
 
-- LIST_STYLE_ALIGN_LEFT (icons at left)
-- LIST_STYLE_ALIGN_TOP (icons at top)
-- LIST_STYLE_NO_COLUMN_HEADER
-- LIST_STYLE_NO_SCROLL
-- LIST_STYLE_NO_SORT_HEADER
-- LIST_STYLE_ONE_CLICK_ACTIVATE
-- LIST_STYLE_TWO_CLICK_ACTIVATE ("normal" behavior)
-- LIST_STYLE_SINGLE_SEL (disables multi-select behavior)
-- LIST_STYLE_SORT_ASCENDING (initial display is sorted by label text)
-- LIST_STYLE_SORT_DESCENDING (initial display is sorted in desc order)
+- `LIST_STYLE_ALIGN_LEFT` (icons at left)
+- `LIST_STYLE_ALIGN_TOP` (icons at top)
+- `LIST_STYLE_NO_COLUMN_HEADER`
+- `LIST_STYLE_NO_SCROLL`
+- `LIST_STYLE_NO_SORT_HEADER`
+- `LIST_STYLE_ONE_CLICK_ACTIVATE`
+- `LIST_STYLE_TWO_CLICK_ACTIVATE` ("normal" behavior)
+- `LIST_STYLE_SINGLE_SEL` (disables multi-select behavior)
+- `LIST_STYLE_SORT_ASCENDING` (initial display is sorted by label text)
+- `LIST_STYLE_SORT_DESCENDING` (initial display is sorted in desc order)
 
 A list object can have these callback routines specified:
 
@@ -563,3 +569,60 @@ Checkboxes can be displayed on lists so that users don't have to use Ctrl/Shift 
 the_list.style = the_list.style + LIST_STYLE_CHECK_BOXES
 ```
 
+## Strings
+
+Some useful built-in string functions and commands include:
+
+- `TOUPPER(str)`
+- `TOLOWER(str)`
+- `STRIP(str)` (trims leading and trailing spaces)
+- `PAD(str1, str2, pad_count)` (pads `str1` with `str2` to total of `pad_count` characters)
+- `JUSTIFY(str1, str2)` (`str2` must be `LEFT` or `RIGHT`, spaces are from beginning to end or vice-versa to maintain original string length)
+- `INDEX(str1, str2)` (searches `str1` for an occurence of `str2` and returns `0` if not found or 1-based index of first occurence if found)
+- `lib_text_reverse_index(str1, str2)` (in library `$LIB_TEXT`, same as `INDEX` but search is done in reverse)
+- `lib_text_is_like(text, pattern, single_wildcard, multi_wildcard)` (in library `$LIB_TEXT`, returns `TRUE` if `text` matches `pattern` with specified wildcards, usually `single_wildcard = '_'` and `mult_wildcard = '%'`)
+- `LENGTH(str)` (contrary to training manual's description, this apparently returns the length of a string with trailing spaces/tabs removed - _leading spaces are counted_)
+- `STRINGLENGTH(str)` (returns the length of a string without removing any spaces)
+- `LEFTSTRING(str, count)`
+- `RIGHTSTRING(str, count)`
+- `SUBSTRING(str, start_pos, count)` (`start_pos` is 1-based; returned string will be padded with spaces if the `count` overshoots the end of the string)
+- `ASCII(VALUE int_value)` (converts `65` to `A`, etc.)
+- `ORD(str)` (converts `A` to `65`, etc.)
+- `NOW` (returns current date/time)
+- `TODAY` (returns current date)
+- `STRING(value)` (returns string using current `SET FORMAT` if defined)
+- `NUMTEXT(value)` (returns `TRUE` if `value` can be converted to a real)
+- `NUMERIC(str)` (returns real datatype of parsed `str`)
+- `NUMBER_TO_TEXT(num, format_str)` (formats number as a string, `format_str` should be something like `"999.999"`)
+- `BLANK(str)` (returns `TRUE` if `str` is an empty or blank - tabs/spaces)
+- `get_token(str, separator)` (`str` must be a reference - the substring of `str` up to the first instance of `separator` is returned, the remainder of the string is stored in `str`)
+- `SUBSTITUTE(str1, str2, str3)` (returns a new string formed by finding instances in `str1` of any of the characters in `str2` and replacing them with characters in corresponding positions in `str3`)
+- `lib_text_replace(str1, str2, str3)` (in library `$lib_text` - returns a new string replacing instances of `str2` in `str1` with `str3` value)
+- `DATE(str)` (converts a string to a date type, must be 'dd-MON-yyyy' or 'dd-MON-yyyy hh24:mi' format)
+- `INTERVAL(str)` (converts a string to an interval type, must be 'dddd hh24:mi:ss' format, including leading zeroes for days)
+- `DAYNUMBER(date_str)` (returns integer where 1 is Monday, 7 is Sunday)
+- `SET DATE FORMAT str` (command defines how dates are displayed, see help docs for format strings)
+- `SET FORMAT str` (command defines how numbers are displayed, default is "999999.999")
+
+The `SET FORMAT` commands are held on a stack, so they are superseded by subsequent `SET FORMAT` commands.  Popping the last format on the stack is possible with `RESTORE FORMAT`.
+
+
+## Files
+
+To open an existing file, use the `FILE OPEN file_name, chk` command where `file_name` is the file name (assuming user files directory) and `, chk` is optional and will be set to `EMPTY` if the open operation succeeds, or an error if not.
+
+After opening, a file can be read using `FILE READ file_name, file_line, chk`.  The contents of the current line are stored in `file_line`, so a loop is required to read through an entire file.  The `chk` variable will be set to `EMPTY` each time a line is read successfully.  When an attempt is made to read a line after the cursor has moved past the last line of the file, `chk` will be set to an error and `file_line` will be set to "Attempted to read past end of text file".
+
+After reading, a file must be closed using `FILE CLOSE file_name, chk`.  The `chk` will be set to `EMPTY` if the file is closed successfully.
+
+To move to the top of a file, use `FILE TOP file_name, chk`.  
+
+To check if a file exists, use `exists = FILE EXISTS(file_name)` where `file_name` is a full path.
+
+To create a new file, use `FILE CREATE new_file_name, chk`.  The file is placed in the "Exe" directory, unless a full path is specified.  The `chk` variable is set to `EMPTY` if file creation succeeds.  _An existing file will be silently overwritten._
+
+To append to an existing file, use `FILE EXTEND file_name, chk`.  This command opens the file for writing and puts the cursor at the end of the file.  Then the `FILE WRITE` command can be used to append.
+
+To write to a file at the current cursor position, use `FILE WRITE file_name, str_to_write, chk`.  This writes one line at a time and appends `\r\n` to your `str_to_write` text.
+
+To copy an existing file, use `FILE COPY source_file, target_file_name, chk`.  If the destination filename already exists it will be silently overwritten.  Likewise, to delete an existing file, use `FILE DELETE file_name, chk`.
