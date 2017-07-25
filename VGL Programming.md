@@ -18,7 +18,7 @@ There is a help file for VGL programming in `Help\Programmers_Guide.chm`.
 - Include files are created during compilation if a `GLOBAL ROUTINE` or `GLOBAL CONSTANT` is defined.  The existence of an `.inc` file is therefore an indication that the program is considered a "library".
 
 
-## Variables, Constants, Arrays
+## Variables, Constants
 
 Comments are delimited with `{ }`.
 
@@ -35,7 +35,10 @@ Constants require the keyword `CONSTANT`.  Best practice is to use uppercase:
 CONSTANT PI = 3.14159
 ```
 
-Arrays use the keyword and optional specified sizing.  
+
+## Arrays
+
+Arrays use the `ARRAY` keyword and optional specified sizing.  
 
 ```
 ARRAY my_list_dynamic
@@ -60,6 +63,152 @@ my_list[2] = 3
 my_list[3] = 5
 my_list[4] = 7
 my_list[5] = 11
+```
+
+Multi-dimensional arrays' indices are separated with a comma:
+
+```
+ARRAY items ARRAYSIZE(3,2) { 3 rows, 2 columns }
+items[1,1] = "a"
+items[1,2] = "b"
+items[2,1] = "c"
+items[2,2] = "d"
+items[3,1] = "e"
+items[3,2] = "f"
+```
+
+Many helpful routines dealing with arrays can be found in the `STD_ARRAY` standard library.  Row counts of arrays can be determined using `size_of_array()`:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(3,2) { 3 rows, 2 columns }
+items[1,1] = "a"
+items[1,2] = "b"
+items[2,1] = "c"
+items[2,2] = "d"
+FLASH_MESSAGE(size_of_array(items), TRUE) { 2 }
+```
+
+In the example above, "2" is displayed even though the array was declared having 3 rows, only two are populated, so the size is returned as 2.  If elements in row 3 were populated instead of elements in row 2, the size would be reported as 3.
+
+To copy an array:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(3,2) { 3 rows, 2 columns }
+items[3,2] = "d"
+array_copy(new_array, items)
+flash_message(new_array[3,2], TRUE) { "d" }
+```
+
+To check for existence of an array element, use `array_element_exists` which takes two arrays.  The second array must contain element indices for each dimension:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(3,2) 
+ARRAY indices ARRAYSIZE(2)
+indices[1] = 3 { first dimension }
+indices[2] = 1 { second dimension }
+flash_message(array_element_exists(items, indices), TRUE) { false, nothing there yet }
+items[3,1] = "something"
+flash_message(array_element_exists(items, indices), TRUE) { true, value has been set }
+indices[2] = 3
+flash_message(array_element_exists(items, indices), TRUE) { false, outside array bounds }
+```
+
+To insert a row into an existing array (pushing subsequent existing rows "down"), use `array_insert_slice` with a paramter for the target array, a parameter for the dimension, and a parameter defining the row/column for insertion:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(3,2) 
+items[1,1] = "a"
+items[1,2] = "b"
+items[2,1] = "c"
+items[2,2] = "d"
+items[3,1] = "e"
+items[3,2] = "f"
+array_insert_slice(items, 1, 2)
+flash_message(items[1,1], TRUE) { "a", unchanged }
+flash_message(items[2,1], TRUE) { empty, nothing there yet }
+flash_message(items[3,1], TRUE) { "c", shifted down by insertion }
+```
+
+Likewise, to remove a row:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(3,2) 
+items[1,1] = "a"
+items[1,2] = "b"
+items[2,1] = "c"
+items[2,2] = "d"
+items[3,1] = "e"
+items[3,2] = "f"
+array_remove_slice(items, 1, 2)
+flash_message(items[1,1], TRUE) { "a", unchanged }
+flash_message(items[2,1], TRUE) { "e", shifted up by removal }
+flash_message(items[3,1], TRUE) { error, past the array bounds after removal }
+```
+
+To sort an array, use `array_sort` with a second paramter of one of the constants `ARRAY_SORT_ASCENDING` or `ARRAY_SORT_DESCENDING`:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(6) 
+items[1] = "q"
+items[2] = "b"
+items[3] = "c"
+items[4] = "t"
+items[5] = "w"
+items[6] = "x"
+array_sort(items, ARRAY_SORT_ASCENDING)
+flash_message(items[1], TRUE) { "b" }
+flash_message(items[2], TRUE) { "c" }
+flash_message(items[3], TRUE) { "q" }
+```
+
+Sorting on a multi-dimensional array is performed on the value of the first column values:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(3,2) 
+items[1,1] = "q"
+items[1,2] = "b"
+items[2,1] = "c"
+items[2,2] = "t"
+items[3,1] = "w"
+items[3,2] = "x"
+array_sort(items, ARRAY_SORT_ASCENDING)
+flash_message(items[1,2], TRUE) { "t" }
+flash_message(items[2,2], TRUE) { "b" }
+flash_message(items[3,2], TRUE) { "x" }
+```
+
+To sort by values in a specified column, use `array_complex_sort`:
+
+```
+JOIN STANDARD_LIBRARY std_array
+JOIN LIBRARY $lib_utils
+ARRAY items ARRAYSIZE(3,2) 
+items[1,1] = "q"
+items[1,2] = "b"
+items[2,1] = "c"
+items[2,2] = "t"
+items[3,1] = "w"
+items[3,2] = "x"
+ARRAY indices ARRAYSIZE(1)
+indices[1] = 2 { going to sort on second column }
+array_complex_sort(items, indices, ARRAY_SORT_DESCENDING)
+flash_message(items[1,1], TRUE) { "w" }
+flash_message(items[2,1], TRUE) { "c" }
+flash_message(items[3,1], TRUE) { "q" }
 ```
 
 
@@ -754,3 +903,102 @@ At the end of the `USING` paramter list, a virtual keypress can also be passed, 
 
 The `MENUPROC` keyword can be used to call another VGL program that is not a master menu item by calling master menu item 56 ("GRL") and passing a first paramter that is the name of the VGL program to run, followed by the parameter list to pass to that program.
 
+
+## Database access
+
+Reading data requires a read transaction, which is created using `START READ TRANSACTION` followed by a transaction name.  If the read transaction is not started, auditing information will not be correctly saved.
+
+Simple data retrieval is done via SQL select statements without `FROM` clauses - the `SELECT` clause must indicate the table.field(s) to pull from.  Entire table records are queried from the database, not just the field(s) specified, so subsequent `SELECT` statements will pull from in-memory data (consequently, the `WHERE` clause is not needed).  Assignment of a variable to a `SELECT` expression results in a single (first matching) record being loaded into the variable (and cache).  In other words, a `SELECT` command without a `WHERE` will select from an in-memory record, and retrieval of data from the database *requires* a `WHERE` clause.
+
+```
+JOIN LIBRARY $lib_utils
+START READ TRANSACTION "tx"
+oper_id = SELECT personnel.identity WHERE name NOT LIKE "Sys%" ORDER ON identity
+oper_name = SELECT personnel.name
+mod_on = SELECT personnel.modified_on
+FLASH_MESSAGE(oper_id, TRUE)
+NEXT personnel
+oper_id = SELECT personnel.identity
+FLASH_MESSAGE(oper_id, TRUE)
+```
+
+String literals are delimited with `"`, not `'` as in standard SQL.
+
+After getting one value from a query, the `NEXT` command can be used to point subsequent `SELECT` commands at the next record's value(s).  If `NEXT` points past all records retrieved from the database, a `SELECT` command will set the variable to `EMPTY`.  With this in mind, a loop for processing query results can be constructed:
+
+```
+JOIN LIBRARY $lib_utils
+START READ TRANSACTION "tx"
+oper_name = SELECT personnel.identity WHERE identity != 1 ORDER ON identity
+oper_list = ""
+WHILE oper_name <> EMPTY DO
+    oper_list = oper_list : oper_name
+    NEXT personnel
+    oper_name = SELECT personnel.identity
+ENDWHILE
+
+FLASH_MESSAGE(oper_list, TRUE)
+```
+
+Ordering query results is accomplished using the `ORDER ON` which is similar to a SQL `ORDER BY` except that the default ordering is descending.  To explicitly state ordering, use `ASCENDING` or `DESCENDING` after the field name.
+
+Jobs, samples, tests, and results are by default retrieved from the active tables.  The `SET MODE` command can switch to other table sets if needed.
+
+The `DISTINCT` keyword can query for distinct records, but doesn't seem to work correctly when used with a loop.  Also, counts can be queried using `var = SELECT COUNT {DISTINCT} table.field WHERE expr`.
+
+```
+JOIN LIBRARY $lib_utils
+START READ TRANSACTION "tx"
+modby = SELECT COUNT DISTINCT personnel.modified_by WHERE modified_by != "INSTALL" 
+FLASH_MESSAGE(modby, TRUE) { 1 }
+modby = SELECT COUNT personnel WHERE modified_by = "INSTALL"
+FLASH_MESSAGE(modby, TRUE) { 2 }
+```
+
+Note that the `COUNT DISTINCT` requires a field name, but `COUNT` without `DISTINCT` may have only a table name.
+
+Other supported aggregate functions include `MIN`,`MAX`,`SUM`, and `AVG`.
+
+The `READ_LOCK` qualifier allows a selected record to be locked for updating, which will be important for result processing.  Results can be retrieved using a different approach than the standard `SELECT` command, which knows nothing about calculated results.  Instead, `RESULT_VALUE` and `RESULT_STRING` should be used for single result retrival:
+
+```
+JOIN LIBRARY $lib_utils
+sample_id = 3
+analysis_id = "SUGAR_CONT/2"
+component_name = "Fructose"
+FLASH_MESSAGE( RESULT_STRING(sample_id, analysis_id, component_name), TRUE) { 7 }
+FLASH_MESSAGE( RESULT_VALUE(sample_id, analysis_id, component_name), TRUE) { 7.000 }
+```
+
+In the above example, if a matching result isn't found, `EMPTY` is returned.
+
+To retrieve all results for a given test use the `GET_TEST_RESULTS` command with a supplied `test_id`, a 2D array containing a "header" row, which will be filled in with additional rows of actual results, and a "check variable" to contain a status indicator after retrieval of the results (successful retrieval = `EMPTY`, an error message otherwise).
+
+```
+JOIN STANDARD_LIBRARY STD_ARRAY
+JOIN LIBRARY $lib_utils
+ARRAY test_results
+test_results[1,1] = "component_name"
+test_results[1,2] = "units"
+test_results[1,3] = "text"
+test_results[1,4] = "status"
+sample_id = 3
+test_id = SELECT test.test_number WHERE (sample = sample_id) AND (analysis = "SUGAR_CONT") AND (TEST_COUNT = 2)
+
+GET_TEST_RESULTS test_id, test_results, chk
+
+IF chk = EMPTY THEN
+    result_count = size_of_array(test_results)
+    msg = ""
+    i = 1
+    WHILE i <= result_count DO
+        {msg = msg : test_results[i,1] : ASCII(9) : test_results[i, 2] : ASCII(9) : test_results[i,3] : ASCII(9) : test_results[i,4] : ASCII(13) : ASCII(10)}
+        msg = msg : PAD(test_results[i,1], " ", 15) : PAD(test_results[i,2], " ", 15) : PAD(test_results[i,3], " ", 15) : PAD(test_results[i,4], " ", 15) : ASCII(13) : ASCII(10)
+        i = i + 1
+    ENDWHILE 
+
+    FLASH_MESSAGE(msg, TRUE)
+ELSE
+    FLASH_MESSAGE(chk, TRUE)
+ENDIF
+```
