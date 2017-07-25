@@ -137,6 +137,14 @@ ELSE
 ENDIF
 ```
 
+Evidently there is no way to short-circuit expression evaluation using boolean operators.  In other words, the second condition below will be evaluated:
+
+```
+IF (1 = 2) AND (limit_value = EMPTY) THEN
+    { statements }
+ENDIF
+```
+
 
 ## Routines
 
@@ -331,20 +339,35 @@ PROMPT OBJECT samp_id
     THEN SELECT FOR UPDATE
 ```
 
-The `CHOOSE OUTOF array_name` keywords can be used to specify dropdown menu choices for the prompt:
+The `CHOOSE OUTOF array_name` keywords can be used to specify menu choices for the prompt:
 
 ```
 JOIN LIBRARY $lib_utils
 JOIN STANDARD_LIBRARY STD_PROMPT
 SET COMPILE_OPTION DECLARE
-DECLARE my_prompt
-ARRAY date_choices
-date_choices[1] = "Yesterday"
-date_choices[2] = "Today"
-date_choices[3] = "Tomorrow"
+DECLARE my_form, my_prompt, choices
+
+CREATE OBJECT PROMPT_CLASS_FORM, my_form
+my_form.height = 4
+my_form.width = 40
+my_form.add_display("Pick: ", 2, 1, PROMPT_RENDITION_NORMAL)
+
+ARRAY choices ARRAYSIZE(0,3)
+choices[1,1] = "Yesterday"
+choices[1,2] = -1
+choices[2,1] = "Today"
+choices[2,2] = 0
+choices[3,1] = "Tomorrow"
+choices[3,2] = 1
 PROMPT OBJECT my_prompt
-    AT 6.2, 6.5
-    CHOOSE OUTOF date_choices
+    AT 3, 2
+    CHOOSE OUTOF choices
+
+my_form.add_prompt(my_prompt)
+
+my_form.start_prompt()
+my_form.wait_prompt()
+my_form.end_prompt()
 ```
 
 The `BROWSE ON` command can specify more than just a table name.  The command can be used with a datatype, a database table (with or without a column specified), a phrase, and more:
@@ -496,6 +519,7 @@ Lists are objects added to forms that display information to the user in a listv
 To create a list:
 
 ```
+JOIN LIBRARY $lib_utils
 JOIN STANDARD_LIBRARY STD_PROMPT
 JOIN LIBRARY $PROMPT_LIST
 
@@ -524,7 +548,7 @@ list_form.wait_prompt()
 list_form.end_prompt()
 ```
 
-As shown in the example above, a list is a type of a prompt object.  The object has properties, actions, and callbacks specific to the `PROMPT_LIST_CLASS` type.  For instance, a callback can be set for `double_click_routine`:  
+Note that for some undocumented reason, `$lib_utils` must be joined.  As shown in the example above, a list is a type of a prompt object.  The object has properties, actions, and callbacks specific to the `PROMPT_LIST_CLASS` type.  For instance, a callback can be set for `double_click_routine`:  
 
 ```
 the_list.double_click_routine = "sample_details"
@@ -575,7 +599,7 @@ Some useful built-in string functions and commands include:
 
 - `TOUPPER(str)`
 - `TOLOWER(str)`
-- `STRIP(str)` (trims leading and trailing spaces)
+- `STRIP(str)` (in-place trim of leading and trailing spaces from `str`)
 - `PAD(str1, str2, pad_count)` (pads `str1` with `str2` to total of `pad_count` characters)
 - `JUSTIFY(str1, str2)` (`str2` must be `LEFT` or `RIGHT`, spaces are from beginning to end or vice-versa to maintain original string length)
 - `INDEX(str1, str2)` (searches `str1` for an occurence of `str2` and returns `0` if not found or 1-based index of first occurence if found)
@@ -583,8 +607,8 @@ Some useful built-in string functions and commands include:
 - `lib_text_is_like(text, pattern, single_wildcard, multi_wildcard)` (in library `$LIB_TEXT`, returns `TRUE` if `text` matches `pattern` with specified wildcards, usually `single_wildcard = '_'` and `mult_wildcard = '%'`)
 - `LENGTH(str)` (contrary to training manual's description, this apparently returns the length of a string with trailing spaces/tabs removed - _leading spaces are counted_)
 - `STRINGLENGTH(str)` (returns the length of a string without removing any spaces)
-- `LEFTSTRING(str, count)`
-- `RIGHTSTRING(str, count)`
+- `LEFTSTRING(str, count)` (returns new string of left-most `count` characters)
+- `RIGHTSTRING(str, count)` (returns new string of right-most `count` characters)
 - `SUBSTRING(str, start_pos, count)` (`start_pos` is 1-based; returned string will be padded with spaces if the `count` overshoots the end of the string)
 - `ASCII(VALUE int_value)` (converts `65` to `A`, etc.)
 - `ORD(str)` (converts `A` to `65`, etc.)
@@ -595,7 +619,7 @@ Some useful built-in string functions and commands include:
 - `NUMERIC(str)` (returns real datatype of parsed `str`)
 - `NUMBER_TO_TEXT(num, format_str)` (formats number as a string, `format_str` should be something like `"999.999"`)
 - `BLANK(str)` (returns `TRUE` if `str` is an empty or blank - tabs/spaces)
-- `get_token(str, separator)` (`str` must be a reference - the substring of `str` up to the first instance of `separator` is returned, the remainder of the string is stored in `str`)
+- `get_token(str, separator)` (in `$LIB_UTILS`, `str` must be a reference - the substring of `str` up to the first instance of `separator` is returned, the remainder of the string is stored in `str`)
 - `SUBSTITUTE(str1, str2, str3)` (returns a new string formed by finding instances in `str1` of any of the characters in `str2` and replacing them with characters in corresponding positions in `str3`)
 - `lib_text_replace(str1, str2, str3)` (in library `$lib_text` - returns a new string replacing instances of `str2` in `str1` with `str3` value)
 - `DATE(str)` (converts a string to a date type, must be 'dd-MON-yyyy' or 'dd-MON-yyyy hh24:mi' format)
@@ -626,3 +650,90 @@ To append to an existing file, use `FILE EXTEND file_name, chk`.  This command o
 To write to a file at the current cursor position, use `FILE WRITE file_name, str_to_write, chk`.  This writes one line at a time and appends `\r\n` to your `str_to_write` text.
 
 To copy an existing file, use `FILE COPY source_file, target_file_name, chk`.  If the destination filename already exists it will be silently overwritten.  Likewise, to delete an existing file, use `FILE DELETE file_name, chk`.
+
+
+## VGL Menus
+
+To create a menu on a form using an array, use `CHOOSE OUTOF` (apparently no library joins required):
+
+```
+JOIN LIBRARY $lib_utils
+ARRAY menu_items ARRAYSIZE(0, 3) { unknown row count, 3 columns }
+menu_items[1,1] = "*"
+menu_items[1,2] = "This is the menu title"
+menu_items[2,1] = ""
+menu_items[2,2] = "First display item"
+menu_items[2,3] = 1
+menu_items[3,1] = ""
+menu_items[3,2] = "Second item"
+menu_items[3,3] = 2
+menu_items[4,1] = ""
+menu_items[4,2] = "Third"
+menu_items[4,3] = 3
+
+CHOOSE example_menu OUTOF menu_items AT 10, 10
+FLASH_MESSAGE("You picked " : example_menu, TRUE)
+```
+
+If the number of rows are known, declare it in `ARRAYSIZE`.  There must be 3 columns in the array used with the `OUTOF` keyword.  The first row must contain `"*"`, and a value for the menu window's title in the second element.  Rows 2 onward must contain an unused string in the first column (pre-Windows shortcut key?), the value to display in the second column, and the value to store in the `CHOOSE` variable when the user makes a selection.   
+
+As in the "Prompts" example earlier, a dropdown menu can be created using the `CHOOSE OUTOF` keywords and a two-column array to describe the options: 
+
+```
+JOIN LIBRARY $lib_utils
+JOIN STANDARD_LIBRARY STD_PROMPT
+SET COMPILE_OPTION DECLARE
+DECLARE my_form, my_prompt, choices
+
+CREATE OBJECT PROMPT_CLASS_FORM, my_form
+my_form.height = 2
+my_form.width = 40
+my_form.add_display("Pick: ", 2, 1, PROMPT_RENDITION_NORMAL)
+
+ARRAY choices ARRAYSIZE(0,3)
+choices[1,1] = "First option"
+choices[1,2] = 1
+choices[2,1] = "Second option"
+choices[2,2] = 2
+choices[3,1] = "Third option"
+choices[3,2] = 3
+
+PROMPT OBJECT my_prompt
+    AT 12, 1
+    CHOOSE OUTOF choices
+
+my_form.add_prompt(my_prompt)
+
+my_form.start_prompt()
+my_form.wait_prompt()
+my_form.end_prompt()
+```
+
+Another option for creating a menu is `CALL_MENU OUTOF`, which calls routines specified by names in the array used to create the menu.  The routine name is in the fourth column, the library is in the third column:
+
+```
+JOIN LIBRARY $lib_utils
+DECLARE choices
+
+ARRAY choices ARRAYSIZE(0,4)
+choices[1,1] = "*"
+choices[1,2] = "Window header"
+choices[2,1] = ""
+choices[2,2] = "Get some info"
+choices[2,3] = GLOBAL("current_library")
+choices[2,4] = "get_info"
+choices[3,1] = ""
+choices[3,2] = "Show a message"
+choices[3,3] = GLOBAL("current_library")
+choices[3,4] = "show_message"
+
+CALL_MENU OUTOF choices AT 1,1
+
+ROUTINE get_info(option)
+	FLASH_MESSAGE("Get_info was called: " : option, TRUE)
+ENDROUTINE
+
+ROUTINE show_message(option)
+	FLASH_MESSAGE("Show_message was called: " : option, TRUE)
+ENDROUTINE
+```
