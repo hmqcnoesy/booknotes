@@ -23,6 +23,11 @@
             
             loadMarkdown(this.value);
         });
+
+        if (window.location.search) {
+            select.value = decodeURIComponent(window.location.search.substring(1)) + ".md";
+            select.style.display = "none";
+        }
         
         function loadMarkdown(filename) {
             var xhr = new XMLHttpRequest();
