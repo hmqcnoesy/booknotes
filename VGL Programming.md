@@ -737,3 +737,20 @@ ROUTINE show_message(option)
 	FLASH_MESSAGE("Show_message was called: " : option, TRUE)
 ENDROUTINE
 ```
+
+The `MENUPROC` keyword allows calling an existing master menu item by ID and passing necessary parameters.
+
+```
+MENUPROC 81 USING "SYSTEM"
+```
+
+In the example above, `81` is the ID for item "Modify Operator" and `"SYSTEM"` is the ID of the operator record we want to modify.  If no parameters are required for an operation, the `USING p1, p2, ...` can be left out.  For example, to add a customer:
+
+```
+MENUPROC 2
+```
+
+At the end of the `USING` paramter list, a virtual keypress can also be passed, as either the string `"$EXIT"` or `"$DO"`.
+
+The `MENUPROC` keyword can be used to call another VGL program that is not a master menu item by calling master menu item 56 ("GRL") and passing a first paramter that is the name of the VGL program to run, followed by the parameter list to pass to that program.
+
