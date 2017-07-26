@@ -530,7 +530,7 @@ The `BROWSE ON` command can specify more than just a table name.  The command ca
 - `BROWSE ON IDENTITY`: Prompts for left-justified uppercase 10-char-wide string value
 - `BROWSE ON IDENTITY_<len>`: Prompts for identity with length other than 10
 - `BROWSE ON DATE_OR_INTERVAL`: Prompts for a date or a interval from current
-- `BROWSE ON SAMPLE_TEST`: Prompts for analyses assigned to the sample specified in `sample_id` property
+- `BROWSE ON SAMPLE_TESTS`: Prompts for analyses assigned to the sample specified in `sample_id` property
 - `BROWSE ON FILE`: Prompts for file, starting in directory in `file_directory` property, optionally filtered to types specified in `file_extension` property.
 - `BROWSE ON PHRASE.<phrase_type>`: Prompts for values from specified phrase.
 - `BROWSE ON VALID_PHRASE.<phrase_type>`: Prompts for values from specified phrase, without allowing custom input.
@@ -582,6 +582,16 @@ Other properties that can be specified using `WITH` include:
 Many other properties are available on prompts, including many type-specific properties.  They are all covered in the help file.
 
 Callback routines can also be set as properties on a prompt.  For example: `WITH (leave_prompt_routine="my_routine")` will execute `my_routine` when the prompt loses focus.  Other callbacks include `browse_routine`, `enter_prompt_routine`, `insert_routine`, `leave_prompt_routine`, `remove_routine`, `select_routine`, and `validation_routine` (which should return a boolean indicating pass/fail of the validation).  Each of the callback routine definitions should take a single parameter, which is passed as the prompt object itself.
+
+Some callbacks will require either the `vgl_library` to be set, or the library name to be included in the callback string value.  It is not clear from the documentation when this is required and when it is not.  An indication that this will be required would be an error like "Error from SampleManager server: Routine <routinename> has not been found in library ...".  To remedy this, either of these two solutions can be employed:
+
+```
+PROMPT OBJECT prmpt AT 20,1 BROWSE ON sample 
+    WITH (leave_prompt_routine="selection_made", vgl_library=GLOBAL("current_library"))
+
+PROMPT OBJECT prmpt AT 20,1 BROWSE ON sample
+    WITH (leave_prompt_routine=GLOBAL("current_library") : "/selection_made")
+```
 
 Prompts are added to a form using the form's `add_prompt` action, and text is added using the `add_display` action.
 
@@ -992,8 +1002,11 @@ IF chk = EMPTY THEN
     msg = ""
     i = 1
     WHILE i <= result_count DO
-        {msg = msg : test_results[i,1] : ASCII(9) : test_results[i, 2] : ASCII(9) : test_results[i,3] : ASCII(9) : test_results[i,4] : ASCII(13) : ASCII(10)}
-        msg = msg : PAD(test_results[i,1], " ", 15) : PAD(test_results[i,2], " ", 15) : PAD(test_results[i,3], " ", 15) : PAD(test_results[i,4], " ", 15) : ASCII(13) : ASCII(10)
+        msg = msg : PAD(test_results[i,1], " ", 15) 
+            : PAD(test_results[i,2], " ", 15) 
+            : PAD(test_results[i,3], " ", 15) 
+            : PAD(test_results[i,4], " ", 15) 
+            : ASCII(13) : ASCII(10)
         i = i + 1
     ENDWHILE 
 
@@ -1002,3 +1015,58 @@ ELSE
     FLASH_MESSAGE(chk, TRUE)
 ENDIF
 ```
+
+
+## Infomaker Reports
+
+Infomaker reports are defined in .pbl files, usually stored in the "Imprint" folder.  The database records are in `INFOMAKER_LINK` and `INFOMAKER_PARAMTERS`.  They can be run directly from contextual menus, but can also be utilized via Master Menu Items (and subsequently via VGL `MENUPROC 15291 USING "report", "property"` calls, where 15291 is the ID of the "Run Management Report" master menu item).
+
+Text-based reports can be programatically generated within VGL using the `LITERAL ... $ENDLITERAL` functionality.  Text between these two keywords is output literally, except for indicators starting with the `$` character, which is assumed to be a variable name, to be replaced with that variable's value.  Replaced values are padded or truncated to occupy the same number of spaces as the variable name.  The variable name underscore "tricks" inherent to the VGL language can therefore be used to easily force desired padding:
+
+```
+LITERAL
+Sample Id:    $sample_id_________
+Status:       $sample_status_____
+Modified On:  $sample_modified_on
+$ENDLITERAL
+```
+
+Literals can contain only variable replacements, not arbitrary code blocks, so loops and branching must contain the literals instead:
+
+```
+WHILE i <= size_of_array(test_results) DO
+    LITERAL
+        $test_results____[1]   $test_results______[2] $test_results[3]
+    $ENDLITERAL
+ENDWHILE
+```
+
+New pages can be forced in output using the `NEW PAGE` command, and repeated page headers can be defined using the `ON NEW PAGE ... ENDON` construct:
+
+```
+ON NEW PAGE
+LITERAL
+    This is literally a text-based report, made in 1982.
+    Sample ID            Test Count            Status
+    _________            __________            ______
+$ENDLITERAL
+ENDON
+```
+
+Report headers and footers are defined using `SET HEADER expr` and `SET FOOTER expr` where `expr` is a valid VGL expression.  If `##` appears in the text expression, it will be replaced with current page number, e.g. `SET FOOTER "PAGE ##"`.
+
+Page dimensions are defined using `SET WIDTH x` and `SET LENGTH y` where `x` and `y` are column and line counts (80 columns and 61 lines by default).  US Letter sized pages should be set to 57 lines.  New pages can be avoided by using `TEST PAGE n` where a new page will be started unless the lines remaining on the page is less than `n`.  The lines remaining on the current page can also be determined using the `LINESLEFT` command:  `lines_remaining = LINESLEFT`.  
+
+The `SET NAME` command determines the output destination of a report:
+
+- `SET NAME "DISPLAY/"` sends output to the screen
+- `SET NAME "DEFER/"` prompts user for destination
+- `SET NAME "filename"` sends output to file, named as specified
+- `SET NAME "PRINTER/prt_id/"` sends output to specified printer
+- `SET NAME "LOCAL/"` sends output to a local printer
+- `SET NAME "MAIL/name"` sends output to email addresses separated by commas
+- `SET NAME "EDIT/"` sends output to text editor
+
+To complete a report, the `FLUSH_LITERAL` command can be used, which completes the output by prompting for a destination.
+
+Printer code commands can be included in output by using `SET PRINTERCODES TRUE` and prefixing printer commands with the `!` character, which are used to toggle their change on and off:  `!B` (bold), `!U` (underline), `!P` (proportional fonts), etc.  Drawing a line is accomplished with `!L` followed by line drawing command (see docs).  
