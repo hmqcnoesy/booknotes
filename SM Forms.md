@@ -33,3 +33,7 @@ The `MasterDetailGrid` control shows hierarchical relationships between linked e
 
 A `TreeList` control is an alternative to the `MasterDetailGrid` control.  It cannot display multiple columns like the `MasterDetailGrid` can, but it can include contextual menus.  To use a `TreeList`, set the `Levels` property.  At each level, the `NodeDialog` property can be set to allow a custom form to be displayed when adding a new node.
 
+
+## Forms as Explorer Views
+
+A form entity can be changed to become an explorer view by setting its window style from `FLOAT` to `EXPLORER`.  Then the form can be applied to a folder, with the folder's "Task" set to "DefaultFormTask" to display directly in the explorer when that folder is selected.
