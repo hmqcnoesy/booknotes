@@ -1166,7 +1166,7 @@ ELSE
 ENDIF
 ```
 
-The `PUT_TEST_RESULTS test_number, results_array, status_array` command is used for multiple results.  Result fields must be stored in the first row of the array, and each result to be saved comprises an additional row in the array.  Component name must appear in the array, and the result type must also appear for any adhoc results.  Some fields cannot be included in the array:  status, test_number, value, entered_on, and entered_by.
+The `PUT_TEST_RESULTS test_number, results_array, status_array` command is used for multiple results.  Result fields must be stored in the first row of the array, and each result to be saved comprises an additional row in the array.  Component name must appear in the array, and the result type must also appear for any adhoc results.  Some fields cannot be included in the array:  `status`, `test_number`, `value`, `entered_on`, and `entered_by`.
 
 ```
 SET NOTPROTECTED
@@ -1193,7 +1193,7 @@ VGL can access OS functionality via internal functions.  To start a server-side 
 
 The `GLOBAL` function returns configuration info, such as in `user_name = GLOBAL("mode")`, which returns `"INTERACTIVE"`, `"BATCH"`, or `"BACKGROUND"`.  Other string parameters that can be used with `GLOBAL()` include `"process_id"`, `"termtype"`, `"operator"`, and `"current_library"`.  Globals can be modified using `SET GLOBAL "globalname" TO "newvalue"`. 
 
-Custom result calculations can be created in VGL.  Unlike "report" VGL code, they are stored in the server's calculations directory with a `.caf` extension.  The calculation functions get the sample numeric ID, the test_number, and the component_name passed in as paramters.  The function can then do arbitrary mathematic operations and data access to arrive at a value which is then returned in a `RETURN` statement by the function.  So a calculation function skeleton will look like this:
+Custom result calculations can be created in VGL.  Unlike "report" VGL code, they are stored in the server's calculations directory with a `.caf` extension.  The calculation functions get the sample numeric ID, the `test_number`, and the `component_name` passed in as paramters.  The function can then do arbitrary mathematic operations and data access to arrive at a value which is then returned in a `RETURN` statement by the function.  So a calculation function skeleton will look like this:
 
 ```
 GLOBAL ROUTINE CALCULATION(sample_id, test_number, component_name)
