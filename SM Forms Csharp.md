@@ -91,7 +91,11 @@ To make a customization available to Sample Manager, the dll must be added to th
         <assembly name="Customization.ObjectModel" />
 ```
 
-The compiled dlls should be saved in the server's Exe\SolutionAssemblies directory.
+The compiled dlls should be saved in the server's Exe\SolutionAssemblies directory.  A post-build event in the Visual Studio project can take care of moving files:
+
+```shell
+xcopy /Q /Y "$(TargetPath)" "C:\Thermo\SampleManager\Server\<ENVNAME>\Exe\SolutionAssemblies"
+```
 
 
 ## Extending an existing entity
@@ -144,4 +148,46 @@ namespace Customization.ObjectModel
 After implementing the above customization by deploying the compiled dll to `Exe\SolutionAssemblies` and modifying `Exe\SampleManagerServerHost.Exe.Config`, the "Customer" form can be extended in the Sample Manager designer, and `Prompt` controls can be added to the form with their `Property` properties set to `ContactDetails` and `AddressDetails`.
 
 The two examples above illustrate the two common ways to customize forms with C#:  server tasks and entity extensions.  Server tasks are used to launch forms and/or execute custom code when launched, via master menu options.  Entity extensions are used to extend the built-in entities of the Sample Manager object model, and for the most part just add properties or methods.
+
+
+## Extending an existing form
+
+To add functionality to an existing form, extend the form and add controls in Sample Manager and save.  Create a class decorated with `[SampleManagerTask("TaskName", "LABTABLE", "ENTITYNAME")]` where `"TaskName"` is the name of the task you will create in Sample Manager, `"LABTABLE"` is a descriptor for how the form will be used, and `"ENTITYNAME"` is the database table name being extended (e.g. `"HAZARD"`).  For example, after extending the Hazard form with a new tab containing a button named `btnClickMe`, a class might look like:
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Thermo.SampleManager.Library;
+using Thermo.SampleManager.Library.FormDefinition;
+using Thermo.SampleManager.ObjectModel;
+using Thermo.SampleManager.Tasks;
+
+namespace MattCustomForms
+{
+    [SampleManagerTask("AFC_HazardInfo", "LABTABLE", "HAZARD")]
+    public class AFC_HazardInfo : GenericLabtableTask
+    {
+        private FormHazard _form;
+
+        protected override void MainFormCreated()
+        {
+            _form = (FormHazard)MainForm;
+            _form.btnClickMe.Click += ClickedButton;
+            base.MainFormCreated();
+        }
+
+        void ClickedButton(object sender, EventArgs e)
+        {
+            var desc = (_form.Entity as Hazard).Description;
+            var name = (_form.Entity as Hazard).Name;
+            Library.Utils.FlashMessage(desc, name);
+        }
+    }
+}
+```
+
+After deploying this compiled dll and modifying the config file to load the customization, testing on the hazard form should work, as long as `AFC_HazardInfo` is selected as the Server Task.  To make the change "permanent", modify the master item(s) - for example, modify the "Modify Hazard" master menu item, changing the Server Task to `AFC_HazardInfo` on the Implementation tab.  Note that the ".Net" option on a master menu item's Implementation tab is for internal operations only.
 
