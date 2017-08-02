@@ -191,3 +191,64 @@ namespace MattCustomForms
 
 After deploying this compiled dll and modifying the config file to load the customization, testing on the hazard form should work, as long as `AFC_HazardInfo` is selected as the Server Task.  To make the change "permanent", modify the master item(s) - for example, modify the "Modify Hazard" master menu item, changing the Server Task to `AFC_HazardInfo` on the Implementation tab.  Note that the ".Net" option on a master menu item's Implementation tab is for internal operations only.
 
+
+## Multiple inheritance levels
+
+Sample Manager uses the "deepest" inherited entity it finds when it loads, so if an entity has been extended once before, if it is extended again in a new class, Sample Manager will use that new class.  For example, using the extended customer entity from before, we could extend again by inheriting from it:
+
+```csharp
+using Customization.ObjectModel;
+using Thermo.SampleManager.Common.Data;
+
+namespace MattCustomForms
+{
+    [SampleManagerEntity("CUSTOMER")]
+    public class ExtendedCustomer2 : ExtendedCustomer
+    {
+        [PromptText]
+        public string ShortName
+        {
+            get
+            {
+                return this.Name.Length < 4 ? this.Name : this.Name.Substring(0, 4);
+            }
+        }
+    }
+}
+```
+
+Note the `using Customization.ObjectModel;` (where we first derived from `Customer` to make `ExtendedCustomer`) and the fact that the inheritance is on `ExtendedCustomer` rather than `Customer`.
+
+
+## Visual Studio debugging
+
+The project properties / Debug tab in Visual Studio can be configured to start an external program (instead of the default "Start Project").  If this option is selected with a path to the _server's_ Sample Manager executable and the login properties are set to local mode, then "Start Debugging" from Visual Studio should launch Sample Manager connected to the debugger.
+
+
+## Data 
+
+A `SampleManagerTask` object and any extended entity object will have an `EntityManager` property, which is a type that implements `IEntityManager`, whose methods allow interaction with the database.  For example, the `IEntityManager` has a `CreateQuery("TABLE_NAME")` method which returns an `IQuery`, which can be set up as needed and passed to `IEntityManager.Select(IQuery)` to get an `IEntity` or an `IEntityCollection` returned:
+
+```csharp
+var query = EntityManager.CreateQuery(TableNames.ProjectInfo);
+query.AddEquals(ProjectInfoPropertyNames.ProjectId, "MY_PROJECT");
+query.AddOr();
+query.AddEquals(ProjectInfoPropertyNames.ProjectId, "2ND_PROJEC");
+var projects = EntityManager.Select(query);
+Library.Utils.FlashMessage(string.Format("Found {0} project(s)", projects.Count), "Project count");
+```
+
+Note above the use of the `TableNames` and `ProjectInfoPropertyNames` enumerations.  All entities have an `EntityNamePropertyNames` enum to help with column/property names.
+
+To create data, use the `EntityManager.CreateEntity("TABLE_NAME")` method, which returns an `IEntity` (which can be cast to the specific type).  The `EntityManager.Transaction.Add(IEntity)` method allows an insert to be queued with the transaction, and the `EntityManager.Commit()` method will commit the data to the database.
+
+```csharp
+var project = EntityManager.CreateEntity(TableNames.ProjectInfo) as ProjectInfo;
+project.ProjectId = "PEDRO_PROJ";
+project.ProjectInfoName = _form.txtProjectName.Text;
+project.BrowseDescription = _form.txtProjectDescription.Text;
+project.CustomerId = (Customer)_form.Entity;
+EntityManager.Transaction.Add(project);
+EntityManager.Commit();
+```
+
