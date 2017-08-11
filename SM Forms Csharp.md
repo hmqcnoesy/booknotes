@@ -10,6 +10,7 @@ Projects in Visual Studio for customization must have references to the followin
 - Thermo.Framework.Server (Exe)
 - Thermo.SampleManager.Common (Exe)
 - Thermo.SampleManager.Library (Exe)
+- Thermo.SampleManager.Internal.ObjectModel (Exe)
 - Thermo.SampleManager.ObjectModel (Exe\SolutionAssemblies)
 - Thermo.SampleManager.Tasks (Exe\SolutionAssemblies)
 - Thermo.SampleManager.Tasks.EntityDefinition (Exe\SolutionAssemblies)
@@ -251,4 +252,7 @@ project.CustomerId = (Customer)_form.Entity;
 EntityManager.Transaction.Add(project);
 EntityManager.Commit();
 ```
+
+
+## Integrating forms into explorer
 
