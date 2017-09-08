@@ -99,7 +99,7 @@ One of the 4 types of worksheet can be generated in Sample Manager using the "Wo
 
 ### Batches
 
-Batches are like worksheets in the sense that they are a means of grouping work that is related in some way.  A Batch is like an Analysis Worksheet but with more capabilities, allowing QA and QC operations.  A Batch is created based on a particular Analysis and a Batch Template.
+Batches are like worksheets in the sense that they are a means of grouping work that is related in some way.  A Batch is like an Analysis Worksheet but with more capabilities, allowing QA and QC operations.  A Batch is created using a Batch Template, which is based on a particular Analysis.
 
 
 ### Lots

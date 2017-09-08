@@ -73,3 +73,33 @@ let x = 2;
 let y = 3;
 println!("x is {} and y is {}", x, y);
 ```
+
+
+## Crates
+
+Crates can be binaries (executable) or libraries.  To use a crate such as the `rand` crate for generating random numbers, modify the Cargo.toml file to include the crate name and version under the `[dependencies]`:
+
+```
+[dependencies]
+rand = "0.3.14"
+```
+
+The "0.3.14" string is semantic versioning:  any version that is API compatible with 0.3.14 is acceptable. 
+
+After modifying the Cargo.toml file, run again with `cargo run` and notice that `rand` and a `rand` dependency are downloaded from crates.io, and both are compiled before the local project.  Subsequent build processes will not download/compile the dependencies, because Cargo knows they are already available.  To update versions of dependencies automatically, use `cargo update`, which will update dependencies to the latest `z` in `x.y.z` (to update series' versions, manually edit Cargo.toml).  
+
+To use the `rand` crate in code:
+
+```rust
+extern crate rand;
+use rand::Rng;
+let r_number = rand::thread_rng().gen_range(1,101);
+```
+
+The `extern crate rand` line indicates use of an external dependency, and also implicitly does the same thing as `use rand;`, so that doesn't need to be explicitly stated.  
+
+The `use rand::Rng` imports the `Rng` trait, which defines methods for random number generators.  It must be in scope to use the RNG methods.
+
+The call to the associated function `rand::thread_rng()` returns a random number generator (one that is local to the current thread, and seeded by the OS).  The `gen_range()` method on the RNG was brought into scope via importing the `Rng` trait.  The method takes two arguments, and returns a random number >= the first, and < the second.
+
+Cargo can generate HTML documentation for all a projects' dependencies, via `cargo doc`.  The docs are placed in `target\doc`.  The `--open` flag will open the docs in the default program for .html files after they're generated.
