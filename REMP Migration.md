@@ -62,23 +62,20 @@ begin
     end loop;
   end loop;
 
-  -- rrack
-  for rack in (select r.*, st.logical_id, sps.level_number 
-               from rrack@productionremp r join shelf@productionremp s on s.rpo_id = r.default_rpo_id 
-               join shelf_position_stack@productionremp sps on sps.id = s.spo_Id 
-               join stack@productionremp st on st.id = sps.stk_id 
-               where r.id in (select rack_id from plates_to_migrate)) loop
-
-    select s.rpo_id into next_rpo_id from shelf@remp s join shelf_position_stack@remp sps on s.spo_id = sps.id join stack@remp st on st.id = sps.stk_id where st.logical_id = rack.logical_id and sps.level_number = rack.level_number;
-    select s_rra_id.nextval@remp into next_rra_id from dual;
-    insert into rrack@remp values (next_rra_id, rack.barcode, next_rpo_id, decode(rack.rty_id, 1,199, 3,201, -1), next_rpo_id, null, null, rack.mut_counter, rack.mut_datetime, rack.mut_user);
-    
-    -- each new rrack needs 8 plate_position records and 8 plate_position_rrack recrods
-    for i in 1..8 loop
-      select s_ppo_id.nextval@remp into next_ppo_id from dual;
-      insert into plate_position@remp values (next_ppo_id, 1, sysdate, 'MSS', 0);
-      insert into plate_position_rrack@remp values (next_ppo_id, next_rra_id, i, 1, sysdate, 'MSS');
-    end loop;
+  -- demo script puts empty racks in rack positions for odd levels up to 49 of stacks 5 through 10.  We will fill the rest (11 through 94)
+  for i in 11..94 loop -- stacks 11 through 94
+    for j in 1..49 loop -- shelves 1 through 49 of each stack (odd only)
+      if mod(j,2) = 0 then continue; end if;
+      select s.rpo_id into next_rpo_id from shelf@remp s join shelf_position_stack@remp sps on s.spo_id = sps.id join stack@remp st on st.id = sps.stk_id where st.logical_id = i and sps.level_number = j;
+      select s_rra_id.nextval@remp into next_rra_id from dual;
+      insert into rrack@remp values (next_rra_id, null, next_rpo_id, 201, next_rpo_id, null, null, 1, sysdate, 'MSS');
+      
+      for k in 1..8 loop -- each rack needs 9 plate positions
+        select s_ppo_id.nextval@remp into next_ppo_id from dual;
+        insert into plate_position@remp values (next_ppo_id, 1, sysdate, 'MSS', 0);
+        insert into plate_position_rrack@remp values (next_ppo_id, next_rra_id, k, 1, sysdate, 'MSS');
+      end loop;
+    end loop;    
   end loop;
 
   -- plates 
@@ -147,7 +144,17 @@ join shelf_position_stack@remp sps on s.spo_id = sps.id
 join stack@remp st on st.id = sps.stk_id
 where st.logical_id in (2,4)
 union
---PLATES
+--RACKS WITHOUT PLATES
+select 4, to_char(lpad(st.logical_id, 3, '0')), to_char(lpad(sps.level_number, 3, '0')), 
+  '1:AREA_PLATE_MIC_ROBOT1_1:' || st.logical_id || ':' || sps.level_number || ':RANGE60(SRACKP_8.' || nvl(r.barcode, 'NULL') || '{})' script
+from rrack@remp r 
+join shelf@remp s on s.rpo_id = r.rpo_id
+join shelf_position_stack@remp sps on sps.id = s.spo_id
+join stack@remp st on st.id = sps.stk_id
+where st.logical_id > 4
+and r.id not in (select ppr.rra_id from plate_position_rrack@remp ppr join plate@remp p on p.ppo_Id = ppr.id)
+union
+--RACKS WITH PLATES
 select 4, to_char(lpad(st.logical_id, 3, '0')), to_char(lpad(sps.level_number, 3, '0')), 
   '1:AREA_PLATE_MIC_ROBOT1_1:' || st.logical_id || ':' || sps.level_number || ':RANGE60(SRACKP_8.NULL{' || pn.info || '})' script
 from plate@remp p
