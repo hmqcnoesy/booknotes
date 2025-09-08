@@ -19,14 +19,17 @@ sudo ufw enable
 ## Give sudo a reasonable timeout
 
 ```bash
-sudo visudo
+cd /etc/sudoers.d
+sudo visudo -f myusername
 ```
 
 Add line (this is a timespan in minutes):
 
 ```
-Defaults	passwd_timeout=100
+Defaults	timestamp_timeout=100
 ```
+
+Save the file (will save with filename specified as whatever is used in place of myusername)
 
 
 ## Enable bare hostname resolution (without .local)
@@ -59,23 +62,6 @@ And now it should be possible to resolve bare hostnames:
 ```bash
 ping t440x
 ```
-
-
-## Change the sudo timeout
-
-```bash
-sudo visudo
-```
-
-Just below the `env_reset` line in the file, add a timeout config:
-
-```
-Defaults      env_reset`
-Defaults      timestamp_timeout=180
-```
-
-The value 180 here is for 180 minutes.
-
 
 
 ## Install and configure Samba file sharing
