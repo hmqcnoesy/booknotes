@@ -88,11 +88,26 @@ Add contents to bottom of file:
 [shared]
 path = /shared
 browseable = yes
-writeable = yes
+public = yes
 guest ok = yes
 read only = no
-guest account = nobody
+force user = nobody
 create mask = 777
+```
+
+Also add this to the `[global]` section:
+```
+security = user
+```
+
+Then restart smbd:
+```bash
+sudo systemctl restart smbd
+```
+
+Enable the traffic through the firewall:
+```bash
+sudo ufw allow 'Samba'
 ```
 
 This sort of seems to work.  Connecting from windows clients still sometimes prompts for a username/password, but any phony credentials are accepted.
