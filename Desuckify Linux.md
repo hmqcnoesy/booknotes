@@ -32,6 +32,29 @@ Defaults	timestamp_timeout=100
 Save the file (will save with filename specified as whatever is used in place of myusername)
 
 
+## Prevent sleeping on lid close
+
+Set this in KDE Plasma or Gnome power management settings, but that usually isn't enough.  Also change it here:
+
+```bash
+sudo nano /etc/systemd/logind.conf
+```
+
+Uncomment these lines and set them to "ignore":
+
+```
+HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
+HandleLidSwitchDocked=ignore
+```
+
+Restart systemd-logind:
+
+```bash
+sudo systemctl restart systemd-logind
+```
+
+
 ## Enable bare hostname resolution (without .local)
 This solution seems to work, and survives a reboot:
 
