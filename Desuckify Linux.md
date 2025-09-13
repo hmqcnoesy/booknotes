@@ -240,3 +240,84 @@ Test the script:
 
 Create the custom shortcut in System Settings -> Shortcuts.
 
+
+## Create a "pdf print server"
+
+Create a watched and shared folder, that auto prints PDFs that are saved in it.
+
+Create the shared folder, e.g. `/print`.  Set up using samba similar to `/shared` instructions above.
+
+Install the notify tools:
+
+```bash
+sudo apt update
+sudo apt install inotify-tools cups
+```
+
+Get the printer name:
+
+```bash
+lpstat -p -d
+```
+
+Create the script to be run:
+
+```bash
+nano /print/autoprintpdfs.sh
+```
+Script contents:
+
+```bash
+#!/bin/bash
+
+WATCH_DIR="/print"
+PRINTER_NAME="Canon4350"
+BACKUP_DIR="$WATCH_DIR/backup"
+
+inotifywait -m -e close_write,moved_to --format '%w%f' "$WATCH_DIR" | while read FILE
+do
+    if [[ "$FILE" == *.pdf ]]; then
+        echo "Printing $FILE..."
+        if lp -d "$PRINTER_NAME" "$FILE"; then
+            # move to backup if printing succeeded
+            mv "$FILE" "$BACKUP_DIR/"
+            echo "Moved $FILE to $BACKUP_DIR"
+        else
+            echo "Printing failed for $FILE"
+        fi
+    fi
+done
+```
+
+Set the permissions on the autoprintpdfs.sh script.  Also make sure it is executable:
+
+```bash
+chmod ugo+rwx /print/autoprintpdfs.sh
+```
+
+Run the script manually now for testing, or just go ahead with setting it up as a service to run always:
+
+```bash
+nano ~/.config/systemd/user/autoprintpdfs.service
+```
+
+The autoprintpdfs.service file contents:
+
+```ini
+[Unit]
+Description=Watch folder and print PDFs
+
+[Service]
+ExecStart=/print/autoprintpdfs.sh
+Restart=always
+
+[Install]
+WantedBy=default.target
+```
+
+Start it up (don't use `sudo` here):
+
+```bash
+systemctl --user daemon-reexec
+systemctl --user enable --now autoprintpdfs.service
+```
